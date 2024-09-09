@@ -1,0 +1,37 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<h1>Review Member Applications</h1>
+<form method="post">
+  {% csrf_token %}
+  <table>
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Application Date</th>
+        <th>Proof Image</th>
+        <th>Approve</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for application in applications %}
+      <tr>
+        <td>{{ application.user.username }}</td>
+        <td>{{ application.user.email }}</td>
+        <td>{{ application.application_date }}</td>
+        <td><a href="{{ application.proof_image.url }}" target="_blank">View Image</a></td>
+        <td>
+          <input type="checkbox" name="approve" value="{{ application.id }}" id="approve_{{ application.id }}">
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="5">No pending applications.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <button type="submit">Process Selected Applications</button>
+</form>
+{% endblock %}

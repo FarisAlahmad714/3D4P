@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Select Post Type</h2>
+<div>
+    <a href="{% url 'create_regular_post' %}" class="btn btn-primary">Create Regular Post</a>
+    <a href="{% url 'create_donation_request' %}" class="btn btn-secondary">Create Donation Request</a>
+</div>
+{% endblock %}

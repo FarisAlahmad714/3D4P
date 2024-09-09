@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Application Status</h2>
+{% if user.memberapplication %}
+  <p>Application submitted on: {{ user.memberapplication.application_date }}</p>
+  {% if user.is_verified %}
+    <p>Your application has been approved. You are now a verified member.</p>
+  {% else %}
+    <p>Your application is currently under review. We'll notify you once it's been processed.</p>
+  {% endif %}
+{% else %}
+  <p>You haven't submitted a member application yet.</p>
+{% endif %}
+{% endblock %}

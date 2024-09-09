@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load user_tags %}
+
+{% block content %}
+<h1>Welcome to the Prosthetic Donation Platform</h1>
+
+{% if not user.is_authenticated %}
+<div class="alert alert-info">
+    <h4>Join our community!</h4>
+    <p>As a member, you'll benefit from:</p>
+    <ul>
+        <li>Access to our network of trusted prosthetic companies</li>
+        <li>Personalized assistance in finding the right prosthetic solution</li>
+        <li>The ability to create donation requests for your specific needs</li>
+        <li>A supportive community of donors and fellow members</li>
+    </ul>
+    <a href="{% url 'signup' %}" class="btn btn-primary">Sign Up Now</a>
+</div>
+{% endif %}
+
+<button id="toggle-create-post">Create Post</button>
+<div id="create-post-section" style="display: none;">
+    <h2>Create a new post</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Create Post</button>
+    </form>
+</div>
+
+<h2>Recent Posts</h2>
+{% for post in recent_posts %}
+<div class="card mb-3">
+    {% if post.image %}
+        <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+    {% endif %}
+        <div class="card-body">
+            <h5 class="card-title">{{ post.title }}</h5>
+            <p class="card-text">{{ post.content|truncatewords:30 }}</p>
+            <p class="card-text"><small class="text-muted">
+                Posted by 
+                {% if post.author %}
+                <a href="{% url 'user_profile' post.author.username %}">{{ post.author.username }}</a>
+                {% else %}
+                    {{ post.author_name }}
+                {% endif %} 
+                on {{ post.created_at|date:"F j, Y, g:i A" }}
+            </small></p>
+            {% if post.author and post.author|is_member %}
+                <span class="badge badge-info">Verified Member</span>
+            {% endif %}
+        </div>
+        <p>Views: {{ post.view_count }}</p>
+        <p>Shares: {{ post.share_count }}</p>
+    </div>
+{% empty %}
+    <p>No recent posts yet.</p>
+{% endfor %}
+
+<h2>Most Shared Posts</h2>
+{% for post in most_shared_posts %}
+<div class="card mb-3">
+    {% if post.image %}
+        <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+    {% endif %}
+        <div class="card-body">
+            <h5 class="card-title">{{ post.title }}</h5>
+            <p class="card-text">{{ post.content|truncatewords:30 }}</p>
+            <p class="card-text"><small class="text-muted">
+                Posted by 
+                {% if post.author %}
+                <a href="{% url 'user_profile' post.author.username %}">{{ post.author.username }}</a>
+                {% else %}
+                    {{ post.author_name }}
+                {% endif %} 
+                on {{ post.created_at|date:"F j, Y, g:i A" }}
+            </small></p>
+            {% if post.author and post.author|is_member %}
+                <span class="badge badge-info">Verified Member</span>
+            {% endif %}
+        </div>
+        <p>Views: {{ post.view_count }}</p>
+        <p>Shares: {{ post.share_count }}</p>
+    </div>
+{% empty %}
+    <p>No shared posts yet.</p>
+{% endfor %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('toggle-create-post').addEventListener('click', function() {
+        var section = document.getElementById('create-post-section');
+        if (section.style.display === 'none') {
+            section.style.display = 'block';
+            this.textContent = 'Hide Create Post';
+        } else {
+            section.style.display = 'none';
+            this.textContent = 'Create Post';
+        }
+    });
+});
+</script>
+{% endblock %}

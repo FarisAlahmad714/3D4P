@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{ post.title }}</h1>
+  <p>{{ post.content }}</p>
+  <p>Author: {{ post.author.username or post.author_name }}</p>
+  <p>Created at: {{ post.created_at }}</p>
+  <p>View Count: {{ post.view_count }}</p>
+
+  <h2>Comments</h2>
+  {% for comment in comments %}
+    <div>
+      <p>{{ comment.content }}</p>
+      <p>By: {{ comment.author.username or comment.author_name }}</p>
+      <p>Created at: {{ comment.created_at }}</p>
+      <p>View Count: {{ post.view_count }}</p>
+    </div>
+    <div class="share-buttons">
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank">Share on Facebook</a>
+        <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title }}" target="_blank">Share on Twitter</a>
+        <!-- Add more sharing buttons or links as needed -->
+      </div>
+  {% empty %}
+    <p>No comments yet.</p>
+  {% endfor %}
+
+  <h3>Add a Comment</h3>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+  </form>
+{% endblock %}

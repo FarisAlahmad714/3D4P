@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    ...
+    <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
+    ...
+</head>
+<body>
+    ...
+</body>
+</html>
+
+{% block content %}
+<h1>{{ profile_user.username }}'s Profile</h1>
+<div class="row">
+    <div class="col-md-4">
+        {% if profile_user.profile.photo %}
+        <img class="rounded-circle account-img" src="{{ user.profile.photo.url }}">
+        {% else %}
+        <img class="rounded-circle account-img" src="{% static 'images/default.jpg' %}">
+        {% endif %}    
+        <h2>{{ profile_user.username }}</h2>
+        <p>{{ profile_user.memberprofile.bio }}</p>
+        {% if is_own_profile %}
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#profileModal">
+            Edit Profile
+        </button>
+        {% endif %}
+    </div>
+    <div class="col-md-8">
+        <h3>Approved Posts</h3>
+        {% for post in posts %}
+            <article class="media content-section">
+                <div class="media-body">
+                    <h4>{{ post.title }}</h4>
+                    <p>{{ post.content }}</p>
+                </div>
+            </article>
+        {% empty %}
+            <p>No approved posts yet.</p>
+        {% endfor %}
+    </div>
+</div>
+
+{% if is_own_profile %}
+<!-- Modal -->
+<div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="profileModalLabel">Edit Profile</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ u_form.as_p }}
+                    {{ p_form.as_p }}
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock content %}

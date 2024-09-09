@@ -1,0 +1,34 @@
+from django import forms
+from .models import Post, DonationRequest ,Comment 
+
+class RegularPostForm(forms.ModelForm):
+    author_name = forms.CharField(max_length=100, required=False, widget=forms.TextInput(attrs={'placeholder': 'Your name (optional for non-registered users)'}))
+
+    class Meta:
+        model = Post
+        fields = ['title', 'content', 'image', 'author_name']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
+
+class DonationRequestForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'content']
+    
+    estimated_cost = forms.DecimalField(max_digits=10, decimal_places=2)
+    prosthetic_type = forms.CharField(max_length=100)
+    measurements = forms.CharField(widget=forms.Textarea)
+
+class CommentForm(forms.ModelForm):
+    author_name = forms.CharField(max_length=100, required=False, label='Your Name')
+
+    class Meta:
+        model = Comment
+        fields = ['content', 'author_name']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['author_name'].widget.attrs['placeholder'] = 'Enter your name (optional)'    
