@@ -3,6 +3,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
+
 class Post(models.Model):
     POST_TYPE_CHOICES = [
         ('regular', 'Regular Post'),
@@ -26,7 +27,14 @@ class Post(models.Model):
                 return f"{self.title} by {self.author.username}"
             else:
                 return f"{self.title} by {self.author_name or 'Unknown'}"
-        
+    
+    def increment_view_count(self):
+        self.view_count += 1
+        self.save()
+
+    def increment_share_count(self):
+        self.share_count += 1
+        self.save()
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
@@ -45,3 +53,25 @@ class DonationRequest(models.Model):
 
     def __str__(self):
         return f"Donation Request for {self.post.title}"
+    
+class DonationRequestImage(models.Model):
+    donation_request = models.ForeignKey(DonationRequest, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='donation_request_images/')
+
+    def __str__(self):
+        return f"Image for {self.donation_request}"
+    
+class PostImage(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='post_images/')
+
+    def __str__(self):
+        return f"Image for {self.post.title}"
+
+class DonationRequestFile(models.Model):
+    donation_request = models.ForeignKey(DonationRequest, on_delete=models.CASCADE, related_name='files')
+    file = models.FileField(upload_to='donation_request_files/')
+
+    def __str__(self):
+        return f"File for {self.donation_request}"
+

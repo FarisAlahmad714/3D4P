@@ -6074,3 +6074,1459 @@ Watching for file changes with StatReloader
 Watching for file changes with StatReloader
 C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
 Watching for file changes with StatReloader
+Forbidden (CSRF token from POST incorrect.): /
+Watching for file changes with StatReloader
+Internal Server Error: /posts/delete/5/
+Traceback (most recent call last):
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py", line 69, in delete_post
+    return redirect('profile')
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\shortcuts.py", line 49, in redirect
+    return redirect_class(resolve_url(to, *args, **kwargs))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\shortcuts.py", line 180, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'profile' not found. 'profile' is not a valid view function or pattern name.
+Not Found: /posts/delete/5/
+Internal Server Error: /posts/delete/6/
+Traceback (most recent call last):
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py", line 69, in delete_post
+    return redirect('profile')
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\shortcuts.py", line 49, in redirect
+    return redirect_class(resolve_url(to, *args, **kwargs))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\shortcuts.py", line 180, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'profile' not found. 'profile' is not a valid view function or pattern name.
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /users/profile/f1/
+Traceback (most recent call last):
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\template\base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'endblock'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\users\views.py", line 116, in profile_view
+    return render(request, 'users/profile.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+           ^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\template\loader_tags.py", line 295, in do_extends
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\template\base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\template\base.py", line 573, in invalid_block_tag
+    raise self.error(
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 77: 'endblock'. Did you forget to register or load this tag?
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\users\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\users\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\users\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\models.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\models.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\models.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\models.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\forms.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\forms.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\forms.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\forms.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\settings.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\settings.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\settings.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\settings.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\settings.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\settings.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\admin.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\models.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\models.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\models.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+Not Found: /posts/19/share/
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\settings.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\settings.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+error_code=model_not_found error_message='The model `text-davinci-002` has been deprecated, learn more here: https://platform.openai.com/docs/deprecations' error_param=None error_type=invalid_request_error message='OpenAI API error received' stream_error=False
+Internal Server Error: /posts/create/regular/
+Traceback (most recent call last):
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py", line 24, in create_regular_post
+    moderation_result = perform_moderation(post.title, post.content)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py", line 58, in perform_moderation
+    response = openai.Completion.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_resources\completion.py", line 25, in create
+    return super().create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_resources\abstract\engine_api_resource.py", line 153, in create
+    response, _, api_key = requestor.request(
+                           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_requestor.py", line 298, in request
+    resp, got_stream = self._interpret_response(result, stream)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_requestor.py", line 700, in _interpret_response
+    self._interpret_response_line(
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_requestor.py", line 765, in _interpret_response_line
+    raise self.handle_error_response(
+openai.error.InvalidRequestError: The model `text-davinci-002` has been deprecated, learn more here: https://platform.openai.com/docs/deprecations
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+error_code=model_not_found error_message='The model `text-davinci-003` has been deprecated, learn more here: https://platform.openai.com/docs/deprecations' error_param=None error_type=invalid_request_error message='OpenAI API error received' stream_error=False
+Internal Server Error: /posts/create/regular/
+Traceback (most recent call last):
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py", line 24, in create_regular_post
+    moderation_result = perform_moderation(post.title, post.content)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py", line 58, in perform_moderation
+    response = openai.Completion.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_resources\completion.py", line 25, in create
+    return super().create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_resources\abstract\engine_api_resource.py", line 153, in create
+    response, _, api_key = requestor.request(
+                           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_requestor.py", line 298, in request
+    resp, got_stream = self._interpret_response(result, stream)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_requestor.py", line 700, in _interpret_response
+    self._interpret_response_line(
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_requestor.py", line 765, in _interpret_response_line
+    raise self.handle_error_response(
+openai.error.InvalidRequestError: The model `text-davinci-003` has been deprecated, learn more here: https://platform.openai.com/docs/deprecations
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\ai_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /posts/create/regular/
+Traceback (most recent call last):
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py", line 24, in create_regular_post
+    moderation_result = perform_moderation(post.content)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: perform_moderation() missing 1 required positional argument: 'content'
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /posts/create/regular/
+Traceback (most recent call last):
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\contrib\auth\decorators.py", line 60, in _view_wrapper
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py", line 24, in create_regular_post
+    moderation_result = perform_moderation(post.content)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: perform_moderation() missing 1 required positional argument: 'content'
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py", line 26, in home
+    image_moderation_result = moderate_image(request.FILES['image'])
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py", line 7, in moderate_image
+    with open(image_file.temporary_file_path(), "rb") as f:
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'InMemoryUploadedFile' object has no attribute 'temporary_file_path'
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\settings.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\settings.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\settings.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\settings.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\settings.py changed, reloading.
+Watching for file changes with StatReloader
+Starting image moderation
+Starting image moderation for file: download.jfif
+File is InMemoryUploadedFile
+Sending request to OpenAI API
+error_code=None error_message="'moderation' is not one of ['fine-tune', 'assistants', 'batch', 'user_data', 'responses', 'vision'] - 'purpose'" error_param=purpose error_type=invalid_request_error message='OpenAI API error received' stream_error=False
+Error in moderate_image: 'moderation' is not one of ['fine-tune', 'assistants', 'batch', 'user_data', 'responses', 'vision'] - 'purpose'
+Traceback (most recent call last):
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py", line 30, in moderate_image
+    response = openai.File.create(
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_resources\file.py", line 85, in create
+    response, _, api_key = requestor.request("post", url, files=files)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_requestor.py", line 298, in request
+    resp, got_stream = self._interpret_response(result, stream)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_requestor.py", line 700, in _interpret_response
+    self._interpret_response_line(
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_requestor.py", line 765, in _interpret_response_line
+    raise self.handle_error_response(
+openai.error.InvalidRequestError: 'moderation' is not one of ['fine-tune', 'assistants', 'batch', 'user_data', 'responses', 'vision'] - 'purpose'
+OpenAI API error: 'moderation' is not one of ['fine-tune', 'assistants', 'batch', 'user_data', 'responses', 'vision'] - 'purpose'
+Traceback (most recent call last):
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py", line 32, in home
+    image_moderation_result = moderate_image(request.FILES['image'])
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py", line 30, in moderate_image
+    response = openai.File.create(
+               ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_resources\file.py", line 85, in create
+    response, _, api_key = requestor.request("post", url, files=files)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_requestor.py", line 298, in request
+    resp, got_stream = self._interpret_response(result, stream)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_requestor.py", line 700, in _interpret_response
+    self._interpret_response_line(
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_requestor.py", line 765, in _interpret_response_line
+    raise self.handle_error_response(
+openai.error.InvalidRequestError: 'moderation' is not one of ['fine-tune', 'assistants', 'batch', 'user_data', 'responses', 'vision'] - 'purpose'
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+Starting image moderation
+Starting image moderation for file: download.jfif
+File is InMemoryUploadedFile
+Sending request to OpenAI API for image description
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 404 Not Found"
+Error in moderate_image: Error code: 404 - {'error': {'message': 'The model `gpt-4-vision-preview` has been deprecated, learn more here: https://platform.openai.com/docs/deprecations', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}
+Traceback (most recent call last):
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py", line 31, in moderate_image
+    response = client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\_utils\_utils.py", line 274, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\resources\chat\completions.py", line 679, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\_base_client.py", line 1260, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\_base_client.py", line 937, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\_base_client.py", line 1041, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.NotFoundError: Error code: 404 - {'error': {'message': 'The model `gpt-4-vision-preview` has been deprecated, learn more here: https://platform.openai.com/docs/deprecations', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}
+OpenAI API error: Error code: 404 - {'error': {'message': 'The model `gpt-4-vision-preview` has been deprecated, learn more here: https://platform.openai.com/docs/deprecations', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}
+Traceback (most recent call last):
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py", line 32, in home
+    image_moderation_result = moderate_image(request.FILES['image'])
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py", line 31, in moderate_image
+    response = client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\_utils\_utils.py", line 274, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\resources\chat\completions.py", line 679, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\_base_client.py", line 1260, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\_base_client.py", line 937, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\_base_client.py", line 1041, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.NotFoundError: Error code: 404 - {'error': {'message': 'The model `gpt-4-vision-preview` has been deprecated, learn more here: https://platform.openai.com/docs/deprecations', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+Starting image moderation
+Starting image moderation for file: download.jfif
+File is InMemoryUploadedFile
+Sending request to OpenAI API for image description
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 404 Not Found"
+Error in moderate_image: Error code: 404 - {'error': {'message': 'The model `gpt-4-vision-preview` has been deprecated, learn more here: https://platform.openai.com/docs/deprecations', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}
+Traceback (most recent call last):
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py", line 31, in moderate_image
+    response = client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\_utils\_utils.py", line 274, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\resources\chat\completions.py", line 679, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\_base_client.py", line 1260, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\_base_client.py", line 937, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\_base_client.py", line 1041, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.NotFoundError: Error code: 404 - {'error': {'message': 'The model `gpt-4-vision-preview` has been deprecated, learn more here: https://platform.openai.com/docs/deprecations', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}
+OpenAI API error: Error code: 404 - {'error': {'message': 'The model `gpt-4-vision-preview` has been deprecated, learn more here: https://platform.openai.com/docs/deprecations', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}
+Traceback (most recent call last):
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py", line 33, in home
+    image_moderation_result = moderate_image(request.FILES['image'])
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py", line 31, in moderate_image
+    response = client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\_utils\_utils.py", line 274, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\resources\chat\completions.py", line 679, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\_base_client.py", line 1260, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\_base_client.py", line 937, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\_base_client.py", line 1041, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.NotFoundError: Error code: 404 - {'error': {'message': 'The model `gpt-4-vision-preview` has been deprecated, learn more here: https://platform.openai.com/docs/deprecations', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+Starting image moderation
+Starting image moderation for file: download.jfif
+HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 404 Not Found"
+Error in moderate_image: Error code: 404 - {'error': {'message': 'The model `gpt-4-vision-preview` has been deprecated, learn more here: https://platform.openai.com/docs/deprecations', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}
+Traceback (most recent call last):
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py", line 20, in moderate_image
+    response = client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\_utils\_utils.py", line 274, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\resources\chat\completions.py", line 679, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\_base_client.py", line 1260, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\_base_client.py", line 937, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\_base_client.py", line 1041, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.NotFoundError: Error code: 404 - {'error': {'message': 'The model `gpt-4-vision-preview` has been deprecated, learn more here: https://platform.openai.com/docs/deprecations', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}
+Error in image moderation: Error code: 404 - {'error': {'message': 'The model `gpt-4-vision-preview` has been deprecated, learn more here: https://platform.openai.com/docs/deprecations', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}
+Traceback (most recent call last):
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py", line 30, in home
+    image_moderation_result = moderate_image(request.FILES['image'])
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py", line 20, in moderate_image
+    response = client.chat.completions.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\_utils\_utils.py", line 274, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\resources\chat\completions.py", line 679, in create
+    return self._post(
+           ^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\_base_client.py", line 1260, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\_base_client.py", line 937, in request
+    return self._request(
+           ^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\_base_client.py", line 1041, in _request
+    raise self._make_status_error_from_response(err.response) from None
+openai.NotFoundError: Error code: 404 - {'error': {'message': 'The model `gpt-4-vision-preview` has been deprecated, learn more here: https://platform.openai.com/docs/deprecations', 'type': 'invalid_request_error', 'param': None, 'code': 'model_not_found'}}
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+Not Found: /posts/48/share/
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Not Found: /posts/49/share/
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+Starting image moderation
+Starting image moderation for file: download.jfif
+error_code=model_not_found error_message='The model `text-davinci-002` has been deprecated, learn more here: https://platform.openai.com/docs/deprecations' error_param=None error_type=invalid_request_error message='OpenAI API error received' stream_error=False
+Error in moderate_image: The model `text-davinci-002` has been deprecated, learn more here: https://platform.openai.com/docs/deprecations
+Traceback (most recent call last):
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py", line 22, in moderate_image
+    response = openai.Completion.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_resources\completion.py", line 25, in create
+    return super().create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_resources\abstract\engine_api_resource.py", line 153, in create
+    response, _, api_key = requestor.request(
+                           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_requestor.py", line 298, in request
+    resp, got_stream = self._interpret_response(result, stream)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_requestor.py", line 700, in _interpret_response
+    self._interpret_response_line(
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_requestor.py", line 765, in _interpret_response_line
+    raise self.handle_error_response(
+openai.error.InvalidRequestError: The model `text-davinci-002` has been deprecated, learn more here: https://platform.openai.com/docs/deprecations
+OpenAI API error: The model `text-davinci-002` has been deprecated, learn more here: https://platform.openai.com/docs/deprecations
+Traceback (most recent call last):
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py", line 32, in home
+    image_moderation_result = moderate_image(request.FILES['image'])
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py", line 22, in moderate_image
+    response = openai.Completion.create(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_resources\completion.py", line 25, in create
+    return super().create(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_resources\abstract\engine_api_resource.py", line 153, in create
+    response, _, api_key = requestor.request(
+                           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_requestor.py", line 298, in request
+    resp, got_stream = self._interpret_response(result, stream)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_requestor.py", line 700, in _interpret_response
+    self._interpret_response_line(
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_requestor.py", line 765, in _interpret_response_line
+    raise self.handle_error_response(
+openai.error.InvalidRequestError: The model `text-davinci-002` has been deprecated, learn more here: https://platform.openai.com/docs/deprecations
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+Starting image moderation
+Starting image moderation for file: download.jfif
+Image description: I'm sorry, but I'm unable to view images. However, if you describe the image to me, I'll do my best to provide you with a detailed description.
+Moderation response: {
+  "id": "modr-A5xxPvWKtoogjdJhcMgpMcTjRHHyo",
+  "model": "text-moderation-007",
+  "results": [
+    {
+      "flagged": false,
+      "categories": {
+        "sexual": false,
+        "hate": false,
+        "harassment": false,
+        "self-harm": false,
+        "sexual/minors": false,
+        "hate/threatening": false,
+        "violence/graphic": false,
+        "self-harm/intent": false,
+        "self-harm/instructions": false,
+        "harassment/threatening": false,
+        "violence": false
+      },
+      "category_scores": {
+        "sexual": 0.00015025847824290395,
+        "hate": 0.00011225807975279167,
+        "harassment": 0.00015243729285430163,
+        "self-harm": 8.040729539970926e-07,
+        "sexual/minors": 2.6016882657131646e-06,
+        "hate/threatening": 3.3991582881753857e-07,
+        "violence/graphic": 8.813631211523898e-06,
+        "self-harm/intent": 1.4422171261685435e-06,
+        "self-harm/instructions": 3.1284059787139995e-08,
+        "harassment/threatening": 4.17951514464221e-06,
+        "violence": 8.644867921248078e-05
+      }
+    }
+  ]
+}
+Error in moderate_image: 'nudity'
+Traceback (most recent call last):
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py", line 45, in moderate_image
+    "has_nudity": categories['sexual'] or categories['nudity'],
+                                          ~~~~~~~~~~^^^^^^^^^^
+KeyError: 'nudity'
+Error processing image: 'nudity'
+Traceback (most recent call last):
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py", line 32, in home
+    image_moderation_result = moderate_image(request.FILES['image'])
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py", line 45, in moderate_image
+    "has_nudity": categories['sexual'] or categories['nudity'],
+                                          ~~~~~~~~~~^^^^^^^^^^
+KeyError: 'nudity'
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+Starting image moderation
+Starting image moderation for file: download.jfif
+Image description: I'm unable to view the image, as it is encoded in base64 format. However, I can provide a description if you decode it and provide the image. Remember to be cautious when sharing potentially sensitive or inappropriate content. Let me know if you need help with anything else.
+Moderation response: {
+  "id": "modr-A5xz88oOq6FoqGWG536K58AAvgAvP",
+  "model": "text-moderation-007",
+  "results": [
+    {
+      "flagged": false,
+      "categories": {
+        "sexual": false,
+        "hate": false,
+        "harassment": false,
+        "self-harm": false,
+        "sexual/minors": false,
+        "hate/threatening": false,
+        "violence/graphic": false,
+        "self-harm/intent": false,
+        "self-harm/instructions": false,
+        "harassment/threatening": false,
+        "violence": false
+      },
+      "category_scores": {
+        "sexual": 0.0021668393164873123,
+        "hate": 6.059370207367465e-05,
+        "harassment": 0.00013194205530453473,
+        "self-harm": 7.700078867856064e-07,
+        "sexual/minors": 4.358814112492837e-05,
+        "hate/threatening": 2.724544287957542e-07,
+        "violence/graphic": 3.328573075123131e-05,
+        "self-harm/intent": 1.2399041224853136e-06,
+        "self-harm/instructions": 1.856304265857034e-07,
+        "harassment/threatening": 1.9129893189528957e-06,
+        "violence": 0.0001797869917936623
+      }
+    }
+  ]
+}
+Image moderation result: {'is_safe': True, 'has_nudity': False, 'is_explicit': False, 'is_suggestive': False, 'moderation_details': <OpenAIObject at 0x1742ab131d0> JSON: {
+  "flagged": false,
+  "categories": {
+    "sexual": false,
+    "hate": false,
+    "harassment": false,
+    "self-harm": false,
+    "sexual/minors": false,
+    "hate/threatening": false,
+    "violence/graphic": false,
+    "self-harm/intent": false,
+    "self-harm/instructions": false,
+    "harassment/threatening": false,
+    "violence": false
+  },
+  "category_scores": {
+    "sexual": 0.0021668393164873123,
+    "hate": 6.059370207367465e-05,
+    "harassment": 0.00013194205530453473,
+    "self-harm": 7.700078867856064e-07,
+    "sexual/minors": 4.358814112492837e-05,
+    "hate/threatening": 2.724544287957542e-07,
+    "violence/graphic": 3.328573075123131e-05,
+    "self-harm/intent": 1.2399041224853136e-06,
+    "self-harm/instructions": 1.856304265857034e-07,
+    "harassment/threatening": 1.9129893189528957e-06,
+    "violence": 0.0001797869917936623
+  }
+}}
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+Starting image moderation
+Starting image moderation for file: download.jfif
+Error in moderate_image: Object of type bytes is not JSON serializable
+Traceback (most recent call last):
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py", line 22, in moderate_image
+    moderation_response = openai.Moderation.create(input=file_content)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_resources\moderation.py", line 35, in create
+    return instance.request("post", cls.get_url(), params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\openai_object.py", line 179, in request
+    response, stream, api_key = requestor.request(
+                                ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_requestor.py", line 288, in request
+    result = self.request_raw(
+             ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_requestor.py", line 581, in request_raw
+    abs_url, headers, data = self._prepare_request_raw(
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_requestor.py", line 553, in _prepare_request_raw
+    data = json.dumps(params).encode()
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\AppData\Local\Programs\Python\Python311\Lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type bytes is not JSON serializable
+Error processing image: Object of type bytes is not JSON serializable
+Traceback (most recent call last):
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py", line 34, in home
+    image_moderation_result = moderate_image(request.FILES['image'])
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py", line 22, in moderate_image
+    moderation_response = openai.Moderation.create(input=file_content)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_resources\moderation.py", line 35, in create
+    return instance.request("post", cls.get_url(), params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\openai_object.py", line 179, in request
+    response, stream, api_key = requestor.request(
+                                ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_requestor.py", line 288, in request
+    result = self.request_raw(
+             ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_requestor.py", line 581, in request_raw
+    abs_url, headers, data = self._prepare_request_raw(
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\openai\api_requestor.py", line 553, in _prepare_request_raw
+    data = json.dumps(params).encode()
+           ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\AppData\Local\Programs\Python\Python311\Lib\json\__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type bytes is not JSON serializable
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+Starting image moderation
+Starting image moderation for file: download.jfif
+Moderation response: {
+  "id": "modr-A5y2WESG2w8p64moitRcooyzSxLUe",
+  "model": "text-moderation-007",
+  "results": [
+    {
+      "flagged": false,
+      "categories": {
+        "sexual": false,
+        "hate": false,
+        "harassment": false,
+        "self-harm": false,
+        "sexual/minors": false,
+        "hate/threatening": false,
+        "violence/graphic": false,
+        "self-harm/intent": false,
+        "self-harm/instructions": false,
+        "harassment/threatening": false,
+        "violence": false
+      },
+      "category_scores": {
+        "sexual": 0.0023487983271479607,
+        "hate": 0.004619693383574486,
+        "harassment": 0.04020214080810547,
+        "self-harm": 0.004296094179153442,
+        "sexual/minors": 0.0015785490395501256,
+        "hate/threatening": 0.0005267481319606304,
+        "violence/graphic": 0.01299179345369339,
+        "self-harm/intent": 0.002626626053825021,
+        "self-harm/instructions": 0.00037385051837190986,
+        "harassment/threatening": 0.01565748266875744,
+        "violence": 0.03671937435865402
+      }
+    }
+  ]
+}
+Image moderation result: {'is_safe': True, 'has_nudity': False, 'is_explicit': False, 'is_suggestive': False, 'moderation_details': <OpenAIObject at 0x1bbc063a990> JSON: {
+  "flagged": false,
+  "categories": {
+    "sexual": false,
+    "hate": false,
+    "harassment": false,
+    "self-harm": false,
+    "sexual/minors": false,
+    "hate/threatening": false,
+    "violence/graphic": false,
+    "self-harm/intent": false,
+    "self-harm/instructions": false,
+    "harassment/threatening": false,
+    "violence": false
+  },
+  "category_scores": {
+    "sexual": 0.0023487983271479607,
+    "hate": 0.004619693383574486,
+    "harassment": 0.04020214080810547,
+    "self-harm": 0.004296094179153442,
+    "sexual/minors": 0.0015785490395501256,
+    "hate/threatening": 0.0005267481319606304,
+    "violence/graphic": 0.01299179345369339,
+    "self-harm/intent": 0.002626626053825021,
+    "self-harm/instructions": 0.00037385051837190986,
+    "harassment/threatening": 0.01565748266875744,
+    "violence": 0.03671937435865402
+  }
+}}
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Starting image moderation
+Starting image moderation for file: download.jfif
+Moderation response: {
+  "id": "modr-A5y5b91tNS8XMIbtyCuJqjrlHDca2",
+  "model": "text-moderation-007",
+  "results": [
+    {
+      "flagged": false,
+      "categories": {
+        "sexual": false,
+        "hate": false,
+        "harassment": false,
+        "self-harm": false,
+        "sexual/minors": false,
+        "hate/threatening": false,
+        "violence/graphic": false,
+        "self-harm/intent": false,
+        "self-harm/instructions": false,
+        "harassment/threatening": false,
+        "violence": false
+      },
+      "category_scores": {
+        "sexual": 0.0023487983271479607,
+        "hate": 0.004619693383574486,
+        "harassment": 0.04020214080810547,
+        "self-harm": 0.004296094179153442,
+        "sexual/minors": 0.0015785490395501256,
+        "hate/threatening": 0.0005267481319606304,
+        "violence/graphic": 0.01299179345369339,
+        "self-harm/intent": 0.002626626053825021,
+        "self-harm/instructions": 0.00037385051837190986,
+        "harassment/threatening": 0.01565748266875744,
+        "violence": 0.03671937435865402
+      }
+    }
+  ]
+}
+Image moderation result: {'is_safe': False, 'has_nudity': np.True_, 'is_explicit': np.True_, 'is_suggestive': np.True_, 'moderation_details': <OpenAIObject at 0x2424ccf8cb0> JSON: {
+  "flagged": false,
+  "categories": {
+    "sexual": false,
+    "hate": false,
+    "harassment": false,
+    "self-harm": false,
+    "sexual/minors": false,
+    "hate/threatening": false,
+    "violence/graphic": false,
+    "self-harm/intent": false,
+    "self-harm/instructions": false,
+    "harassment/threatening": false,
+    "violence": false
+  },
+  "category_scores": {
+    "sexual": 0.0023487983271479607,
+    "hate": 0.004619693383574486,
+    "harassment": 0.04020214080810547,
+    "self-harm": 0.004296094179153442,
+    "sexual/minors": 0.0015785490395501256,
+    "hate/threatening": 0.0005267481319606304,
+    "violence/graphic": 0.01299179345369339,
+    "self-harm/intent": 0.002626626053825021,
+    "self-harm/instructions": 0.00037385051837190986,
+    "harassment/threatening": 0.01565748266875744,
+    "violence": 0.03671937435865402
+  }
+}}
+Potentially unsafe image detected: {
+  "flagged": false,
+  "categories": {
+    "sexual": false,
+    "hate": false,
+    "harassment": false,
+    "self-harm": false,
+    "sexual/minors": false,
+    "hate/threatening": false,
+    "violence/graphic": false,
+    "self-harm/intent": false,
+    "self-harm/instructions": false,
+    "harassment/threatening": false,
+    "violence": false
+  },
+  "category_scores": {
+    "sexual": 0.0023487983271479607,
+    "hate": 0.004619693383574486,
+    "harassment": 0.04020214080810547,
+    "self-harm": 0.004296094179153442,
+    "sexual/minors": 0.0015785490395501256,
+    "hate/threatening": 0.0005267481319606304,
+    "violence/graphic": 0.01299179345369339,
+    "self-harm/intent": 0.002626626053825021,
+    "self-harm/instructions": 0.00037385051837190986,
+    "harassment/threatening": 0.01565748266875744,
+    "violence": 0.03671937435865402
+  }
+}
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+Starting image moderation
+Starting image moderation for file: nude-girl-349-alexander-lobanov.jpg
+Moderation response: {
+  "id": "modr-A5y8XIS4KvH7bqs3pNqCi5nBnPu82",
+  "model": "text-moderation-007",
+  "results": [
+    {
+      "flagged": false,
+      "categories": {
+        "sexual": false,
+        "hate": false,
+        "harassment": false,
+        "self-harm": false,
+        "sexual/minors": false,
+        "hate/threatening": false,
+        "violence/graphic": false,
+        "self-harm/intent": false,
+        "self-harm/instructions": false,
+        "harassment/threatening": false,
+        "violence": false
+      },
+      "category_scores": {
+        "sexual": 0.0029057401698082685,
+        "hate": 0.00875432975590229,
+        "harassment": 0.026237940415740013,
+        "self-harm": 0.00454431027173996,
+        "sexual/minors": 0.0007214764482341707,
+        "hate/threatening": 0.003905107034370303,
+        "violence/graphic": 0.0181709174066782,
+        "self-harm/intent": 0.002363405888900161,
+        "self-harm/instructions": 0.0012557229492813349,
+        "harassment/threatening": 0.019320283085107803,
+        "violence": 0.02446107566356659
+      }
+    }
+  ]
+}
+Image moderation result: {'is_safe': True, 'has_nudity': False, 'is_explicit': False, 'is_suggestive': False, 'moderation_details': <OpenAIObject at 0x264c039b7d0> JSON: {
+  "flagged": false,
+  "categories": {
+    "sexual": false,
+    "hate": false,
+    "harassment": false,
+    "self-harm": false,
+    "sexual/minors": false,
+    "hate/threatening": false,
+    "violence/graphic": false,
+    "self-harm/intent": false,
+    "self-harm/instructions": false,
+    "harassment/threatening": false,
+    "violence": false
+  },
+  "category_scores": {
+    "sexual": 0.0029057401698082685,
+    "hate": 0.00875432975590229,
+    "harassment": 0.026237940415740013,
+    "self-harm": 0.00454431027173996,
+    "sexual/minors": 0.0007214764482341707,
+    "hate/threatening": 0.003905107034370303,
+    "violence/graphic": 0.0181709174066782,
+    "self-harm/intent": 0.002363405888900161,
+    "self-harm/instructions": 0.0012557229492813349,
+    "harassment/threatening": 0.019320283085107803,
+    "violence": 0.02446107566356659
+  }
+}, 'local_check_result': False, 'skin_percentage': 0.10195898778359512, 'api_flagged': False}
+Watching for file changes with StatReloader
+Starting image moderation
+Starting image moderation for file: nude-girl-349-alexander-lobanov.jpg
+Error in moderate_image: please make sure the image_path is str or np.ndarray or bytes
+Traceback (most recent call last):
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py", line 20, in moderate_image
+    result = nude_detector.detect(image)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\nudenet\nudenet.py", line 169, in detect
+    ) = _read_image(image_path, self.input_width)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\nudenet\nudenet.py", line 41, in _read_image
+    raise ValueError(
+ValueError: please make sure the image_path is str or np.ndarray or bytes
+Error processing image: please make sure the image_path is str or np.ndarray or bytes
+Traceback (most recent call last):
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py", line 33, in home
+    image_moderation_result = moderate_image(request.FILES['image'])
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py", line 20, in moderate_image
+    result = nude_detector.detect(image)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\nudenet\nudenet.py", line 169, in detect
+    ) = _read_image(image_path, self.input_width)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_env\Lib\site-packages\nudenet\nudenet.py", line 41, in _read_image
+    raise ValueError(
+ValueError: please make sure the image_path is str or np.ndarray or bytes
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\prosthetic_3D4P\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\image_moderation.py changed, reloading.
+Watching for file changes with StatReloader
+Starting image moderation
+Starting image moderation for file: nude-girl-349-alexander-lobanov.jpg
+Image moderation result: {'is_safe': False, 'has_nudity': True, 'is_explicit': True, 'is_suggestive': True, 'inappropriate_percentage': 10.38394415357766, 'detection_results': [{'class': 'BELLY_EXPOSED', 'score': 0.8435856699943542, 'box': [218, 345, 141, 153]}, {'class': 'FEMALE_BREAST_EXPOSED', 'score': 0.7499224543571472, 'box': [204, 255, 83, 87]}, {'class': 'FEMALE_BREAST_EXPOSED', 'score': 0.713221549987793, 'box': [297, 244, 84, 84]}, {'class': 'FACE_FEMALE', 'score': 0.6574254631996155, 'box': [201, 118, 88, 92]}, {'class': 'FEMALE_GENITALIA_EXPOSED', 'score': 0.4125121235847473, 'box': [248, 525, 63, 58]}]}
+Unsafe image detected. Inappropriate content: 10.38%
+Starting image moderation
+Starting image moderation for file: download.jfif
+Image moderation result: {'is_safe': False, 'has_nudity': True, 'is_explicit': True, 'is_suggestive': True, 'inappropriate_percentage': 23.302716049382717, 'detection_results': [{'class': 'BELLY_EXPOSED', 'score': 0.8266689777374268, 'box': [46, 41, 36, 42]}, {'class': 'FEMALE_BREAST_EXPOSED', 'score': 0.8190879821777344, 'box': [39, 13, 25, 27]}, {'class': 'MALE_BREAST_EXPOSED', 'score': 0.7753822803497314, 'box': [136, 16, 27, 24]}, {'class': 'BELLY_EXPOSED', 'score': 0.7465659379959106, 'box': [141, 41, 41, 40]}, {'class': 'FEMALE_BREAST_EXPOSED', 'score': 0.6945884227752686, 'box': [66, 15, 25, 28]}, {'class': 'FEET_EXPOSED', 'score': 0.6514087915420532, 'box': [175, 186, 38, 38]}, {'class': 'MALE_GENITALIA_EXPOSED', 'score': 0.6463335752487183, 'box': [152, 83, 20, 29]}, {'class': 'FEMALE_GENITALIA_EXPOSED', 'score': 0.640363335609436, 'box': [51, 86, 21, 20]}, {'class': 'MALE_BREAST_EXPOSED', 'score': 0.6210750937461853, 'box': [163, 16, 26, 22]}, {'class': 'ARMPITS_EXPOSED', 'score': 0.5920328497886658, 'box': [35, 11, 10, 15]}, {'class': 'FEET_COVERED', 'score': 0.5271586775779724, 'box': [110, 183, 36, 39]}, {'class': 'FEET_EXPOSED', 'score': 0.46555668115615845, 'box': [53, 185, 24, 34]}, {'class': 'FEET_EXPOSED', 'score': 0.3763027787208557, 'box': [39, 184, 24, 35]}, {'class': 'ARMPITS_EXPOSED', 'score': 0.3150877356529236, 'box': [128, 13, 14, 19]}, {'class': 'ARMPITS_EXPOSED', 'score': 0.257438063621521, 'box': [85, 14, 10, 13]}]}
+Unsafe image detected. Inappropriate content: 23.30%
+Starting image moderation
+Starting image moderation for file: images.jfif
+Image moderation result: {'is_safe': False, 'has_nudity': True, 'is_explicit': True, 'is_suggestive': True, 'inappropriate_percentage': 19.65883335321484, 'detection_results': [{'class': 'FEMALE_BREAST_EXPOSED', 'score': 0.8319133520126343, 'box': [108, 165, 41, 37]}, {'class': 'FACE_FEMALE', 'score': 0.825367271900177, 'box': [102, 100, 37, 38]}, {'class': 'FACE_FEMALE', 'score': 0.7447908520698547, 'box': [48, 103, 32, 33]}, {'class': 'FEMALE_BREAST_EXPOSED', 'score': 0.7158360481262207, 'box': [71, 163, 36, 38]}, {'class': 'BELLY_EXPOSED', 'score': 0.6888784170150757, 'box': [73, 199, 60, 40]}, {'class': 'FEMALE_BREAST_COVERED', 'score': 0.5589322447776794, 'box': [16, 156, 35, 31]}, {'class': 'FEMALE_BREAST_COVERED', 'score': 0.2945096492767334, 'box': [43, 158, 32, 33]}]}
+Unsafe image detected. Inappropriate content: 19.66%
+Starting image moderation
+Starting image moderation for file: images (1).jfif
+Image moderation result: {'is_safe': False, 'has_nudity': True, 'is_explicit': True, 'is_suggestive': True, 'inappropriate_percentage': 21.941028535218518, 'detection_results': [{'class': 'FEMALE_BREAST_COVERED', 'score': 0.8418134450912476, 'box': [43, 66, 48, 53]}, {'class': 'BELLY_EXPOSED', 'score': 0.8175534009933472, 'box': [59, 127, 60, 58]}, {'class': 'FEMALE_BREAST_COVERED', 'score': 0.8132880926132202, 'box': [89, 67, 48, 54]}, {'class': 'ARMPITS_EXPOSED', 'score': 0.6678662300109863, 'box': [38, 63, 16, 24]}, {'class': 'FACE_FEMALE', 'score': 0.6513704061508179, 'box': [57, 0, 45, 19]}, {'class': 'FEMALE_GENITALIA_COVERED', 'score': 0.6253650188446045, 'box': [73, 204, 35, 35]}]}
+Unsafe image detected. Inappropriate content: 21.94%
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\Faris\OneDrive\Desktop\Code\3D4P\prosthetic_3D4P\posts\views.py changed, reloading.
+Watching for file changes with StatReloader

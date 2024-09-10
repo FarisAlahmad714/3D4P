@@ -1,10 +1,35 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+<!-- Display messages at the top -->
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div class="alert {{ message.tags }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
 <h2>Create Donation Request</h2>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Submit Donation Request</button>
+
+    <h4>Upload Images</h4>
+    {{ image_formset.management_form }}
+    {% for form in image_formset %}
+        {{ form.image.label_tag }} {{ form.image }}
+    {% endfor %}
+
+    <h4>Upload Files</h4>
+    {{ file_formset.management_form }}
+    {% for form in file_formset %}
+        {{ form.file.label_tag }} {{ form.file }}
+    {% endfor %}
+
+    <button type="submit" class="btn btn-primary">Submit Donation Request</button>
 </form>
 {% endblock %}

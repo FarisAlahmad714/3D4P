@@ -62,6 +62,18 @@ MIDDLEWARE = [
     'posts.middleware.PostViewMiddleware',
 ]
 
+
+# Configuration for the messages framework
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'debug',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'error',
+}
+
 ROOT_URLCONF = 'prosthetic_3D4P.urls'
 
 TEMPLATES = [
@@ -173,6 +185,7 @@ LOGGING = {
             'class': 'logging.StreamHandler',
         },
         'file': {
+            'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': 'debug.log',
         },
@@ -181,4 +194,19 @@ LOGGING = {
         'handlers': ['console', 'file'],
         'level': 'INFO',
     },
+    'loggers': {
+        '': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
 }
+
+FILE_UPLOAD_HANDLERS = [
+    'django.core.files.uploadhandler.MemoryFileUploadHandler',
+    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+]
+
+# Allow all file types
+CONTENT_TYPES = None  # This removes any restrictions on file types

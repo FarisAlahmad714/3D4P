@@ -6,6 +6,7 @@
   <p>Author: {{ post.author.username or post.author_name }}</p>
   <p>Created at: {{ post.created_at }}</p>
   <p>View Count: {{ post.view_count }}</p>
+  <button id="shareButton" data-post-id="{{ post.id }}">Share</button>
 
   <h2>Comments</h2>
   {% for comment in comments %}
@@ -30,4 +31,18 @@
     {{ form.as_p }}
     <button type="submit">Submit</button>
   </form>
+
+  <script>
+    document.getElementById('shareButton').addEventListener('click', function() {
+        const postId = this.getAttribute('data-post-id');
+        fetch(`/posts/${postId}/share/`, {method: 'POST', headers: {'X-CSRFToken': '{{ csrf_token }}'}})
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    this.textContent = `Shared (${data.share_count})`;
+                    this.disabled = true;
+                }
+            });
+    });
+    </script>
 {% endblock %}

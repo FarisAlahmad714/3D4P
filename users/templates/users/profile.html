@@ -1,24 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html>
-<head>
-    ...
-    <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
-    ...
-</head>
-<body>
-    ...
-</body>
-</html>
-
 {% block content %}
 <h1>{{ profile_user.username }}'s Profile</h1>
 <div class="row">
     <div class="col-md-4">
-        {% if profile_user.profile.photo %}
-        <img class="rounded-circle account-img" src="{{ user.profile.photo.url }}">
+        {% if profile_user.memberprofile.photo %}
+        <img class="rounded-circle account-img" src="{{ profile_user.memberprofile.photo.url }}">
         {% else %}
         <img class="rounded-circle account-img" src="{% static 'images/default.jpg' %}">
         {% endif %}    
@@ -37,6 +25,12 @@
                 <div class="media-body">
                     <h4>{{ post.title }}</h4>
                     <p>{{ post.content }}</p>
+                    {% if user == post.author %}
+                        <form action="{% url 'delete_post' post.id %}" method="POST" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
+                        </form>
+                    {% endif %}
                 </div>
             </article>
         {% empty %}
