@@ -1,0 +1,325 @@
+{% extends 'base.html' %}
+{% load user_tags %}
+
+{% block content %}
+<div class="container" style="padding-top: 2rem;">
+    <!-- Page Header -->
+    <div class="text-center mb-5" data-aos="fade-up">
+        <h1 class="display-4 text-gradient">🤝 All Posts & Requests</h1>
+        <p class="lead text-muted">Browse all community posts and prosthetic assistance requests</p>
+    </div>
+    
+    <!-- Filter Tabs -->
+    <div class="filter-tabs mb-5" data-aos="fade-up" data-aos-delay="100">
+        <div class="tab-container">
+            <button class="tab-btn active" data-filter="all">
+                <i class="fas fa-th-large"></i> All Posts
+            </button>
+            <button class="tab-btn" data-filter="donation">
+                <i class="fas fa-hand-holding-medical"></i> Donation Requests
+            </button>
+            <button class="tab-btn" data-filter="regular">
+                <i class="fas fa-newspaper"></i> Community Posts
+            </button>
+        </div>
+    </div>
+    
+    <!-- Posts Grid -->
+    <div class="posts-grid" data-aos="fade-up" data-aos-delay="200">
+        {% for post in posts %}
+        <div class="post-grid-item {{ post.post_type }}" data-aos="fade-up" data-aos-delay="{% cycle '100' '200' '300' '400' %}">
+            {% if post.post_type == 'donation' %}
+            <!-- Donation Request Card -->
+            <div class="donation-card h-100">
+                {% if post.image %}
+                <div class="card-img-wrapper">
+                    <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+                    <div class="urgency-badge">
+                        🩺 Urgent Request
+                    </div>
+                </div>
+                {% else %}
+                <div class="card-img-wrapper" style="background: var(--gradient-danger); height: 200px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-hand-holding-medical" style="font-size: 4rem; color: white; opacity: 0.8;"></i>
+                    <div class="urgency-badge">
+                        🩺 Urgent Request
+                    </div>
+                </div>
+                {% endif %}
+                
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{% url 'post_detail' post.pk %}" class="text-decoration-none text-dark">
+                            {{ post.title }}
+                        </a>
+                    </h5>
+                    
+                    <p class="card-text">{{ post.content|truncatewords:25 }}</p>
+                    
+                    {% if post.donation_details %}
+                    <div class="prosthetic-info mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge badge-light">
+                                <i class="fas fa-robot"></i> {{ post.donation_details.prosthetic_type }}
+                            </span>
+                            <span class="estimated-cost">
+                                ${{ post.donation_details.estimated_cost }}
+                            </span>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if post.donation_goal %}
+                    <div class="progress-wrapper">
+                        <div class="progress">
+                            <div class="progress-bar" 
+                                 role="progressbar" 
+                                 style="width: {{ post.donation_goal.progress_percentage }}%"
+                                 data-percentage="{{ post.donation_goal.progress_percentage|floatformat:0 }}%">
+                            </div>
+                        </div>
+                        <div class="progress-info">
+                            <span class="raised">${{ post.donation_goal.current_amount|floatformat:0 }}</span>
+                            <span class="goal">of ${{ post.donation_goal.goal_amount|floatformat:0 }} goal</span>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="mt-auto">
+                        <a href="{% url 'donate_to_post' post.id %}" class="btn btn-donate btn-block">
+                            💝 Donate Now
+                        </a>
+                        
+                        <div class="post-meta mt-3">
+                            <small class="text-muted">
+                                <i class="fas fa-user-circle"></i>
+                                {% if post.author %}
+                                    {{ post.author.username }}
+                                {% else %}
+                                    {{ post.author_name }}
+                                {% endif %}
+                                {% if post.author and post.author|is_member %}
+                                    <span class="badge badge-success ml-1">✓ Verified</span>
+                                {% endif %}
+                            </small>
+                            <small class="text-muted float-right">
+                                <i class="fas fa-calendar"></i> {{ post.created_at|date:"M j" }}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <!-- Regular Post Card -->
+            <div class="post-card h-100">
+                {% if post.image %}
+                <div class="card-img-wrapper">
+                    <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+                </div>
+                {% endif %}
+                
+                <div class="card-body">
+                    <span class="badge badge-info mb-2">
+                        <i class="fas fa-newspaper"></i> Community Post
+                    </span>
+                    
+                    <h5 class="card-title">
+                        <a href="{% url 'post_detail' post.pk %}" class="text-decoration-none text-dark">
+                            {{ post.title }}
+                        </a>
+                    </h5>
+                    
+                    <p class="card-text">{{ post.content|truncatewords:30 }}</p>
+                    
+                    <div class="mt-auto">
+                        <a href="{% url 'post_detail' post.pk %}" class="btn btn-outline-primary">
+                            Read More <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                        
+                        <div class="post-meta mt-3">
+                            <small class="text-muted">
+                                <i class="fas fa-user-circle"></i>
+                                {% if post.author %}
+                                    {{ post.author.username }}
+                                {% else %}
+                                    {{ post.author_name }}
+                                {% endif %}
+                            </small>
+                            <small class="text-muted float-right">
+                                <i class="fas fa-eye"></i> {{ post.view_count }}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="empty-state text-center py-5">
+                <i class="fas fa-inbox" style="font-size: 4rem; color: var(--gray-light); margin-bottom: 1rem;"></i>
+                <h3>No Posts Available</h3>
+                <p class="text-muted mb-4">Be the first to share your story or create a request for help.</p>
+                <a href="{% url 'select_post_type' %}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-plus-circle"></i> Create First Post
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+</div>
+
+<style>
+/* Post List Specific Styles */
+.filter-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.tab-container {
+    background: var(--white);
+    border-radius: 50px;
+    padding: 0.5rem;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    gap: 0.5rem;
+}
+
+.tab-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    background: transparent;
+    border-radius: 50px;
+    font-weight: 600;
+    color: var(--gray-medium);
+    transition: var(--transition-fast);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tab-btn.active {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.tab-btn:hover:not(.active) {
+    background: var(--gray-light);
+    color: var(--dark-color);
+}
+
+.posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.post-grid-item {
+    transition: var(--transition-medium);
+}
+
+.post-grid-item.hidden {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .posts-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .tab-container {
+        flex-direction: column;
+        width: 100%;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+    
+    .tab-btn {
+        justify-content: center;
+    }
+}
+
+/* Filter Animation */
+.post-grid-item {
+    opacity: 1;
+    transform: scale(1);
+    transition: all 0.3s ease;
+}
+
+.post-grid-item.filtering-out {
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+/* Dark mode support for post list */
+[data-theme="dark"] .filter-tabs .tab-container {
+    background: var(--white);
+    border: 1px solid var(--gray-light);
+}
+
+[data-theme="dark"] .filter-tabs .tab-btn {
+    color: var(--gray-medium);
+}
+
+[data-theme="dark"] .filter-tabs .tab-btn:hover:not(.active) {
+    background: var(--gray-light);
+    color: var(--dark-color);
+}
+
+[data-theme="dark"] .filter-tabs .tab-btn.active {
+    background: var(--gradient-primary);
+    color: white;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Filter functionality
+    const filterBtns = document.querySelectorAll('.tab-btn');
+    const postItems = document.querySelectorAll('.post-grid-item');
+    
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const filter = this.getAttribute('data-filter');
+            
+            // Update active tab
+            filterBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Filter posts
+            postItems.forEach(item => {
+                const isVisible = filter === 'all' || item.classList.contains(filter);
+                
+                if (isVisible) {
+                    item.classList.remove('filtering-out');
+                    setTimeout(() => {
+                        item.style.display = 'block';
+                    }, 150);
+                } else {
+                    item.classList.add('filtering-out');
+                    setTimeout(() => {
+                        item.style.display = 'none';
+                        item.classList.remove('filtering-out');
+                    }, 300);
+                }
+            });
+        });
+    });
+    
+    // Progress bar animations
+    const progressBars = document.querySelectorAll('.progress-bar');
+    progressBars.forEach(bar => {
+        const width = bar.style.width;
+        bar.style.width = '0%';
+        setTimeout(() => {
+            bar.style.width = width;
+        }, 500);
+    });
+});
+</script>
+{% endblock %}

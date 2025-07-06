@@ -1,0 +1,524 @@
+{% extends 'base.html' %}
+{% load user_tags %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content text-center" data-aos="fade-up">
+            <h1 class="display-3 mb-4">
+                Empowering Lives Through Prosthetics
+            </h1>
+            <p class="lead mb-5">
+                Join our global mission to provide prosthetic assistance to individuals who need it most. 
+                Every donation brings someone closer to regaining their independence and mobility.
+            </p>
+            <div class="hero-buttons">
+                <a href="{% url 'donation_list' %}" class="btn btn-donate btn-lg mr-3" data-aos="fade-right" data-aos-delay="200">
+                    💝 Donate to a Request
+                </a>
+                <a href="{% url 'select_post_type' %}" class="btn btn-outline btn-lg" data-aos="fade-left" data-aos-delay="200">
+                    <i class="fas fa-plus-circle"></i> Create Request
+                </a>
+            </div>
+            
+            <!-- Hero Stats -->
+            <div class="row mt-5 text-white" data-aos="fade-up" data-aos-delay="400">
+                <div class="col-md-4">
+                    <h3 class="font-weight-bold">Global</h3>
+                    <p>Reach & Impact</p>
+                </div>
+                <div class="col-md-4">
+                    <h3 class="font-weight-bold">All Ages</h3>
+                    <p>We Help Everyone</p>
+                </div>
+                <div class="col-md-4">
+                    <h3 class="font-weight-bold">24/7</h3>
+                    <p>Support Available</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="py-5 bg-white">
+    <div class="container">
+        <h2 class="text-center mb-5" data-aos="fade-up">How It Works</h2>
+        <div class="row">
+            <div class="col-md-4 text-center mb-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon mb-3">
+                    <i class="fas fa-hand-paper text-primary" style="font-size: 3rem;"></i>
+                </div>
+                <h4>1. Submit Request</h4>
+                <p class="text-muted">Share your story and prosthetic needs. Our community is here to help.</p>
+            </div>
+            <div class="col-md-4 text-center mb-4" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon mb-3">
+                    <i class="fas fa-users text-primary" style="font-size: 3rem;"></i>
+                </div>
+                <h4>2. Get Verified</h4>
+                <p class="text-muted">Our team verifies requests to ensure donations reach legitimate recipients worldwide.</p>
+            </div>
+            <div class="col-md-4 text-center mb-4" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-icon mb-3">
+                    <i class="fas fa-heart text-primary" style="font-size: 3rem;"></i>
+                </div>
+                <h4>3. Receive Support</h4>
+                <p class="text-muted">Donors contribute directly to your prosthetic fund. Track progress in real-time.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if not user.is_authenticated %}
+<!-- Join CTA -->
+<section class="py-5" style="background: var(--gradient-primary); color: white;">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h3 class="mb-3">Join Our Global Community</h3>
+                <p class="mb-0">Create an account to submit requests, track donations, and connect with supporters from around the world.</p>
+            </div>
+            <div class="col-lg-4 text-lg-right mt-3 mt-lg-0">
+                <a href="{% url 'signup' %}" class="btn btn-light btn-lg">
+                    <i class="fas fa-user-plus"></i> Sign Up Now
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Quick Create Section (Hidden by default) -->
+<div id="create-post-section" class="create-post-modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h3 class="mb-4">✍️ Create New Post</h3>
+        <form method="post" enctype="multipart/form-data" class="form-card">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary btn-lg btn-block">
+                <i class="fas fa-paper-plane"></i> Publish Post
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Recent Posts Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="display-4 text-gradient">Recent Donation Requests</h2>
+            <p class="lead text-muted">Latest prosthetic assistance requests from individuals worldwide</p>
+        </div>
+        
+        <div class="row">
+            {% for post in recent_posts %}
+            {% if post.post_type == 'donation' %}
+            <div class="col-lg-6 mb-4" data-aos="fade-up" data-aos-delay="{% cycle '100' '200' '300' '400' '500' %}">
+                <!-- Beautiful Donation Card -->
+                <div class="donation-card h-100">
+                    {% if post.image %}
+                    <div class="card-img-wrapper">
+                        <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+                        <div class="urgency-badge">
+                            🩺 Urgent Request
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="card-img-wrapper" style="background: var(--gradient-primary); height: 200px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-hand-holding-medical" style="font-size: 4rem; color: white; opacity: 0.8;"></i>
+                        <div class="urgency-badge">
+                            🩺 Urgent Request
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="{% url 'post_detail' post.pk %}" class="text-decoration-none text-dark">
+                                {{ post.title }}
+                            </a>
+                        </h5>
+                        
+                        <p class="card-text">{{ post.content|truncatewords:25 }}</p>
+                        
+                        {% if post.donation_details %}
+                        <div class="prosthetic-info mb-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge badge-light">
+                                    <i class="fas fa-robot"></i> {{ post.donation_details.prosthetic_type }}
+                                </span>
+                                <span class="estimated-cost">
+                                    ${{ post.donation_details.estimated_cost }}
+                                </span>
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if post.donation_goal %}
+                        <div class="progress-wrapper">
+                            <div class="progress">
+                                <div class="progress-bar" 
+                                     role="progressbar" 
+                                     style="width: {{ post.donation_goal.progress_percentage }}%"
+                                     data-percentage="{{ post.donation_goal.progress_percentage|floatformat:0 }}%">
+                                </div>
+                            </div>
+                            <div class="progress-info">
+                                <span class="raised">${{ post.donation_goal.current_amount|floatformat:0 }}</span>
+                                <span class="goal">of ${{ post.donation_goal.goal_amount|floatformat:0 }} goal</span>
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="mt-auto">
+                            <a href="{% url 'donate_to_post' post.id %}" class="btn btn-donate btn-block">
+                                💝 Donate Now
+                            </a>
+                            
+                            <div class="post-meta mt-3">
+                                <small class="text-muted">
+                                    <i class="fas fa-user-circle"></i>
+                                    {% if post.author %}
+                                        {{ post.author.username }}
+                                    {% else %}
+                                        {{ post.author_name }}
+                                    {% endif %}
+                                    {% if post.author and post.author|is_member %}
+                                        <span class="badge badge-success ml-1">✓ Verified</span>
+                                    {% endif %}
+                                </small>
+                                <small class="text-muted float-right">
+                                    <i class="fas fa-calendar"></i> {{ post.created_at|date:"M j" }}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% empty %}
+            <div class="col-12">
+                <div class="empty-state text-center py-5">
+                    <i class="fas fa-hand-holding-medical" style="font-size: 4rem; color: var(--gray-light); margin-bottom: 1rem;"></i>
+                    <h3>No Donation Requests Yet</h3>
+                    <p class="text-muted mb-4">Be the first to create a prosthetic assistance request and get the help you need.</p>
+                    <a href="{% url 'select_post_type' %}" class="btn btn-donate btn-lg">
+                        <i class="fas fa-plus-circle"></i> Create First Request
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{% url 'post_list' %}" class="btn btn-outline-primary btn-lg">
+                View All Requests <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Most Shared Posts Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <h2 class="display-4">🔥 Trending Posts</h2>
+            <p class="lead text-muted">Most shared stories making a difference</p>
+        </div>
+        
+        <div class="row">
+            {% for post in most_shared_posts %}
+            <div class="col-lg-4 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{% cycle '100' '200' '300' '400' '500' '600' %}">
+                <div class="trending-card h-100">
+                    <div class="trending-badge">
+                        <i class="fas fa-fire"></i> {{ post.share_count }} shares
+                    </div>
+                    
+                    {% if post.post_type == 'donation' %}
+                    <!-- Trending Donation Card -->
+                    {% if post.image %}
+                    <div class="card-img-wrapper">
+                        <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+                    </div>
+                    {% else %}
+                    <div class="card-img-wrapper" style="background: var(--gradient-danger); height: 180px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-hands-helping" style="font-size: 3rem; color: white;"></i>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="card-body">
+                        <span class="badge badge-danger mb-2">🩺 Donation Request</span>
+                        
+                        <h6 class="card-title">
+                            <a href="{% url 'post_detail' post.pk %}" class="text-decoration-none text-dark">
+                                {{ post.title|truncatewords:10 }}
+                            </a>
+                        </h6>
+                        
+                        {% if post.donation_goal %}
+                        <div class="mini-progress mb-3">
+                            <div class="progress" style="height: 6px;">
+                                <div class="progress-bar" style="width: {{ post.donation_goal.progress_percentage }}%"></div>
+                            </div>
+                            <small class="text-primary font-weight-bold">
+                                {{ post.donation_goal.progress_percentage|floatformat:0 }}% funded
+                            </small>
+                        </div>
+                        {% endif %}
+                        
+                        <a href="{% url 'donate_to_post' post.id %}" class="btn btn-donate btn-sm btn-block">
+                            💝 Support Now
+                        </a>
+                    </div>
+                    {% else %}
+                    <!-- Trending Regular Post -->
+                    {% if post.image %}
+                    <div class="card-img-wrapper">
+                        <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+                    </div>
+                    {% endif %}
+                    
+                    <div class="card-body">
+                        <h6 class="card-title">
+                            <a href="{% url 'post_detail' post.pk %}" class="text-decoration-none text-dark">
+                                {{ post.title }}
+                            </a>
+                        </h6>
+                        
+                        <p class="card-text small">{{ post.content|truncatewords:15 }}</p>
+                        
+                        <a href="{% url 'post_detail' post.pk %}" class="btn btn-outline-primary btn-sm">
+                            Read Story
+                        </a>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="card-footer">
+                        <button class="btn btn-sm btn-light shareButton w-100" data-post-id="{{ post.id }}">
+                            <i class="fas fa-share-alt"></i> Share
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="text-center py-5">
+                    <i class="fas fa-share-alt" style="font-size: 3rem; color: var(--gray-light); margin-bottom: 1rem;"></i>
+                    <h4 class="text-muted">No trending posts yet</h4>
+                    <p>Share posts to help them gain visibility!</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Modal handling
+    const createPostModal = document.getElementById('create-post-section');
+    const closeModal = document.querySelector('.close-modal');
+    
+    // Close modal when clicking the X
+    if (closeModal) {
+        closeModal.addEventListener('click', function() {
+            createPostModal.style.display = 'none';
+        });
+    }
+    
+    // Close modal when clicking outside
+    if (createPostModal) {
+        createPostModal.addEventListener('click', function(e) {
+            if (e.target === createPostModal) {
+                createPostModal.style.display = 'none';
+            }
+        });
+    }
+    
+    // Handle share buttons with improved UX
+    document.querySelectorAll('.shareButton').forEach(function(button) {
+        button.addEventListener('click', function() {
+            const postId = this.getAttribute('data-post-id');
+            const button = this;
+            const originalText = button.innerHTML;
+            
+            // Show loading state
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sharing...';
+            button.disabled = true;
+            
+            fetch(`/posts/${postId}/share/`, {
+                method: 'POST', 
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    button.innerHTML = `<i class="fas fa-check"></i> Shared (${data.share_count})`;
+                    button.classList.add('btn-success');
+                    button.classList.remove('btn-light', 'btn-outline-secondary');
+                    
+                    // Show success animation
+                    button.style.transform = 'scale(1.1)';
+                    setTimeout(() => {
+                        button.style.transform = 'scale(1)';
+                    }, 200);
+                    
+                    // Copy link to clipboard
+                    if (navigator.clipboard) {
+                        const postUrl = window.location.origin + `/posts/${postId}/`;
+                        navigator.clipboard.writeText(postUrl);
+                        showToast('Link copied to clipboard!');
+                    }
+                } else {
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                    showToast('Error sharing post', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                button.innerHTML = originalText;
+                button.disabled = false;
+                showToast('Error sharing post', 'error');
+            });
+        });
+    });
+    
+    // Progress bar animations
+    const progressBars = document.querySelectorAll('.progress-bar');
+    progressBars.forEach(bar => {
+        const width = bar.style.width;
+        bar.style.width = '0%';
+        setTimeout(() => {
+            bar.style.width = width;
+        }, 500);
+    });
+    
+    // Donation button hover effects
+    const donateButtons = document.querySelectorAll('.btn-donate');
+    donateButtons.forEach(button => {
+        button.addEventListener('mouseenter', function() {
+            this.style.transform = 'scale(1.05)';
+        });
+        
+        button.addEventListener('mouseleave', function() {
+            this.style.transform = 'scale(1)';
+        });
+    });
+});
+
+// Toast notification function
+function showToast(message, type = 'success') {
+    const toast = document.createElement('div');
+    toast.className = `toast-notification ${type}`;
+    toast.innerHTML = `
+        <div class="toast-content">
+            <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+            <span>${message}</span>
+        </div>
+    `;
+    
+    document.body.appendChild(toast);
+    
+    // Trigger animation
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 100);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            document.body.removeChild(toast);
+        }, 300);
+    }, 3000);
+}
+</script>
+
+<style>
+/* Toast Notification Styles */
+.toast-notification {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    background: var(--gradient-primary);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 50px;
+    box-shadow: var(--shadow-lg);
+    z-index: 1000;
+    transform: translateX(400px);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.toast-notification.error {
+    background: var(--gradient-danger);
+}
+
+.toast-notification.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.toast-content {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+}
+
+/* Enhanced hover effects */
+.donation-card:hover .btn-donate {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(247, 127, 0, 0.5);
+}
+
+.trending-card:hover .btn-donate {
+    transform: scale(1.05);
+}
+
+/* Smooth transitions for all interactive elements */
+.card-title a {
+    transition: var(--transition-fast);
+}
+
+.card-title a:hover {
+    color: var(--primary-color) !important;
+}
+
+/* Loading animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+[data-aos] {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease;
+}
+
+[data-aos].aos-animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Dark mode support for home page */
+[data-theme="dark"] .card-title a:hover {
+    color: var(--accent-color) !important;
+}
+</style>
+{% endblock %}

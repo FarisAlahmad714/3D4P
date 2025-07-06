@@ -1,0 +1,332 @@
+{% extends 'admin_dashboard/base.html' %}
+
+{% block title %}Analytics Dashboard - 3D4P Admin{% endblock %}
+
+{% block extra_css %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-0">Analytics & Insights</h1>
+            <p class="text-muted">Comprehensive analytics and performance metrics</p>
+        </div>
+    </div>
+
+    <!-- Key Metrics Row -->
+    <div class="row mb-4">
+        <!-- Users Analytics -->
+        <div class="col-xl-4 col-lg-6 mb-4">
+            <div class="admin-card border-left-primary h-100">
+                <div class="admin-card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        <i class="fas fa-users mr-2"></i>User Growth
+                    </h6>
+                </div>
+                <div class="admin-card-body">
+                    <div class="row no-gutters align-items-center mb-3">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-uppercase mb-1">Total Users</div>
+                            <div class="h5 mb-0 font-weight-bold">{{ analytics.users.total }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-users fa-2x text-primary"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="text-xs text-muted">This Month</div>
+                            <div class="font-weight-bold text-success">+{{ analytics.users.new_this_month }}</div>
+                        </div>
+                        <div class="col-6">
+                            <div class="text-xs text-muted">This Week</div>
+                            <div class="font-weight-bold text-info">+{{ analytics.users.new_this_week }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Posts Analytics -->
+        <div class="col-xl-4 col-lg-6 mb-4">
+            <div class="admin-card border-left-success h-100">
+                <div class="admin-card-header">
+                    <h6 class="m-0 font-weight-bold text-success">
+                        <i class="fas fa-newspaper mr-2"></i>Content Activity
+                    </h6>
+                </div>
+                <div class="admin-card-body">
+                    <div class="row no-gutters align-items-center mb-3">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-uppercase mb-1">Total Posts</div>
+                            <div class="h5 mb-0 font-weight-bold">{{ analytics.posts.total }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-newspaper fa-2x text-success"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="text-xs text-muted">This Month</div>
+                            <div class="font-weight-bold text-success">+{{ analytics.posts.this_month }}</div>
+                        </div>
+                        <div class="col-6">
+                            <div class="text-xs text-muted">Donation Requests</div>
+                            <div class="font-weight-bold text-danger">{{ analytics.posts.donation_requests }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Donations Analytics -->
+        <div class="col-xl-4 col-lg-12 mb-4">
+            <div class="admin-card border-left-warning h-100">
+                <div class="admin-card-header">
+                    <h6 class="m-0 font-weight-bold text-warning">
+                        <i class="fas fa-heart mr-2"></i>Donation Impact
+                    </h6>
+                </div>
+                <div class="admin-card-body">
+                    <div class="row no-gutters align-items-center mb-3">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-uppercase mb-1">Total Raised</div>
+                            <div class="h5 mb-0 font-weight-bold">${{ analytics.donations.total_amount|floatformat:0 }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-warning"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="text-xs text-muted">This Month</div>
+                            <div class="font-weight-bold text-success">${{ analytics.donations.this_month_amount|floatformat:0 }}</div>
+                        </div>
+                        <div class="col-6">
+                            <div class="text-xs text-muted">Total Count</div>
+                            <div class="font-weight-bold text-info">{{ analytics.donations.total_count }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="row mb-4">
+        <!-- Monthly Trends -->
+        <div class="col-xl-8 col-lg-7 mb-4">
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h6 class="m-0 font-weight-bold text-primary">
+                        <i class="fas fa-chart-line mr-2"></i>Monthly Trends
+                    </h6>
+                </div>
+                <div class="admin-card-body">
+                    <canvas id="trendsChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Campaign Progress -->
+        <div class="col-xl-4 col-lg-5 mb-4">
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h6 class="m-0 font-weight-bold text-success">
+                        <i class="fas fa-trophy mr-2"></i>Top Campaigns
+                    </h6>
+                </div>
+                <div class="admin-card-body">
+                    {% for campaign in top_campaigns %}
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <h6 class="mb-0 small">{{ campaign.post.title|truncatechars:25 }}</h6>
+                            <span class="text-success font-weight-bold">${{ campaign.current_amount|floatformat:0 }}</span>
+                        </div>
+                        <div class="progress" style="height: 8px;">
+                            <div class="progress-bar bg-success" style="width: {{ campaign.progress_percentage }}%"></div>
+                        </div>
+                        <small class="text-muted">{{ campaign.progress_percentage|floatformat:1 }}% of ${{ campaign.goal_amount|floatformat:0 }} goal</small>
+                    </div>
+                    {% empty %}
+                    <div class="text-center py-3">
+                        <i class="fas fa-chart-pie fa-2x text-muted mb-2"></i>
+                        <p class="text-muted mb-0 small">No active campaigns</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Donors Table -->
+    <div class="row">
+        <div class="col-12">
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h6 class="m-0 font-weight-bold text-info">
+                        <i class="fas fa-star mr-2"></i>Top Donors (All Time)
+                    </h6>
+                </div>
+                <div class="admin-card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Donor</th>
+                                    <th>Total Donated</th>
+                                    <th>Number of Donations</th>
+                                    <th>Average Donation</th>
+                                    <th>Impact Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for donor in top_donors %}
+                                <tr>
+                                    <td>
+                                        {% if forloop.counter <= 3 %}
+                                            <span class="badge badge-{% if forloop.counter == 1 %}warning{% elif forloop.counter == 2 %}secondary{% else %}dark{% endif %}">
+                                                {% if forloop.counter == 1 %}🥇{% elif forloop.counter == 2 %}🥈{% else %}🥉{% endif %}
+                                                #{{ forloop.counter }}
+                                            </span>
+                                        {% else %}
+                                            <span class="text-muted">#{{ forloop.counter }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <div class="font-weight-bold">{{ donor.donor_name|default:"Anonymous Donor" }}</div>
+                                            {% if donor.donor_email %}
+                                            <small class="text-muted">{{ donor.donor_email }}</small>
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="font-weight-bold text-success">${{ donor.total_donated|floatformat:0 }}</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-primary">{{ donor.donation_count }}</span>
+                                    </td>
+                                    <td>
+                                        <span class="text-info">${{ donor.total_donated|floatformat:0 }}</span>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="progress flex-grow-1 mr-2" style="height: 6px;">
+                                                <div class="progress-bar bg-gradient-success" style="width: 80%"></div>
+                                            </div>
+                                            <span class="text-muted small">High</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="6" class="text-center py-4">
+                                        <i class="fas fa-heart fa-2x text-muted mb-2"></i>
+                                        <p class="text-muted mb-0">No donations recorded yet.</p>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Monthly Trends Chart
+    const ctx = document.getElementById('trendsChart').getContext('2d');
+    const trendsChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['6 months ago', '5 months ago', '4 months ago', '3 months ago', '2 months ago', 'Last month'],
+            datasets: [{
+                label: 'Donations ($)',
+                data: [1200, 1900, 3000, 5000, 2300, 3200],
+                borderColor: '#f77f00',
+                backgroundColor: 'rgba(247, 127, 0, 0.1)',
+                tension: 0.4,
+                fill: true
+            }, {
+                label: 'New Posts',
+                data: [12, 19, 8, 15, 25, 18],
+                borderColor: '#00a896',
+                backgroundColor: 'rgba(0, 168, 150, 0.1)',
+                tension: 0.4,
+                fill: true,
+                yAxisID: 'y1'
+            }]
+        },
+        options: {
+            responsive: true,
+            interaction: {
+                mode: 'index',
+                intersect: false,
+            },
+            scales: {
+                y: {
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+                    title: {
+                        display: true,
+                        text: 'Donation Amount ($)'
+                    }
+                },
+                y1: {
+                    type: 'linear',
+                    display: true,
+                    position: 'right',
+                    title: {
+                        display: true,
+                        text: 'Number of Posts'
+                    },
+                    grid: {
+                        drawOnChartArea: false,
+                    },
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Platform Growth Over Time'
+                }
+            }
+        }
+    });
+});
+</script>
+
+<style>
+.border-left-primary {
+    border-left: 0.25rem solid #4e73df !important;
+}
+
+.border-left-success {
+    border-left: 0.25rem solid #1cc88a !important;
+}
+
+.border-left-warning {
+    border-left: 0.25rem solid #f6c23e !important;
+}
+
+.text-xs {
+    font-size: 0.7rem;
+}
+
+.bg-gradient-success {
+    background: linear-gradient(87deg, #2dce89 0, #2dcecc 100%) !important;
+}
+</style>
+{% endblock %}

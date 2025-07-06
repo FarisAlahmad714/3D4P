@@ -1,0 +1,197 @@
+{% extends 'admin_dashboard/base.html' %}
+
+{% block title %}Posts Management - 3D4P Admin{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-0">Posts & Requests Management</h1>
+            <p class="text-muted">Review and manage community posts and donation requests</p>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="admin-card mb-4">
+        <div class="admin-card-body">
+            <form method="GET" class="row align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label">Status Filter</label>
+                    <select name="status" class="form-control">
+                        <option value="all" {% if status_filter == 'all' %}selected{% endif %}>All Posts</option>
+                        <option value="pending" {% if status_filter == 'pending' %}selected{% endif %}>Pending Approval</option>
+                        <option value="approved" {% if status_filter == 'approved' %}selected{% endif %}>Approved</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Post Type</label>
+                    <select name="type" class="form-control">
+                        <option value="all" {% if post_type == 'all' %}selected{% endif %}>All Types</option>
+                        <option value="donation" {% if post_type == 'donation' %}selected{% endif %}>Donation Requests</option>
+                        <option value="regular" {% if post_type == 'regular' %}selected{% endif %}>Regular Posts</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label">Search</label>
+                    <input type="text" name="search" class="form-control" placeholder="Search posts, authors..." value="{{ search }}">
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-search"></i> Filter
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Posts Grid -->
+    <div class="row">
+        {% for post in page_obj %}
+        <div class="col-xl-4 col-lg-6 mb-4">
+            <div class="admin-card h-100">
+                <div class="admin-card-header d-flex justify-content-between align-items-center">
+                    {% if post.post_type == 'donation' %}
+                    <span class="badge badge-danger">
+                        <i class="fas fa-hand-holding-medical"></i> Donation Request
+                    </span>
+                    {% else %}
+                    <span class="badge badge-primary">
+                        <i class="fas fa-newspaper"></i> Community Post
+                    </span>
+                    {% endif %}
+                    
+                    {% if not post.is_approved %}
+                    <span class="badge badge-warning">Pending</span>
+                    {% else %}
+                    <span class="badge badge-success">Approved</span>
+                    {% endif %}
+                </div>
+                
+                <div class="admin-card-body">
+                    {% if post.image %}
+                    <img src="{{ post.image.url }}" class="img-fluid rounded mb-3" style="height: 150px; width: 100%; object-fit: cover;" alt="{{ post.title }}">
+                    {% endif %}
+                    
+                    <h6 class="mb-2">{{ post.title }}</h6>
+                    <p class="text-muted small mb-3">{{ post.content|truncatewords:20 }}</p>
+                    
+                    <!-- Author Info -->
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-user-circle text-muted mr-2"></i>
+                        <small class="text-muted">
+                            by {{ post.author.username|default:post.author_name }}
+                        </small>
+                    </div>
+                    
+                    <!-- Donation Info -->
+                    {% if post.post_type == 'donation' and post.donation_goal %}
+                    <div class="mb-3">
+                        <div class="progress" style="height: 6px;">
+                            <div class="progress-bar bg-success" style="width: {{ post.donation_goal.progress_percentage }}%"></div>
+                        </div>
+                        <small class="text-muted">
+                            ${{ post.donation_goal.current_amount|floatformat:0 }} of ${{ post.donation_goal.goal_amount|floatformat:0 }} 
+                            ({{ post.donation_goal.progress_percentage|floatformat:1 }}%)
+                        </small>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Stats -->
+                    <div class="row text-center mb-3">
+                        <div class="col-4">
+                            <small class="text-muted">Views</small>
+                            <div class="font-weight-bold">{{ post.view_count }}</div>
+                        </div>
+                        <div class="col-4">
+                            <small class="text-muted">Shares</small>
+                            <div class="font-weight-bold">{{ post.share_count }}</div>
+                        </div>
+                        <div class="col-4">
+                            <small class="text-muted">Created</small>
+                            <div class="font-weight-bold small">{{ post.created_at|date:"M j" }}</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Actions -->
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'post_detail' post.pk %}" class="action-btn action-btn-view flex-fill text-center">
+                            <i class="fas fa-eye"></i> View
+                        </a>
+                        {% if not post.is_approved %}
+                        <a href="{% url 'approve_post' post.id %}" class="action-btn action-btn-approve flex-fill text-center">
+                            <i class="fas fa-check"></i> Approve
+                        </a>
+                        {% else %}
+                        <a href="{% url 'reject_post' post.id %}" class="action-btn action-btn-reject flex-fill text-center">
+                            <i class="fas fa-times"></i> Reject
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="admin-card text-center py-5">
+                <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                <h5 class="text-muted">No posts found</h5>
+                <p class="text-muted">Try adjusting your filters or search terms.</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if page_obj.has_other_pages %}
+    <div class="d-flex justify-content-center">
+        <nav aria-label="Posts pagination">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1&status={{ status_filter }}&type={{ post_type }}&search={{ search }}">&laquo; First</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}&status={{ status_filter }}&type={{ post_type }}&search={{ search }}">Previous</a>
+                    </li>
+                {% endif %}
+                
+                <li class="page-item active">
+                    <span class="page-link">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                    </span>
+                </li>
+                
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}&status={{ status_filter }}&type={{ post_type }}&search={{ search }}">Next</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}&status={{ status_filter }}&type={{ post_type }}&search={{ search }}">Last &raquo;</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+.gap-2 {
+    gap: 0.5rem;
+}
+
+.action-btn {
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+.progress {
+    border-radius: 10px;
+}
+
+.admin-card img {
+    border-radius: 8px;
+}
+</style>
+{% endblock %}

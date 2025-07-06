@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4>📄 Donation Details</h4>
+                </div>
+                <div class="card-body">
+                    <!-- Donation Status -->
+                    <div class="text-center mb-4">
+                        {% if donation.payment_status == 'completed' %}
+                            <div class="alert alert-success">
+                                <h5>✅ Donation Completed Successfully</h5>
+                                <p>Thank you for your contribution!</p>
+                            </div>
+                        {% elif donation.payment_status == 'pending' %}
+                            <div class="alert alert-warning">
+                                <h5>⏳ Donation Pending</h5>
+                                <p>Your payment is being processed...</p>
+                            </div>
+                        {% elif donation.payment_status == 'processing' %}
+                            <div class="alert alert-info">
+                                <h5>🔄 Payment Processing</h5>
+                                <p>Please wait while we confirm your payment...</p>
+                            </div>
+                        {% elif donation.payment_status == 'failed' %}
+                            <div class="alert alert-danger">
+                                <h5>❌ Payment Failed</h5>
+                                <p>Unfortunately, your payment could not be processed.</p>
+                            </div>
+                        {% elif donation.payment_status == 'cancelled' %}
+                            <div class="alert alert-secondary">
+                                <h5>🚫 Donation Cancelled</h5>
+                                <p>This donation was cancelled.</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Donation Information -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h6>💰 Donation Amount</h6>
+                            <p class="h4 text-success">${{ donation.amount }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>🆔 Donation ID</h6>
+                            <p><code>{{ donation.id }}</code></p>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h6>📅 Date</h6>
+                            <p>{{ donation.created_at|date:"F j, Y, g:i A" }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>📧 Email</h6>
+                            <p>{{ donation.donor_email }}</p>
+                        </div>
+                    </div>
+                    
+                    {% if not donation.is_anonymous %}
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <h6>👤 Donor Name</h6>
+                            <p>{{ donation.donor_name|default:donation.donor.username }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>🔒 Privacy</h6>
+                            <p>Public donation</p>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <h6>🔒 Privacy</h6>
+                            <p>Anonymous donation</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if donation.message %}
+                    <div class="mb-4">
+                        <h6>💭 Your Message</h6>
+                        <div class="alert alert-light">
+                            <p><em>"{{ donation.message }}"</em></p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Request Information -->
+                    <hr>
+                    <h5>🩺 Prosthetic Request Details</h5>
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h6 class="card-title">{{ donation.post.title }}</h6>
+                            <p class="card-text">{{ donation.post.content|truncatewords:50 }}</p>
+                            <small class="text-muted">
+                                Requested by {{ donation.post.author.username|default:donation.post.author_name }}
+                                on {{ donation.post.created_at|date:"F j, Y" }}
+                            </small>
+                        </div>
+                    </div>
+                    
+                    <!-- Payment Information -->
+                    {% if donation.payment_status == 'completed' %}
+                    <hr>
+                    <h6>💳 Payment Information</h6>
+                    <div class="row">
+                        {% if donation.stripe_payment_intent_id %}
+                        <div class="col-md-6">
+                            <small class="text-muted">Payment ID</small>
+                            <p><code>{{ donation.stripe_payment_intent_id|slice:":20" }}...</code></p>
+                        </div>
+                        {% endif %}
+                        {% if donation.completed_at %}
+                        <div class="col-md-6">
+                            <small class="text-muted">Completed At</small>
+                            <p>{{ donation.completed_at|date:"F j, Y, g:i A" }}</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Action Buttons -->
+                    <div class="text-center mt-4">
+                        <a href="{% url 'post_detail' donation.post.pk %}" class="btn btn-primary">
+                            View Request Details
+                        </a>
+                        <a href="{% url 'donation_history' %}" class="btn btn-outline-secondary">
+                            Back to History
+                        </a>
+                        {% if donation.payment_status == 'completed' %}
+                        <button class="btn btn-outline-info" onclick="window.print()">
+                            🖨️ Print Receipt
+                        </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

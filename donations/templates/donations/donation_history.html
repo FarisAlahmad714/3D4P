@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-3">
+            <!-- User Stats Sidebar -->
+            <div class="card">
+                <div class="card-header">
+                    <h5>📊 Your Impact</h5>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <h3 class="text-success">${{ total_donated }}</h3>
+                        <small class="text-muted">Total Donated</small>
+                    </div>
+                    <div class="text-center mb-3">
+                        <h4 class="text-primary">{{ completed_donations }}</h4>
+                        <small class="text-muted">Successful Donations</small>
+                    </div>
+                    <div class="text-center">
+                        <small class="text-muted">Thank you for your generosity! 🙏</small>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Links -->
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h6>Quick Links</h6>
+                </div>
+                <div class="card-body">
+                    <a href="{% url 'donation_list' %}" class="btn btn-outline-primary btn-sm btn-block mb-2">
+                        Browse Requests
+                    </a>
+                    <a href="{% url 'home' %}" class="btn btn-outline-secondary btn-sm btn-block">
+                        Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-9">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>💝 Your Donation History</h2>
+                <span class="badge badge-info">{{ donations|length }} donation{{ donations|length|pluralize }}</span>
+            </div>
+            
+            {% if donations %}
+                {% for donation in donations %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h5 class="card-title">
+                                    <a href="{% url 'post_detail' donation.post.pk %}" class="text-decoration-none">
+                                        {{ donation.post.title }}
+                                    </a>
+                                </h5>
+                                <p class="card-text text-muted">{{ donation.post.content|truncatewords:25 }}</p>
+                                
+                                {% if donation.message %}
+                                <div class="alert alert-light p-2">
+                                    <small><strong>Your message:</strong> "{{ donation.message }}"</small>
+                                </div>
+                                {% endif %}
+                                
+                                <small class="text-muted">
+                                    To: {{ donation.post.author.username|default:donation.post.author_name }} •
+                                    {{ donation.created_at|date:"F j, Y, g:i A" }}
+                                </small>
+                            </div>
+                            
+                            <div class="col-md-4 text-right">
+                                <h4 class="text-success">${{ donation.amount }}</h4>
+                                
+                                {% if donation.payment_status == 'completed' %}
+                                    <span class="badge badge-success">✅ Completed</span>
+                                {% elif donation.payment_status == 'pending' %}
+                                    <span class="badge badge-warning">⏳ Pending</span>
+                                {% elif donation.payment_status == 'processing' %}
+                                    <span class="badge badge-info">🔄 Processing</span>
+                                {% elif donation.payment_status == 'failed' %}
+                                    <span class="badge badge-danger">❌ Failed</span>
+                                {% elif donation.payment_status == 'cancelled' %}
+                                    <span class="badge badge-secondary">🚫 Cancelled</span>
+                                {% endif %}
+                                
+                                <div class="mt-2">
+                                    {% if donation.is_anonymous %}
+                                        <small class="text-muted">🔒 Anonymous donation</small>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="mt-2">
+                                    <small class="text-muted">ID: {{ donation.id|slice:":8" }}...</small>
+                                </div>
+                                
+                                {% if donation.payment_status == 'completed' %}
+                                <div class="mt-2">
+                                    <a href="{% url 'post_detail' donation.post.pk %}" class="btn btn-outline-primary btn-sm">
+                                        View Request
+                                    </a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                
+                <!-- Pagination -->
+                {% if donations.has_other_pages %}
+                <nav aria-label="Donation history pagination">
+                    <ul class="pagination justify-content-center">
+                        {% if donations.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1">&laquo; First</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ donations.previous_page_number }}">Previous</a>
+                            </li>
+                        {% endif %}
+                        
+                        <li class="page-item active">
+                            <span class="page-link">
+                                Page {{ donations.number }} of {{ donations.paginator.num_pages }}
+                            </span>
+                        </li>
+                        
+                        {% if donations.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ donations.next_page_number }}">Next</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ donations.paginator.num_pages }}">Last &raquo;</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+                
+            {% else %}
+                <div class="text-center py-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4>📭 No Donations Yet</h4>
+                            <p class="lead text-muted">You haven't made any donations yet.</p>
+                            <p>Ready to make a difference? Browse prosthetic requests and help someone in need.</p>
+                            <a href="{% url 'donation_list' %}" class="btn btn-success">
+                                💝 Browse Donation Requests
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

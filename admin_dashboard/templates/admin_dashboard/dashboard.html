@@ -1,0 +1,311 @@
+{% extends 'admin_dashboard/base.html' %}
+
+{% block title %}Dashboard - 3D4P Admin{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-0">Dashboard Overview</h1>
+            <p class="text-muted">Welcome to the 3D4P administrative dashboard</p>
+        </div>
+        <div class="text-muted">
+            <i class="fas fa-calendar"></i> {{ "now"|date:"F j, Y" }}
+        </div>
+    </div>
+
+    <!-- Key Statistics -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="stat-card">
+                <div class="stat-value">{{ stats.total_users }}</div>
+                <div class="stat-label">Total Users</div>
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="stat-card success">
+                <div class="stat-value">${{ stats.total_raised|floatformat:0 }}</div>
+                <div class="stat-label">Total Raised</div>
+                <div class="stat-icon" style="background: var(--success-color);">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="stat-card warning">
+                <div class="stat-value">{{ stats.pending_posts }}</div>
+                <div class="stat-label">Pending Posts</div>
+                <div class="stat-icon" style="background: var(--accent-color);">
+                    <i class="fas fa-clock"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="stat-card">
+                <div class="stat-value">{{ stats.active_campaigns }}</div>
+                <div class="stat-label">Active Campaigns</div>
+                <div class="stat-icon">
+                    <i class="fas fa-bullseye"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="row mb-4">
+        <div class="col-lg-8">
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-chart-line text-primary"></i>
+                        Monthly Overview
+                    </h5>
+                </div>
+                <div class="admin-card-body">
+                    <div class="chart-container">
+                        <canvas id="monthlyChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4">
+            <div class="admin-card h-100">
+                <div class="admin-card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-exclamation-circle text-warning"></i>
+                        Pending Actions
+                    </h5>
+                </div>
+                <div class="admin-card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span>Posts awaiting approval</span>
+                        <span class="badge badge-warning">{{ stats.pending_posts }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span>Member applications</span>
+                        <span class="badge badge-info">{{ stats.pending_members }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span>Total donations</span>
+                        <span class="badge badge-success">{{ stats.total_donations }}</span>
+                    </div>
+                    <hr>
+                    <a href="{% url 'admin_posts' %}?status=pending" class="btn btn-warning btn-sm btn-block">
+                        <i class="fas fa-eye"></i> Review Pending Posts
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-newspaper text-primary"></i>
+                        Recent Posts
+                    </h5>
+                </div>
+                <div class="admin-card-body p-0">
+                    {% for post in recent_posts %}
+                    <div class="d-flex align-items-center p-3 border-bottom">
+                        <div class="mr-3">
+                            {% if post.post_type == 'donation' %}
+                                <div class="badge badge-danger">
+                                    <i class="fas fa-hand-holding-medical"></i>
+                                </div>
+                            {% else %}
+                                <div class="badge badge-primary">
+                                    <i class="fas fa-newspaper"></i>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="flex-grow-1">
+                            <h6 class="mb-1">{{ post.title|truncatechars:50 }}</h6>
+                            <small class="text-muted">
+                                by {{ post.author.username|default:post.author_name }} • 
+                                {{ post.created_at|timesince }} ago
+                            </small>
+                        </div>
+                        <div>
+                            {% if not post.is_approved %}
+                                <span class="badge badge-warning">Pending</span>
+                            {% else %}
+                                <span class="badge badge-success">Approved</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="text-center p-4 text-muted">
+                        <i class="fas fa-inbox fa-2x mb-2"></i>
+                        <p>No recent posts</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h5 class="mb-0">
+                        <i class="fas fa-heart text-danger"></i>
+                        Recent Donations
+                    </h5>
+                </div>
+                <div class="admin-card-body p-0">
+                    {% for donation in recent_donations %}
+                    <div class="d-flex align-items-center p-3 border-bottom">
+                        <div class="mr-3">
+                            <div class="text-success font-weight-bold">
+                                ${{ donation.amount }}
+                            </div>
+                        </div>
+                        <div class="flex-grow-1">
+                            <h6 class="mb-1">{{ donation.post.title|truncatechars:40 }}</h6>
+                            <small class="text-muted">
+                                {% if not donation.is_anonymous %}
+                                    by {{ donation.donor_name|default:donation.donor.username }} • 
+                                {% else %}
+                                    by Anonymous • 
+                                {% endif %}
+                                {{ donation.created_at|timesince }} ago
+                            </small>
+                        </div>
+                        <div>
+                            <span class="badge badge-success">
+                                <i class="fas fa-check"></i>
+                            </span>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="text-center p-4 text-muted">
+                        <i class="fas fa-heart fa-2x mb-2"></i>
+                        <p>No recent donations</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pending Posts Alert -->
+    {% if pending_posts %}
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="admin-card">
+                <div class="admin-card-header bg-warning text-dark">
+                    <h5 class="mb-0">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Posts Requiring Immediate Attention
+                    </h5>
+                </div>
+                <div class="admin-card-body p-0">
+                    {% for post in pending_posts %}
+                    <div class="d-flex align-items-center p-3 border-bottom">
+                        <div class="mr-3">
+                            {% if post.post_type == 'donation' %}
+                                <div class="badge badge-danger">
+                                    <i class="fas fa-hand-holding-medical"></i> Donation
+                                </div>
+                            {% else %}
+                                <div class="badge badge-primary">
+                                    <i class="fas fa-newspaper"></i> Post
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="flex-grow-1">
+                            <h6 class="mb-1">{{ post.title }}</h6>
+                            <p class="mb-1 text-muted">{{ post.content|truncatechars:100 }}</p>
+                            <small class="text-muted">
+                                by {{ post.author.username|default:post.author_name }} • 
+                                {{ post.created_at|timesince }} ago
+                            </small>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'approve_post' post.id %}" class="action-btn action-btn-approve">
+                                <i class="fas fa-check"></i> Approve
+                            </a>
+                            <a href="{% url 'reject_post' post.id %}" class="action-btn action-btn-reject">
+                                <i class="fas fa-times"></i> Reject
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Monthly Chart
+    const ctx = document.getElementById('monthlyChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: {{ chart_data.months|safe }},
+            datasets: [{
+                label: 'Donations ($)',
+                data: {{ chart_data.donations|safe }},
+                borderColor: '#00a896',
+                backgroundColor: 'rgba(0, 168, 150, 0.1)',
+                tension: 0.4,
+                yAxisID: 'y'
+            }, {
+                label: 'New Posts',
+                data: {{ chart_data.posts|safe }},
+                borderColor: '#f77f00',
+                backgroundColor: 'rgba(247, 127, 0, 0.1)',
+                tension: 0.4,
+                yAxisID: 'y1'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                }
+            },
+            scales: {
+                y: {
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+                    title: {
+                        display: true,
+                        text: 'Donations ($)'
+                    }
+                },
+                y1: {
+                    type: 'linear',
+                    display: true,
+                    position: 'right',
+                    title: {
+                        display: true,
+                        text: 'Posts'
+                    },
+                    grid: {
+                        drawOnChartArea: false,
+                    },
+                }
+            }
+        }
+    });
+});
+</script>
+{% endblock %}
