@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Donation Requests</h1>
+    
+    {% if posts %}
+        {% for post in posts %}
+        <div class="card mb-3">
+            {% if post.image %}
+                <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ post.title }}</h5>
+                <p class="card-text">{{ post.content|truncatewords:50 }}</p>
+                
+                {% if post.donation_details %}
+                <div class="alert alert-info">
+                    <strong>Estimated Cost:</strong> ${{ post.donation_details.estimated_cost }}<br>
+                    <strong>Prosthetic Type:</strong> {{ post.donation_details.prosthetic_type }}<br>
+                    <strong>Measurements:</strong> {{ post.donation_details.measurements }}
+                </div>
+                {% endif %}
+                
+                <p class="card-text">
+                    <small class="text-muted">
+                        Posted by {{ post.author.username }} on {{ post.created_at|date:"F j, Y" }}
+                    </small>
+                </p>
+                <a href="{% url 'post_detail' post.pk %}" class="btn btn-primary">View Details</a>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="alert alert-warning">
+            <h4>No Donation Requests Found</h4>
+            <p>There are currently no approved donation requests.</p>
+            <a href="{% url 'create_donation_request' %}" class="btn btn-primary">Create a Donation Request</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

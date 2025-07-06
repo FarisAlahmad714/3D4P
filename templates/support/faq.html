@@ -1,0 +1,234 @@
+{% extends 'base.html' %}
+
+{% block title %}FAQ - 3D4P{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <!-- Header -->
+                <div class="text-center mb-5" data-aos="fade-up">
+                    <h1 class="display-4 text-gradient mb-3">Frequently Asked Questions</h1>
+                    <p class="lead text-muted">Find answers to common questions about our prosthetic assistance platform</p>
+                </div>
+
+                <!-- Search Box -->
+                <div class="row justify-content-center mb-5" data-aos="fade-up" data-aos-delay="100">
+                    <div class="col-lg-8">
+                        <div class="form-card">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="faq-search" placeholder="Search FAQ...">
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-search"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Accordion -->
+                <div class="accordion" id="faqAccordion" data-aos="fade-up" data-aos-delay="200">
+                    {% for faq in faqs %}
+                    <div class="card faq-item mb-3">
+                        <div class="card-header" id="heading{{ forloop.counter }}">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button" 
+                                        data-toggle="collapse" data-target="#collapse{{ forloop.counter }}" 
+                                        aria-expanded="false" aria-controls="collapse{{ forloop.counter }}">
+                                    <i class="fas fa-question-circle mr-3"></i>
+                                    {{ faq.question }}
+                                    <i class="fas fa-chevron-down float-right mt-1"></i>
+                                </button>
+                            </h2>
+                        </div>
+
+                        <div id="collapse{{ forloop.counter }}" class="collapse" 
+                             aria-labelledby="heading{{ forloop.counter }}" data-parent="#faqAccordion">
+                            <div class="card-body">
+                                <p class="text-muted mb-0">{{ faq.answer }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Additional Help Section -->
+                <div class="row mt-5">
+                    <div class="col-lg-6 mb-4" data-aos="fade-right">
+                        <div class="form-card text-center">
+                            <div class="mb-3">
+                                <i class="fas fa-envelope text-primary" style="font-size: 3rem;"></i>
+                            </div>
+                            <h4 class="mb-3">Still Have Questions?</h4>
+                            <p class="text-muted mb-4">Can't find what you're looking for? Our support team is here to help.</p>
+                            <a href="{% url 'contact_us' %}" class="btn btn-primary btn-lg">
+                                <i class="fas fa-paper-plane mr-2"></i>
+                                Contact Support
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 mb-4" data-aos="fade-left">
+                        <div class="form-card text-center">
+                            <div class="mb-3">
+                                <i class="fas fa-life-ring text-primary" style="font-size: 3rem;"></i>
+                            </div>
+                            <h4 class="mb-3">Need Immediate Help?</h4>
+                            <p class="text-muted mb-4">Learn how our platform works and get started with your request.</p>
+                            <a href="{% url 'how_it_works' %}" class="btn btn-outline btn-lg">
+                                <i class="fas fa-info-circle mr-2"></i>
+                                How It Works
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="row mt-5" data-aos="fade-up">
+                    <div class="col-12">
+                        <div class="form-card">
+                            <div class="row text-center">
+                                <div class="col-md-3 mb-3">
+                                    <h3 class="text-primary mb-1">24-48h</h3>
+                                    <small class="text-muted">Average Review Time</small>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <h3 class="text-primary mb-1">100%</h3>
+                                    <small class="text-muted">Platform Free to Use</small>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <h3 class="text-primary mb-1">Global</h3>
+                                    <small class="text-muted">Worldwide Support</small>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <h3 class="text-primary mb-1">Secure</h3>
+                                    <small class="text-muted">Verified Requests Only</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.faq-item .card {
+    border: 1px solid var(--gray-light);
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition-medium);
+}
+
+.faq-item .card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.faq-item .card-header {
+    background: var(--gradient-card);
+    border-bottom: 1px solid var(--gray-light);
+    border-radius: 12px 12px 0 0;
+}
+
+.faq-item .btn-link {
+    color: var(--dark-color);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.faq-item .btn-link:hover {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.faq-item .btn-link:focus {
+    text-decoration: none;
+    box-shadow: none;
+}
+
+.faq-item .fas.fa-chevron-down {
+    transition: var(--transition-fast);
+}
+
+.faq-item .btn-link[aria-expanded="true"] .fas.fa-chevron-down {
+    transform: rotate(180deg);
+}
+
+.input-group-text {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(18, 53, 36, 0.25);
+}
+
+/* Dark mode support */
+[data-theme="dark"] .faq-item .card-header {
+    background: var(--gradient-card);
+}
+
+[data-theme="dark"] .faq-item .btn-link {
+    color: var(--dark-color);
+}
+
+[data-theme="dark"] .faq-item .btn-link:hover {
+    color: var(--accent-color);
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize AOS
+    AOS.init({
+        duration: 800,
+        once: true
+    });
+
+    // FAQ Search functionality
+    const searchInput = document.getElementById('faq-search');
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+
+        faqItems.forEach(function(item) {
+            const question = item.querySelector('.btn-link').textContent.toLowerCase();
+            const answer = item.querySelector('.card-body p').textContent.toLowerCase();
+
+            if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        // If search is empty, show all items
+        if (searchTerm === '') {
+            faqItems.forEach(function(item) {
+                item.style.display = 'block';
+            });
+        }
+    });
+
+    // Smooth scroll to expanded FAQ
+    document.querySelectorAll('[data-toggle="collapse"]').forEach(function(button) {
+        button.addEventListener('click', function() {
+            setTimeout(function() {
+                if (button.getAttribute('aria-expanded') === 'true') {
+                    button.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 350); // Wait for collapse animation
+        });
+    });
+});
+</script>
+{% endblock %}

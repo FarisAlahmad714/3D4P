@@ -75,7 +75,7 @@ def application_status(request):
 
 @verified_member_required
 def member_only_view(request):
-    return render(request, 'member_only_page.html')
+    return render(request, 'members.html')
     
 
 def logout_view(request):

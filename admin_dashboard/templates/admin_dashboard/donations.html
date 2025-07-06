@@ -1,0 +1,263 @@
+{% extends 'admin_dashboard/base.html' %}
+
+{% block title %}Donations Management - 3D4P Admin{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h3 mb-0">Donations Management</h1>
+            <p class="text-muted">Track and manage all donation transactions</p>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="admin-card border-left-success">
+                <div class="admin-card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total Raised</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">${{ donation_stats.total_amount|floatformat:0 }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-success"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="admin-card border-left-primary">
+                <div class="admin-card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Donations</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ donation_stats.total_donations }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-heart fa-2x text-primary"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="admin-card border-left-warning">
+                <div class="admin-card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pending Amount</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">${{ donation_stats.pending_amount|floatformat:0 }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-clock fa-2x text-warning"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="admin-card border-left-info">
+                <div class="admin-card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Average Donation</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">${{ donation_stats.average_donation|floatformat:0 }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-chart-line fa-2x text-info"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="admin-card mb-4">
+        <div class="admin-card-body">
+            <form method="GET" class="row align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label">Payment Status</label>
+                    <select name="status" class="form-control">
+                        <option value="all" {% if status_filter == 'all' %}selected{% endif %}>All Donations</option>
+                        <option value="completed" {% if status_filter == 'completed' %}selected{% endif %}>Completed</option>
+                        <option value="pending" {% if status_filter == 'pending' %}selected{% endif %}>Pending</option>
+                        <option value="failed" {% if status_filter == 'failed' %}selected{% endif %}>Failed</option>
+                        <option value="cancelled" {% if status_filter == 'cancelled' %}selected{% endif %}>Cancelled</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Search</label>
+                    <input type="text" name="search" class="form-control" placeholder="Search by post, donor email, name..." value="{{ search }}">
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-search"></i> Filter
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Donations Table -->
+    <div class="admin-card">
+        <div class="admin-card-header">
+            <h5 class="mb-0"><i class="fas fa-heart mr-2"></i>All Donations</h5>
+        </div>
+        <div class="admin-card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Donation ID</th>
+                            <th>Post</th>
+                            <th>Donor</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for donation in page_obj %}
+                        <tr>
+                            <td>
+                                <small class="font-monospace">#{{ donation.id|slice:":8" }}...</small>
+                            </td>
+                            <td>
+                                <div>
+                                    <div class="font-weight-bold">{{ donation.post.title|truncatechars:30 }}</div>
+                                    <small class="text-muted">{{ donation.post.author.username|default:donation.post.author_name }}</small>
+                                </div>
+                            </td>
+                            <td>
+                                {% if donation.is_anonymous %}
+                                    <span class="text-muted"><i class="fas fa-user-secret"></i> Anonymous</span>
+                                {% else %}
+                                    <div>
+                                        <div>{{ donation.donor_name|default:"N/A" }}</div>
+                                        <small class="text-muted">{{ donation.donor_email|default:"N/A" }}</small>
+                                    </div>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <span class="font-weight-bold text-success">${{ donation.amount }}</span>
+                            </td>
+                            <td>
+                                {% if donation.payment_status == 'completed' %}
+                                    <span class="badge badge-success"><i class="fas fa-check-circle"></i> Completed</span>
+                                {% elif donation.payment_status == 'pending' %}
+                                    <span class="badge badge-warning"><i class="fas fa-clock"></i> Pending</span>
+                                {% elif donation.payment_status == 'failed' %}
+                                    <span class="badge badge-danger"><i class="fas fa-times-circle"></i> Failed</span>
+                                {% elif donation.payment_status == 'cancelled' %}
+                                    <span class="badge badge-secondary"><i class="fas fa-ban"></i> Cancelled</span>
+                                {% else %}
+                                    <span class="badge badge-light">{{ donation.payment_status|title }}</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div>{{ donation.created_at|date:"M j, Y" }}</div>
+                                <small class="text-muted">{{ donation.created_at|time:"g:i A" }}</small>
+                            </td>
+                            <td>
+                                <div class="d-flex gap-1">
+                                    <a href="{% url 'post_detail' donation.post.pk %}" class="btn btn-sm btn-outline-primary" title="View Post">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    {% if donation.payment_status == 'pending' %}
+                                    <button class="btn btn-sm btn-outline-warning" title="Check Status">
+                                        <i class="fas fa-sync"></i>
+                                    </button>
+                                    {% endif %}
+                                    <button class="btn btn-sm btn-outline-info" title="Download Receipt">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7" class="text-center py-4">
+                                <i class="fas fa-inbox fa-2x text-muted mb-2"></i>
+                                <p class="text-muted mb-0">No donations found matching your criteria.</p>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    {% if page_obj.has_other_pages %}
+    <div class="d-flex justify-content-center mt-4">
+        <nav aria-label="Donations pagination">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1&status={{ status_filter }}&search={{ search }}">&laquo; First</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}&status={{ status_filter }}&search={{ search }}">Previous</a>
+                    </li>
+                {% endif %}
+                
+                <li class="page-item active">
+                    <span class="page-link">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                    </span>
+                </li>
+                
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}&status={{ status_filter }}&search={{ search }}">Next</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}&status={{ status_filter }}&search={{ search }}">Last &raquo;</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+.gap-1 {
+    gap: 0.25rem;
+}
+
+.border-left-success {
+    border-left: 0.25rem solid #1cc88a !important;
+}
+
+.border-left-primary {
+    border-left: 0.25rem solid #4e73df !important;
+}
+
+.border-left-warning {
+    border-left: 0.25rem solid #f6c23e !important;
+}
+
+.border-left-info {
+    border-left: 0.25rem solid #36b9cc !important;
+}
+
+.text-xs {
+    font-size: 0.7rem;
+}
+
+.font-monospace {
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+</style>
+{% endblock %}

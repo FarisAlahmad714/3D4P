@@ -1,9 +1,518 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Select Post Type</h2>
-<div>
-    <a href="{% url 'create_regular_post' %}" class="btn btn-primary">Create Regular Post</a>
-    <a href="{% url 'create_donation_request' %}" class="btn btn-secondary">Create Donation Request</a>
+<div class="container" style="padding-top: 2rem;">
+    <!-- Page Header -->
+    <div class="text-center mb-5" data-aos="fade-up">
+        <h1 class="display-4 text-gradient">✍️ Create New Post</h1>
+        <p class="lead text-muted">Choose the type of post you'd like to create</p>
+    </div>
+    
+    <!-- Post Type Cards -->
+    <div class="post-type-selection" data-aos="fade-up" data-aos-delay="100">
+        <div class="row justify-content-center">
+            <!-- Donation Request Card -->
+            <div class="col-lg-5 col-md-6 mb-4">
+                <div class="post-type-card donation-type" data-aos="fade-right" data-aos-delay="200">
+                    <div class="card-header">
+                        <div class="type-icon">
+                            <i class="fas fa-hand-holding-medical"></i>
+                        </div>
+                        <h3>Donation Request</h3>
+                        <p>Request prosthetic assistance from the community</p>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="features-list">
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Fundraising goals and progress tracking</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Secure payment processing via Stripe</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Verified member status adds credibility</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Higher visibility in feeds</span>
+                            </div>
+                        </div>
+                        
+                        <div class="example-preview">
+                            <small class="text-muted">Perfect for:</small>
+                            <p class="example-text">"I need a prosthetic arm for my 8-year-old daughter who was injured in the conflict..."</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <a href="{% url 'create_donation_request' %}" class="btn btn-donate btn-lg btn-block">
+                            <i class="fas fa-hand-holding-heart"></i> Create Donation Request
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Regular Post Card -->
+            <div class="col-lg-5 col-md-6 mb-4">
+                <div class="post-type-card community-type" data-aos="fade-left" data-aos-delay="300">
+                    <div class="card-header">
+                        <div class="type-icon">
+                            <i class="fas fa-newspaper"></i>
+                        </div>
+                        <h3>Community Post</h3>
+                        <p>Share stories, updates, or connect with the community</p>
+                    </div>
+                    
+                    <div class="card-body">
+                        <div class="features-list">
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Share recovery stories and updates</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Connect with others in similar situations</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Provide support and encouragement</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Share helpful resources and tips</span>
+                            </div>
+                        </div>
+                        
+                        <div class="example-preview">
+                            <small class="text-muted">Perfect for:</small>
+                            <p class="example-text">"Update on my recovery progress - feeling stronger every day thanks to community support!"</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <a href="{% url 'create_regular_post' %}" class="btn btn-primary btn-lg btn-block">
+                            <i class="fas fa-pen-alt"></i> Create Community Post
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Help Section -->
+    <div class="help-section mt-5" data-aos="fade-up" data-aos-delay="400">
+        <div class="help-card">
+            <div class="help-icon">
+                <i class="fas fa-question-circle"></i>
+            </div>
+            <div class="help-content">
+                <h4>Need Help Deciding?</h4>
+                <p>If you need financial assistance for prosthetic devices, choose <strong>Donation Request</strong>. If you want to share your story, provide updates, or connect with the community, choose <strong>Community Post</strong>.</p>
+                <div class="help-actions">
+                    <a href="#" class="help-link" data-toggle="modal" data-target="#guidelinesModal">
+                        <i class="fas fa-book"></i> View Posting Guidelines
+                    </a>
+                    <a href="#" class="help-link">
+                        <i class="fas fa-envelope"></i> Contact Support
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<!-- Guidelines Modal -->
+<div class="modal fade" id="guidelinesModal" tabindex="-1" role="dialog" aria-labelledby="guidelinesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content guidelines-modal">
+            <div class="modal-header">
+                <h5 class="modal-title" id="guidelinesModalLabel">
+                    <i class="fas fa-book"></i> Posting Guidelines
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="guidelines-section">
+                    <h6><i class="fas fa-hand-holding-medical"></i> Donation Request Guidelines</h6>
+                    <ul>
+                        <li>Provide clear, honest details about your prosthetic needs</li>
+                        <li>Include medical documentation if available</li>
+                        <li>Set realistic funding goals</li>
+                        <li>Upload clear photos when appropriate</li>
+                        <li>Respond to donor questions promptly</li>
+                        <li>Provide updates on your progress</li>
+                    </ul>
+                </div>
+                
+                <div class="guidelines-section">
+                    <h6><i class="fas fa-newspaper"></i> Community Post Guidelines</h6>
+                    <ul>
+                        <li>Be respectful and supportive to all community members</li>
+                        <li>Share authentic experiences and stories</li>
+                        <li>Avoid promotional or commercial content</li>
+                        <li>Use appropriate language and imagery</li>
+                        <li>Engage constructively with comments</li>
+                        <li>Report inappropriate content when necessary</li>
+                    </ul>
+                </div>
+                
+                <div class="guidelines-section">
+                    <h6><i class="fas fa-shield-alt"></i> Safety & Privacy</h6>
+                    <ul>
+                        <li>Never share personal information like addresses or phone numbers</li>
+                        <li>Be cautious about sharing identifying details</li>
+                        <li>Report suspicious or inappropriate behavior</li>
+                        <li>All posts are moderated for safety and appropriateness</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Post Type Selection Styles */
+.post-type-selection {
+    margin-bottom: 3rem;
+}
+
+.post-type-card {
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    transition: var(--transition-slow);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 3px solid transparent;
+    position: relative;
+}
+
+.post-type-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+}
+
+.donation-type {
+    border-color: var(--accent-color);
+}
+
+.donation-type:hover {
+    box-shadow: 0 15px 35px rgba(247, 127, 0, 0.3);
+}
+
+.community-type {
+    border-color: var(--primary-color);
+}
+
+.community-type:hover {
+    box-shadow: 0 15px 35px rgba(0, 168, 150, 0.3);
+}
+
+.post-type-card .card-header {
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+}
+
+.donation-type .card-header {
+    background: var(--gradient-danger);
+    color: white;
+}
+
+.community-type .card-header {
+    background: var(--gradient-primary);
+    color: white;
+}
+
+.type-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    margin: 0 auto 1rem;
+    backdrop-filter: blur(10px);
+}
+
+.post-type-card h3 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: white;
+}
+
+.post-type-card .card-header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin: 0;
+}
+
+.post-type-card .card-body {
+    padding: 2rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.features-list {
+    margin-bottom: 2rem;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem 0;
+}
+
+.feature-item i {
+    color: var(--success-color);
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.feature-item span {
+    color: var(--dark-color);
+    font-weight: 500;
+}
+
+.example-preview {
+    background: var(--gradient-card);
+    padding: 1.5rem;
+    border-radius: 15px;
+    border-left: 4px solid var(--primary-color);
+    margin-top: auto;
+}
+
+.donation-type .example-preview {
+    border-left-color: var(--accent-color);
+}
+
+.example-text {
+    font-style: italic;
+    color: var(--gray-medium);
+    margin: 0.5rem 0 0;
+    line-height: 1.6;
+}
+
+.post-type-card .card-footer {
+    padding: 2rem;
+    background: var(--gradient-card);
+    border-top: 1px solid var(--gray-light);
+}
+
+.help-section {
+    margin-bottom: 3rem;
+}
+
+.help-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    border-left: 4px solid var(--primary-color);
+}
+
+.help-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.help-content {
+    flex: 1;
+}
+
+.help-content h4 {
+    color: var(--dark-color);
+    margin-bottom: 0.75rem;
+    font-size: 1.5rem;
+}
+
+.help-content p {
+    color: var(--gray-medium);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.help-actions {
+    display: flex;
+    gap: 2rem;
+}
+
+.help-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition-fast);
+}
+
+.help-link:hover {
+    color: var(--accent-color);
+    text-decoration: none;
+    transform: translateX(3px);
+}
+
+/* Guidelines Modal */
+.guidelines-modal .modal-content {
+    border-radius: 20px;
+    border: none;
+    box-shadow: var(--shadow-xl);
+}
+
+.guidelines-modal .modal-header {
+    background: var(--gradient-primary);
+    color: white;
+    border-radius: 20px 20px 0 0;
+    border-bottom: none;
+}
+
+.guidelines-section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: var(--gradient-card);
+    border-radius: 15px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.guidelines-section h6 {
+    color: var(--dark-color);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.guidelines-section ul {
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+.guidelines-section li {
+    color: var(--gray-medium);
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .post-type-card .card-header {
+        padding: 1.5rem;
+    }
+    
+    .post-type-card .card-body {
+        padding: 1.5rem;
+    }
+    
+    .post-type-card .card-footer {
+        padding: 1.5rem;
+    }
+    
+    .help-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+    }
+    
+    .help-actions {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .type-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
+    }
+    
+    .help-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+}
+
+/* Animation for feature items */
+.feature-item {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.feature-item:nth-child(1) { animation-delay: 0.1s; }
+.feature-item:nth-child(2) { animation-delay: 0.2s; }
+.feature-item:nth-child(3) { animation-delay: 0.3s; }
+.feature-item:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add hover effects to cards
+    const postTypeCards = document.querySelectorAll('.post-type-card');
+    
+    postTypeCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-10px) scale(1.02)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+    
+    // Card click functionality
+    postTypeCards.forEach(card => {
+        card.addEventListener('click', function(e) {
+            if (e.target.tagName !== 'A' && e.target.tagName !== 'BUTTON') {
+                const link = this.querySelector('.card-footer a');
+                if (link) {
+                    window.location.href = link.href;
+                }
+            }
+        });
+    });
+});
+</script>
 {% endblock %}

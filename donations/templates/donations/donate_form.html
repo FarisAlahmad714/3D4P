@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <!-- Post Information -->
+            <div class="card mb-4">
+                {% if post.image %}
+                    <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}" style="max-height: 300px; object-fit: cover;">
+                {% endif %}
+                <div class="card-body">
+                    <span class="badge badge-danger mb-2">🩺 Donation Request</span>
+                    <h2 class="card-title">{{ post.title }}</h2>
+                    <p class="card-text">{{ post.content }}</p>
+                    
+                    {% if post.donation_details %}
+                        <div class="alert alert-info">
+                            <h5>💰 Request Details</h5>
+                            <p><strong>Estimated Cost:</strong> ${{ post.donation_details.estimated_cost }}</p>
+                            <p><strong>Prosthetic Type:</strong> {{ post.donation_details.prosthetic_type }}</p>
+                            <p><strong>Measurements:</strong> {{ post.donation_details.measurements }}</p>
+                        </div>
+                    {% endif %}
+                    
+                    <!-- Author Info -->
+                    <div class="border-top pt-3">
+                        <small class="text-muted">
+                            Request by: 
+                            {% if post.author %}
+                                <strong>{{ post.author.username }}</strong>
+                            {% else %}
+                                <strong>{{ post.author_name }}</strong>
+                            {% endif %}
+                            on {{ post.created_at|date:"F j, Y" }}
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <!-- Donation Progress -->
+            {% if goal %}
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>📊 Funding Progress</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span><strong>${{ goal.current_amount }}</strong> raised</span>
+                        <span>of ${{ goal.goal_amount }}</span>
+                    </div>
+                    <div class="progress mb-3" style="height: 20px;">
+                        <div class="progress-bar bg-success" role="progressbar" 
+                             style="width: {{ goal.progress_percentage }}%"
+                             aria-valuenow="{{ goal.progress_percentage }}" 
+                             aria-valuemin="0" aria-valuemax="100">
+                            {{ goal.progress_percentage|floatformat:1 }}%
+                        </div>
+                    </div>
+                    <p><small class="text-muted">{{ total_donors }} donor{{ total_donors|pluralize }} so far</small></p>
+                    <p><small class="text-success">Only ${{ goal.remaining_amount }} needed to reach goal!</small></p>
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Donation Form -->
+            <div class="card">
+                <div class="card-header">
+                    <h5>💝 Make a Donation</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post" id="donationForm">
+                        {% csrf_token %}
+                        
+                        <!-- Predefined Amounts -->
+                        <div class="form-group">
+                            <label>Choose Amount:</label>
+                            <div class="row">
+                                <div class="col-6 mb-2">
+                                    <button type="button" class="btn btn-outline-primary btn-block amount-btn" data-amount="10">$10</button>
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <button type="button" class="btn btn-outline-primary btn-block amount-btn" data-amount="25">$25</button>
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <button type="button" class="btn btn-outline-primary btn-block amount-btn" data-amount="50">$50</button>
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <button type="button" class="btn btn-outline-primary btn-block amount-btn" data-amount="100">$100</button>
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <button type="button" class="btn btn-outline-primary btn-block amount-btn" data-amount="250">$250</button>
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <button type="button" class="btn btn-outline-primary btn-block amount-btn" data-amount="500">$500</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Custom Amount -->
+                        <div class="form-group">
+                            <label for="{{ form.amount.id_for_label }}">Custom Amount ($):</label>
+                            {{ form.amount }}
+                        </div>
+                        
+                        <!-- Donor Information -->
+                        <div class="form-group">
+                            <label for="{{ form.donor_email.id_for_label }}">Email Address:</label>
+                            {{ form.donor_email }}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="{{ form.donor_name.id_for_label }}">Your Name (optional):</label>
+                            {{ form.donor_name }}
+                        </div>
+                        
+                        <!-- Anonymous Option -->
+                        <div class="form-group form-check">
+                            {{ form.is_anonymous }}
+                            <label class="form-check-label" for="{{ form.is_anonymous.id_for_label }}">
+                                Make this donation anonymous
+                            </label>
+                        </div>
+                        
+                        <!-- Message -->
+                        <div class="form-group">
+                            <label for="{{ form.message.id_for_label }}">Message of Support (optional):</label>
+                            {{ form.message }}
+                        </div>
+                        
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-success btn-lg btn-block">
+                            💳 Proceed to Payment
+                        </button>
+                        
+                        <small class="text-muted d-block text-center mt-2">
+                            Secure payment powered by Stripe
+                        </small>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Recent Donations -->
+            {% if recent_donations %}
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h6>Recent Supporters</h6>
+                </div>
+                <div class="card-body">
+                    {% for donation in recent_donations %}
+                    <div class="border-bottom pb-2 mb-2">
+                        <div class="d-flex justify-content-between">
+                            <span>
+                                {% if donation.is_anonymous %}
+                                    <em>Anonymous</em>
+                                {% else %}
+                                    {{ donation.donor.username|default:donation.donor_name }}
+                                {% endif %}
+                            </span>
+                            <span class="text-success">${{ donation.amount }}</span>
+                        </div>
+                        {% if donation.message %}
+                            <small class="text-muted">"{{ donation.message|truncatewords:10 }}"</small>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle predefined amount buttons
+    document.querySelectorAll('.amount-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const amount = this.getAttribute('data-amount');
+            document.getElementById('id_amount').value = amount;
+            
+            // Update button styling
+            document.querySelectorAll('.amount-btn').forEach(btn => {
+                btn.classList.remove('btn-primary');
+                btn.classList.add('btn-outline-primary');
+            });
+            this.classList.remove('btn-outline-primary');
+            this.classList.add('btn-primary');
+        });
+    });
+    
+    // Handle custom amount input
+    document.getElementById('id_amount').addEventListener('input', function() {
+        // Reset all amount buttons when custom amount is entered
+        document.querySelectorAll('.amount-btn').forEach(btn => {
+            btn.classList.remove('btn-primary');
+            btn.classList.add('btn-outline-primary');
+        });
+    });
+});
+</script>
+{% endblock %}

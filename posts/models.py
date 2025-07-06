@@ -13,14 +13,13 @@ class Post(models.Model):
     author_name = models.CharField(max_length=100, blank=True)
     title = models.CharField(max_length=200)
     content = models.TextField()
-    post_type = models.CharField(max_length=10, choices=POST_TYPE_CHOICES, default='regular')
+    post_type = models.CharField(max_length=20, choices=POST_TYPE_CHOICES, default='regular')
     is_approved = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     view_count = models.IntegerField(default=0)
     share_count = models.IntegerField(default=0)
-    image = models.ImageField(upload_to='post_images/', null=True, blank=True)  # Add this line
-    post_type = models.CharField(max_length=20, choices=[('regular', 'Regular'), ('donation', 'Donation')], default='regular')
+    image = models.ImageField(upload_to='post_images/', null=True, blank=True)
 
     def __str__(self):
             if self.author:

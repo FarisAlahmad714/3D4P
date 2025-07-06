@@ -1,65 +1,684 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load user_tags %}
 
 {% block content %}
-<h1>{{ profile_user.username }}'s Profile</h1>
-<div class="row">
-    <div class="col-md-4">
-        {% if profile_user.memberprofile.photo %}
-        <img class="rounded-circle account-img" src="{{ profile_user.memberprofile.photo.url }}">
-        {% else %}
-        <img class="rounded-circle account-img" src="{% static 'images/default.jpg' %}">
-        {% endif %}    
-        <h2>{{ profile_user.username }}</h2>
-        <p>{{ profile_user.memberprofile.bio }}</p>
-        {% if is_own_profile %}
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#profileModal">
-            Edit Profile
-        </button>
-        {% endif %}
-    </div>
-    <div class="col-md-8">
-        <h3>Approved Posts</h3>
-        {% for post in posts %}
-            <article class="media content-section">
-                <div class="media-body">
-                    <h4>{{ post.title }}</h4>
-                    <p>{{ post.content }}</p>
-                    {% if user == post.author %}
-                        <form action="{% url 'delete_post' post.id %}" method="POST" style="display: inline;">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
-                        </form>
+<div class="container" style="padding-top: 2rem;">
+    <!-- Profile Header -->
+    <div class="profile-header" data-aos="fade-up">
+        <div class="profile-cover">
+            <div class="profile-info">
+                <div class="profile-avatar">
+                    {% if profile_user.memberprofile.photo %}
+                    <img src="{{ profile_user.memberprofile.photo.url }}" alt="{{ profile_user.username }}" class="avatar-img">
+                    {% else %}
+                    <div class="avatar-placeholder">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    {% endif %}
+                    
+                    {% if profile_user|is_member %}
+                    <div class="verified-badge">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
                     {% endif %}
                 </div>
-            </article>
-        {% empty %}
-            <p>No approved posts yet.</p>
-        {% endfor %}
+                
+                <div class="profile-details">
+                    <h1 class="profile-name">{{ profile_user.username }}</h1>
+                    
+                    <div class="profile-badges">
+                        {% if profile_user|is_member %}
+                        <span class="badge-verified">
+                            <i class="fas fa-shield-alt"></i> Verified Member
+                        </span>
+                        {% endif %}
+                        <span class="badge-joined">
+                            <i class="fas fa-calendar"></i> Joined {{ profile_user.date_joined|date:"F Y" }}
+                        </span>
+                    </div>
+                    
+                    {% if profile_user.memberprofile.bio %}
+                    <p class="profile-bio">{{ profile_user.memberprofile.bio }}</p>
+                    {% else %}
+                    <p class="profile-bio text-muted">No bio provided yet.</p>
+                    {% endif %}
+                    
+                    {% if is_own_profile %}
+                    <div class="profile-actions">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#profileModal">
+                            <i class="fas fa-edit"></i> Edit Profile
+                        </button>
+                        <a href="{% url 'donation_history' %}" class="btn btn-outline-primary">
+                            <i class="fas fa-history"></i> Donation History
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Profile Stats -->
+    <div class="profile-stats" data-aos="fade-up" data-aos-delay="100">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-newspaper"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>{{ posts|length }}</h3>
+                    <p>Posts Created</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>{{ total_views|default:0 }}</h3>
+                    <p>Total Views</p>
+                </div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-share"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>{{ total_shares|default:0 }}</h3>
+                    <p>Total Shares</p>
+                </div>
+            </div>
+            
+            <div class="stat-card primary">
+                <div class="stat-icon">
+                    <i class="fas fa-hand-holding-heart"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>{{ donation_posts|default:0 }}</h3>
+                    <p>Donation Requests</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Posts Section -->
+    <div class="profile-posts" data-aos="fade-up" data-aos-delay="200">
+        <div class="section-header">
+            <h2>
+                <i class="fas fa-th-grid"></i> 
+                {% if is_own_profile %}Your{% else %}{{ profile_user.username }}'s{% endif %} Posts
+            </h2>
+            {% if is_own_profile %}
+            <a href="{% url 'select_post_type' %}" class="btn btn-outline-primary">
+                <i class="fas fa-plus"></i> Create New Post
+            </a>
+            {% endif %}
+        </div>
+        
+        {% if posts %}
+        <div class="posts-grid">
+            {% for post in posts %}
+            <div class="post-card-profile" data-aos="fade-up" data-aos-delay="{% cycle '100' '200' '300' %}">
+                {% if post.post_type == 'donation' %}
+                <!-- Donation Request Card -->
+                <div class="donation-card-mini">
+                    {% if post.image %}
+                    <div class="card-img-wrapper">
+                        <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+                        <div class="urgency-badge-mini">
+                            🩺 Request
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="card-img-wrapper gradient-bg">
+                        <i class="fas fa-hand-holding-medical"></i>
+                        <div class="urgency-badge-mini">
+                            🩺 Request
+                        </div>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="card-content">
+                        <h4>
+                            <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a>
+                        </h4>
+                        <p>{{ post.content|truncatewords:15 }}</p>
+                        
+                        {% if post.donation_goal %}
+                        <div class="mini-progress">
+                            <div class="progress">
+                                <div class="progress-bar" style="width: {{ post.donation_goal.progress_percentage }}%"></div>
+                            </div>
+                            <small>{{ post.donation_goal.progress_percentage|floatformat:0 }}% funded</small>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="card-footer">
+                            <small class="text-muted">
+                                <i class="fas fa-calendar"></i> {{ post.created_at|date:"M j, Y" }}
+                            </small>
+                            {% if user == post.author %}
+                            <form action="{% url 'delete_post' post.id %}" method="POST" class="delete-form">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure you want to delete this post?')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                <!-- Regular Post Card -->
+                <div class="regular-card-mini">
+                    {% if post.image %}
+                    <div class="card-img-wrapper">
+                        <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+                    </div>
+                    {% endif %}
+                    
+                    <div class="card-content">
+                        <span class="post-type-badge">
+                            <i class="fas fa-newspaper"></i> Post
+                        </span>
+                        
+                        <h4>
+                            <a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a>
+                        </h4>
+                        <p>{{ post.content|truncatewords:20 }}</p>
+                        
+                        <div class="card-footer">
+                            <small class="text-muted">
+                                <i class="fas fa-eye"></i> {{ post.view_count }} views
+                            </small>
+                            <small class="text-muted">
+                                <i class="fas fa-calendar"></i> {{ post.created_at|date:"M j" }}
+                            </small>
+                            {% if user == post.author %}
+                            <form action="{% url 'delete_post' post.id %}" method="POST" class="delete-form">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure you want to delete this post?')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-posts">
+            <i class="fas fa-inbox"></i>
+            <h3>No Posts Yet</h3>
+            <p>{% if is_own_profile %}You haven't{% else %}{{ profile_user.username }} hasn't{% endif %} created any posts yet.</p>
+            {% if is_own_profile %}
+            <a href="{% url 'select_post_type' %}" class="btn btn-primary">
+                <i class="fas fa-plus-circle"></i> Create Your First Post
+            </a>
+            {% endif %}
+        </div>
+        {% endif %}
     </div>
 </div>
 
 {% if is_own_profile %}
-<!-- Modal -->
+<!-- Edit Profile Modal -->
 <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content profile-modal">
             <div class="modal-header">
-                <h5 class="modal-title" id="profileModalLabel">Edit Profile</h5>
+                <h5 class="modal-title" id="profileModalLabel">
+                    <i class="fas fa-user-edit"></i> Edit Profile
+                </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form method="POST" enctype="multipart/form-data">
+                <form method="POST" enctype="multipart/form-data" class="profile-form">
                     {% csrf_token %}
-                    {{ u_form.as_p }}
-                    {{ p_form.as_p }}
-                    <button type="submit" class="btn btn-primary">Update</button>
+                    <div class="form-section">
+                        <h6><i class="fas fa-user"></i> User Information</h6>
+                        {{ u_form.as_p }}
+                    </div>
+                    
+                    <div class="form-section">
+                        <h6><i class="fas fa-id-card"></i> Profile Details</h6>
+                        {{ p_form.as_p }}
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            <i class="fas fa-times"></i> Cancel
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 </div>
 {% endif %}
+
+<style>
+/* Profile Page Styles */
+.profile-header {
+    margin-bottom: 3rem;
+}
+
+.profile-cover {
+    background: var(--gradient-primary);
+    border-radius: 20px;
+    padding: 3rem 2rem 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-cover::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff20" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,213.3C672,192,768,128,864,128C960,128,1056,192,1152,213.3C1248,235,1344,213,1392,202.7L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+    background-size: cover;
+}
+
+.profile-info {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    color: white;
+}
+
+.profile-avatar {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.avatar-img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid white;
+    object-fit: cover;
+    box-shadow: var(--shadow-lg);
+}
+
+.avatar-placeholder {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 4px solid white;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: white;
+    box-shadow: var(--shadow-lg);
+}
+
+.verified-badge {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background: var(--success-color);
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    border: 2px solid white;
+}
+
+.profile-details {
+    flex: 1;
+}
+
+.profile-name {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.profile-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.badge-verified,
+.badge-joined {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    backdrop-filter: blur(10px);
+}
+
+.profile-bio {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 1.5rem;
+    max-width: 600px;
+}
+
+.profile-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.profile-stats {
+    margin-bottom: 3rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.stat-card {
+    background: var(--white);
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: var(--transition-medium);
+    border: 2px solid transparent;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+}
+
+.stat-card.primary {
+    border-color: var(--primary-color);
+    background: linear-gradient(135deg, rgba(0, 168, 150, 0.05) 0%, rgba(2, 195, 154, 0.05) 100%);
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.stat-content h3 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0;
+    color: var(--dark-color);
+}
+
+.stat-content p {
+    margin: 0;
+    color: var(--gray-medium);
+    font-weight: 500;
+}
+
+.profile-posts {
+    margin-bottom: 3rem;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--gray-light);
+}
+
+.section-header h2 {
+    color: var(--dark-color);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+}
+
+.post-card-profile {
+    transition: var(--transition-medium);
+}
+
+.donation-card-mini,
+.regular-card-mini {
+    background: var(--white);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition-medium);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.donation-card-mini:hover,
+.regular-card-mini:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.donation-card-mini {
+    border-left: 4px solid var(--accent-color);
+}
+
+.regular-card-mini {
+    border-left: 4px solid var(--primary-color);
+}
+
+.card-img-wrapper {
+    height: 150px;
+    position: relative;
+    overflow: hidden;
+}
+
+.gradient-bg {
+    background: var(--gradient-danger);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    color: white;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.urgency-badge-mini {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: var(--gradient-danger);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.post-type-badge {
+    background: var(--gradient-primary);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.card-content {
+    padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-content h4 {
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+}
+
+.card-content h4 a {
+    color: var(--dark-color);
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+.card-content h4 a:hover {
+    color: var(--primary-color);
+}
+
+.card-content p {
+    color: var(--gray-medium);
+    flex: 1;
+    margin-bottom: 1rem;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--gray-light);
+}
+
+.delete-form {
+    display: inline-block;
+}
+
+.empty-posts {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: var(--white);
+    border-radius: 20px;
+    box-shadow: var(--shadow-md);
+}
+
+.empty-posts i {
+    font-size: 4rem;
+    color: var(--gray-light);
+    margin-bottom: 1rem;
+}
+
+.empty-posts h3 {
+    color: var(--dark-color);
+    margin-bottom: 0.5rem;
+}
+
+.empty-posts p {
+    color: var(--gray-medium);
+    margin-bottom: 2rem;
+}
+
+/* Modal Styles */
+.profile-modal .modal-content {
+    border-radius: 20px;
+    border: none;
+    box-shadow: var(--shadow-xl);
+}
+
+.profile-modal .modal-header {
+    background: var(--gradient-primary);
+    color: white;
+    border-radius: 20px 20px 0 0;
+    border-bottom: none;
+}
+
+.profile-form .form-section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: var(--gradient-card);
+    border-radius: 15px;
+    border: 1px solid var(--gray-light);
+}
+
+.profile-form .form-section h6 {
+    color: var(--dark-color);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+    .profile-info {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .profile-name {
+        font-size: 2rem;
+    }
+    
+    .profile-badges {
+        justify-content: center;
+    }
+    
+    .profile-actions {
+        justify-content: center;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .posts-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+}
+</style>
 {% endblock content %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Access Denied - 3D4P{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <div class="error-page">
+                <h1 class="display-1 text-warning">403</h1>
+                <h2 class="mb-4">Access Denied</h2>
+                <p class="lead mb-4">
+                    You don't have permission to access this resource.
+                </p>
+                <div class="mb-4">
+                    <a href="{% url 'home' %}" class="btn btn-primary btn-lg me-3">
+                        <i class="fas fa-home"></i> Go Home
+                    </a>
+                    {% if not user.is_authenticated %}
+                    <a href="{% url 'login' %}" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.error-page {
+    padding: 80px 0;
+}
+.display-1 {
+    font-size: 8rem;
+    font-weight: bold;
+}
+</style>
+{% endblock %}

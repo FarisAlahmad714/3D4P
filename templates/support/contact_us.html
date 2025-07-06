@@ -1,0 +1,344 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Us - 3D4P{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <!-- Header -->
+                <div class="text-center mb-5" data-aos="fade-up">
+                    <h1 class="display-4 text-gradient mb-3">Contact Us</h1>
+                    <p class="lead text-muted">Get in touch with our support team - we're here to help</p>
+                </div>
+
+                <div class="row">
+                    <!-- Contact Form -->
+                    <div class="col-lg-8 mb-4" data-aos="fade-right">
+                        <div class="form-card">
+                            <h3 class="mb-4">
+                                <i class="fas fa-paper-plane mr-2 text-primary"></i>
+                                Send us a Message
+                            </h3>
+                            
+                            <form id="contact-form">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">
+                                                <i class="fas fa-user mr-2"></i>Your Name
+                                            </label>
+                                            <input type="text" class="form-control" id="name" placeholder="Enter your full name" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">
+                                                <i class="fas fa-envelope mr-2"></i>Email Address
+                                            </label>
+                                            <input type="email" class="form-control" id="email" placeholder="your.email@example.com" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <i class="fas fa-tag mr-2"></i>Subject
+                                    </label>
+                                    <select class="form-control" id="subject" required>
+                                        <option value="">Select a topic...</option>
+                                        <option value="general">General Inquiry</option>
+                                        <option value="request-help">Help with My Request</option>
+                                        <option value="donation-question">Donation Question</option>
+                                        <option value="technical-issue">Technical Issue</option>
+                                        <option value="verification">Account Verification</option>
+                                        <option value="feedback">Feedback or Suggestion</option>
+                                        <option value="media">Media Inquiry</option>
+                                        <option value="partnership">Partnership Opportunity</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="form-label">
+                                        <i class="fas fa-comment-alt mr-2"></i>Message
+                                    </label>
+                                    <textarea class="form-control" id="message" rows="6" 
+                                              placeholder="Please provide details about your inquiry..." required></textarea>
+                                    <small class="form-text text-muted">
+                                        <i class="fas fa-info-circle mr-1"></i>
+                                        The more details you provide, the better we can help you.
+                                    </small>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                    <i class="fas fa-paper-plane mr-2"></i>
+                                    Send Message
+                                </button>
+                            </form>
+
+                            <!-- Success Message -->
+                            <div id="success-message" class="alert alert-success mt-3" style="display: none;">
+                                <i class="fas fa-check-circle mr-2"></i>
+                                Thank you! Your message has been sent successfully. We'll get back to you within 24 hours.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div class="col-lg-4 mb-4" data-aos="fade-left">
+                        <!-- Quick Contact -->
+                        <div class="form-card mb-4">
+                            <h4 class="mb-3">
+                                <i class="fas fa-headset mr-2 text-primary"></i>
+                                Quick Contact
+                            </h4>
+                            
+                            <div class="contact-item mb-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="contact-icon mr-3">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                    <div>
+                                        <strong>Email Support</strong><br>
+                                        <a href="mailto:support@3d4p.org" class="text-primary">support@3d4p.org</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="contact-item mb-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="contact-icon mr-3">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <div>
+                                        <strong>Response Time</strong><br>
+                                        <span class="text-muted">Within 24 hours</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="contact-item">
+                                <div class="d-flex align-items-center">
+                                    <div class="contact-icon mr-3">
+                                        <i class="fas fa-globe"></i>
+                                    </div>
+                                    <div>
+                                        <strong>Global Support</strong><br>
+                                        <span class="text-muted">Available worldwide</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Emergency Contact -->
+                        <div class="form-card mb-4">
+                            <h4 class="mb-3">
+                                <i class="fas fa-exclamation-triangle mr-2 text-danger"></i>
+                                Urgent Assistance
+                            </h4>
+                            <p class="text-muted mb-3">
+                                For urgent medical situations or time-sensitive prosthetic needs, please indicate "URGENT" in your subject line.
+                            </p>
+                            <div class="alert alert-warning">
+                                <i class="fas fa-info-circle mr-2"></i>
+                                <strong>Medical Emergency?</strong><br>
+                                Contact your local emergency services immediately.
+                            </div>
+                        </div>
+
+                        <!-- Social Media -->
+                        <div class="form-card">
+                            <h4 class="mb-3">
+                                <i class="fas fa-share-alt mr-2 text-primary"></i>
+                                Follow Us
+                            </h4>
+                            <p class="text-muted mb-3">Stay updated with our latest news and success stories</p>
+                            
+                            <div class="social-links">
+                                <a href="#" class="btn btn-outline btn-sm mr-2 mb-2">
+                                    <i class="fab fa-facebook mr-2"></i>Facebook
+                                </a>
+                                <a href="#" class="btn btn-outline btn-sm mr-2 mb-2">
+                                    <i class="fab fa-twitter mr-2"></i>Twitter
+                                </a>
+                                <a href="#" class="btn btn-outline btn-sm mr-2 mb-2">
+                                    <i class="fab fa-instagram mr-2"></i>Instagram
+                                </a>
+                                <a href="#" class="btn btn-outline btn-sm mb-2">
+                                    <i class="fab fa-linkedin mr-2"></i>LinkedIn
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Reference -->
+                <div class="row mt-5" data-aos="fade-up">
+                    <div class="col-12">
+                        <div class="form-card text-center">
+                            <h4 class="mb-3">
+                                <i class="fas fa-question-circle mr-2 text-primary"></i>
+                                Check Our FAQ First
+                            </h4>
+                            <p class="text-muted mb-4">
+                                Many common questions are answered in our comprehensive FAQ section. 
+                                You might find your answer there instantly!
+                            </p>
+                            <a href="{% url 'faq' %}" class="btn btn-outline btn-lg">
+                                <i class="fas fa-search mr-2"></i>
+                                Browse FAQ
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+.contact-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--gradient-primary);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.contact-item {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--gray-light);
+}
+
+.contact-item:last-child {
+    border-bottom: none;
+}
+
+.social-links .btn {
+    transition: var(--transition-fast);
+}
+
+.social-links .btn:hover {
+    transform: translateY(-2px);
+}
+
+.form-label {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 0.5rem;
+}
+
+.form-label i {
+    color: var(--primary-color);
+}
+
+#contact-form .btn-primary {
+    background: var(--gradient-primary);
+    border: none;
+    transition: var(--transition-medium);
+}
+
+#contact-form .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Dark mode support */
+[data-theme="dark"] .contact-item {
+    border-bottom-color: var(--gray-light);
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize AOS
+    AOS.init({
+        duration: 800,
+        once: true
+    });
+
+    // Contact form submission
+    const contactForm = document.getElementById('contact-form');
+    const successMessage = document.getElementById('success-message');
+
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Get form data
+        const formData = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            subject: document.getElementById('subject').value,
+            message: document.getElementById('message').value
+        };
+
+        // Validate form
+        if (!formData.name || !formData.email || !formData.subject || !formData.message) {
+            alert('Please fill in all required fields.');
+            return;
+        }
+
+        // Simulate form submission
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+        const originalText = submitButton.innerHTML;
+        
+        submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Sending...';
+        submitButton.disabled = true;
+
+        // Simulate API call
+        setTimeout(function() {
+            // Reset form
+            contactForm.reset();
+            
+            // Show success message
+            successMessage.style.display = 'block';
+            
+            // Reset button
+            submitButton.innerHTML = originalText;
+            submitButton.disabled = false;
+            
+            // Scroll to success message
+            successMessage.scrollIntoView({ behavior: 'smooth' });
+            
+            // Hide success message after 5 seconds
+            setTimeout(function() {
+                successMessage.style.display = 'none';
+            }, 5000);
+            
+        }, 2000);
+    });
+
+    // Character counter for message field
+    const messageField = document.getElementById('message');
+    messageField.addEventListener('input', function() {
+        const currentLength = this.value.length;
+        const maxLength = 1000;
+        
+        // Add character counter if it doesn't exist
+        let counter = this.parentNode.querySelector('.char-counter');
+        if (!counter) {
+            counter = document.createElement('small');
+            counter.className = 'char-counter form-text text-muted text-right';
+            this.parentNode.appendChild(counter);
+        }
+        
+        counter.textContent = `${currentLength}/1000 characters`;
+        
+        if (currentLength > maxLength) {
+            counter.classList.add('text-danger');
+            counter.classList.remove('text-muted');
+        } else {
+            counter.classList.add('text-muted');
+            counter.classList.remove('text-danger');
+        }
+    });
+});
+</script>
+{% endblock %}

@@ -1,10 +1,167 @@
 {% extends 'base.html' %}
 
+{% block title %}Login - 3D4P{% endblock %}
+
 {% block content %}
-<h2>Log In</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Log In</button>
-</form>
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+                <!-- Login Card -->
+                <div class="form-card" data-aos="fade-up">
+                    <div class="text-center mb-4">
+                        <h2 class="text-gradient mb-3">
+                            <i class="fas fa-sign-in-alt mr-2"></i>
+                            Welcome Back
+                        </h2>
+                        <p class="text-muted">Sign in to continue helping those in need</p>
+                    </div>
+
+                    <!-- Display Messages -->
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert">
+                                    <span>&times;</span>
+                                </button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <form method="post" class="login-form">
+                        {% csrf_token %}
+                        
+                        <!-- Username Field -->
+                        <div class="form-group">
+                            <label class="form-label" for="{{ form.username.id_for_label }}">
+                                <i class="fas fa-user mr-2"></i>Username
+                            </label>
+                            <input type="text" 
+                                   class="form-control {% if form.username.errors %}is-invalid{% endif %}" 
+                                   name="{{ form.username.name }}" 
+                                   id="{{ form.username.id_for_label }}"
+                                   placeholder="Enter your username"
+                                   value="{{ form.username.value|default:'' }}"
+                                   required>
+                            {% if form.username.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.username.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Password Field -->
+                        <div class="form-group">
+                            <label class="form-label" for="{{ form.password.id_for_label }}">
+                                <i class="fas fa-lock mr-2"></i>Password
+                            </label>
+                            <div class="password-field-wrapper position-relative">
+                                <input type="password" 
+                                       class="form-control {% if form.password.errors %}is-invalid{% endif %}" 
+                                       name="{{ form.password.name }}" 
+                                       id="{{ form.password.id_for_label }}"
+                                       placeholder="Enter your password"
+                                       required>
+                                <button type="button" class="password-toggle" onclick="togglePassword('{{ form.password.id_for_label }}')">
+                                    <i class="fas fa-eye" id="eye-icon-{{ form.password.id_for_label }}"></i>
+                                </button>
+                            </div>
+                            {% if form.password.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.password.errors.0 }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary btn-lg btn-block mt-4">
+                            <i class="fas fa-sign-in-alt mr-2"></i>
+                            Sign In
+                        </button>
+                    </form>
+
+                    <!-- Footer Links -->
+                    <div class="text-center mt-4 pt-4 border-top">
+                        <p class="text-muted mb-2">Don't have an account?</p>
+                        <a href="{% url 'signup' %}" class="btn btn-outline btn-lg">
+                            <i class="fas fa-user-plus mr-2"></i>
+                            Create Account
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+/* Login Page Specific Styles */
+.login-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.password-field-wrapper {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--gray-medium);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: var(--transition-fast);
+}
+
+.password-toggle:hover {
+    color: var(--primary-color);
+    background: var(--gray-light);
+}
+
+.form-label {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 0.5rem;
+}
+
+.form-label i {
+    color: var(--primary-color);
+}
+
+/* Dark mode support */
+[data-theme="dark"] .password-toggle:hover {
+    background: var(--gray-light);
+}
+</style>
+
+<script>
+function togglePassword(fieldId) {
+    const passwordField = document.getElementById(fieldId);
+    const eyeIcon = document.getElementById('eye-icon-' + fieldId);
+    
+    if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        eyeIcon.className = 'fas fa-eye-slash';
+    } else {
+        passwordField.type = 'password';
+        eyeIcon.className = 'fas fa-eye';
+    }
+}
+
+// Initialize AOS for the login form
+document.addEventListener('DOMContentLoaded', function() {
+    AOS.init({
+        duration: 800,
+        once: true
+    });
+});
+</script>
 {% endblock %}

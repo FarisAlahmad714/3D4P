@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Page Header -->
+    <div class="jumbotron bg-primary text-white">
+        <h1 class="display-4">🩺 Prosthetic Donation Requests</h1>
+        <p class="lead">Help provide prosthetic assistance to those in need. Every donation makes a difference.</p>
+        <hr class="my-4 bg-white">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>${{ total_raised|floatformat:0 }}</h5>
+                <small>Total Raised</small>
+            </div>
+            <div class="col-md-4">
+                <h5>${{ total_goals|floatformat:0 }}</h5>
+                <small>Total Goal</small>
+            </div>
+            <div class="col-md-4">
+                <h5>{{ posts|length }}</h5>
+                <small>Active Requests</small>
+            </div>
+        </div>
+    </div>
+    
+    {% if posts %}
+        <div class="row">
+            {% for post in posts %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100">
+                    {% if post.image %}
+                        <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}" style="height: 200px; object-fit: cover;">
+                    {% endif %}
+                    
+                    <div class="card-body d-flex flex-column">
+                        <span class="badge badge-danger mb-2 align-self-start">🩺 Urgent Request</span>
+                        
+                        <h5 class="card-title">{{ post.title }}</h5>
+                        <p class="card-text flex-grow-1">{{ post.content|truncatewords:20 }}</p>
+                        
+                        {% if post.donation_details %}
+                        <div class="alert alert-info p-2 mb-3">
+                            <small>
+                                <strong>💰 Goal:</strong> ${{ post.donation_details.estimated_cost }}<br>
+                                <strong>🦾 Type:</strong> {{ post.donation_details.prosthetic_type }}
+                            </small>
+                        </div>
+                        {% endif %}
+                        
+                        <!-- Progress Bar -->
+                        {% if post.donation_goal %}
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between mb-1">
+                                <small><strong>${{ post.donation_goal.current_amount }}</strong> raised</small>
+                                <small>of ${{ post.donation_goal.goal_amount }}</small>
+                            </div>
+                            <div class="progress" style="height: 8px;">
+                                <div class="progress-bar bg-success" role="progressbar" 
+                                     style="width: {{ post.donation_goal.progress_percentage }}%"
+                                     aria-valuenow="{{ post.donation_goal.progress_percentage }}" 
+                                     aria-valuemin="0" aria-valuemax="100">
+                                </div>
+                            </div>
+                            <small class="text-muted">{{ post.donation_goal.progress_percentage|floatformat:1 }}% funded</small>
+                        </div>
+                        {% endif %}
+                        
+                        <div class="mt-auto">
+                            <div class="btn-group btn-group-sm d-flex">
+                                <a href="{% url 'donate_to_post' post.id %}" class="btn btn-success flex-fill">
+                                    💝 Donate
+                                </a>
+                                <a href="{% url 'post_detail' post.pk %}" class="btn btn-outline-primary flex-fill">
+                                    Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer bg-light">
+                        <small class="text-muted">
+                            Requested by 
+                            {% if post.author %}
+                                <strong>{{ post.author.username }}</strong>
+                            {% else %}
+                                <strong>{{ post.author_name }}</strong>
+                            {% endif %}
+                            • {{ post.created_at|timesince }} ago
+                        </small>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Pagination -->
+        {% if posts.has_other_pages %}
+        <nav aria-label="Donation requests pagination">
+            <ul class="pagination justify-content-center">
+                {% if posts.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1">&laquo; First</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ posts.previous_page_number }}">Previous</a>
+                    </li>
+                {% endif %}
+                
+                <li class="page-item active">
+                    <span class="page-link">
+                        Page {{ posts.number }} of {{ posts.paginator.num_pages }}
+                    </span>
+                </li>
+                
+                {% if posts.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ posts.next_page_number }}">Next</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ posts.paginator.num_pages }}">Last &raquo;</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endif %}
+        
+    {% else %}
+        <div class="text-center py-5">
+            <div class="card">
+                <div class="card-body">
+                    <h3>🔍 No Active Donation Requests</h3>
+                    <p class="lead text-muted">There are currently no active prosthetic donation requests.</p>
+                    <p>Check back later or help spread the word about our platform.</p>
+                    <a href="{% url 'home' %}" class="btn btn-primary">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

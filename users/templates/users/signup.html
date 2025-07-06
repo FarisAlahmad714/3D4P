@@ -1,115 +1,441 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/signup.css' %}">
-<style>
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0,0,0,0.4);
-    }
-    .modal-content {
-        background-color: #fefefe;
-        margin: 15% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-        max-width: 600px;
-    }
-    .error-message {
-        color: red;
-        margin-top: 5px;
-    }
-    .success-message {
-        color: green;
-        margin-top: 5px;
-    }
-    #signup-form-container {
-        display: none;
-    }
-</style>
-{% endblock %}
+{% block title %}Sign Up - 3D4P{% endblock %}
 
 {% block content %}
-<h2>Sign up</h2>
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <!-- Sign Up Card -->
+                <div class="form-card" data-aos="fade-up">
+                    <div class="text-center mb-4">
+                        <h2 class="text-gradient mb-3">
+                            <i class="fas fa-user-plus mr-2"></i>
+                            Join Our Community
+                        </h2>
+                        <p class="text-muted">Create an account to start helping others or request assistance</p>
+                    </div>
 
-{% if messages %}
-<div class="messages">
-    {% for message in messages %}
-    <div{% if message.tags %} class="{{ message.tags }}-message"{% endif %}>{{ message }}</div>
-    {% endfor %}
-</div>
-{% endif %}
+                    <!-- Display Messages (will be shown after modal) -->
+                    <div id="messages-container" class="messages-container" style="display: none;">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show message-alert" role="alert">
+                                    <i class="fas fa-{% if message.tags == 'error' %}exclamation-triangle{% elif message.tags == 'success' %}check-circle{% elif message.tags == 'info' %}info-circle{% else %}bell{% endif %} mr-2"></i>
+                                    {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
 
-<div id="disclaimer-modal" class="modal">
-    <div class="modal-content">
-        <h3>Important Notice</h3>
-        <p>{{ disclaimer }}</p>
-        <button id="agree-button">I Agree</button>
-    </div>
-</div>
+                    <!-- Disclaimer Modal -->
+                    <div id="disclaimer-modal" class="disclaimer-modal">
+                        <div class="modal-content-custom">
+                            <div class="modal-header-custom">
+                                <h3><i class="fas fa-info-circle mr-2"></i>Important Notice</h3>
+                            </div>
+                            <div class="modal-body-custom">
+                                <p>{{ disclaimer }}</p>
+                            </div>
+                            <div class="modal-footer-custom">
+                                <button id="agree-button" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-check mr-2"></i>I Understand & Agree
+                                </button>
+                            </div>
+                        </div>
+                    </div>
 
-<div id="signup-form-container">
-    <form method="post" enctype="multipart/form-data" id="signup_form">
-        {% csrf_token %}
-        {% for field in form %}
-        <div class="form-group">
-            {{ field.label_tag }}
-            {{ field }}
-            {% if field.help_text %}
-            <small class="form-text text-muted">{{ field.help_text }}</small>
-            {% endif %}
-            {% for error in field.errors %}
-            <div class="error-message">{{ error }}</div>
-            {% endfor %}
+                    <!-- Sign Up Form -->
+                    <div id="signup-form-container" class="signup-form-hidden">
+                        <form method="post" enctype="multipart/form-data" id="signup_form" class="signup-form">
+                            {% csrf_token %}
+                            
+                            <div class="row">
+                                {% for field in form %}
+                                    <div class="{% if field.name == 'username' or field.name == 'email' %}col-md-6{% else %}col-12{% endif %} form-group">
+                                        <label class="form-label" for="{{ field.id_for_label }}">
+                                            {% if field.name == 'username' %}
+                                                <i class="fas fa-user mr-2"></i>
+                                            {% elif field.name == 'email' %}
+                                                <i class="fas fa-envelope mr-2"></i>
+                                            {% elif field.name == 'password1' %}
+                                                <i class="fas fa-lock mr-2"></i>
+                                            {% elif field.name == 'password2' %}
+                                                <i class="fas fa-shield-alt mr-2"></i>
+                                            {% elif field.name == 'first_name' %}
+                                                <i class="fas fa-user-tag mr-2"></i>
+                                            {% elif field.name == 'last_name' %}
+                                                <i class="fas fa-user-tag mr-2"></i>
+                                            {% else %}
+                                                <i class="fas fa-info-circle mr-2"></i>
+                                            {% endif %}
+                                            {{ field.label }}
+                                        </label>
+                                        
+                                        {% if field.field.widget.input_type == 'password' %}
+                                            <div class="password-field-wrapper position-relative">
+                                                <input type="password" 
+                                                       class="form-control {% if field.errors %}is-invalid{% endif %}" 
+                                                       name="{{ field.name }}" 
+                                                       id="{{ field.id_for_label }}"
+                                                       placeholder="{% if field.name == 'password1' %}Create a strong password{% else %}Confirm your password{% endif %}"
+                                                       {% if field.field.required %}required{% endif %}>
+                                                <button type="button" class="password-toggle" onclick="togglePassword('{{ field.id_for_label }}')">
+                                                    <i class="fas fa-eye" id="eye-icon-{{ field.id_for_label }}"></i>
+                                                </button>
+                                            </div>
+                                        {% elif field.field.widget.input_type == 'email' %}
+                                            <input type="email" 
+                                                   class="form-control {% if field.errors %}is-invalid{% endif %}" 
+                                                   name="{{ field.name }}" 
+                                                   id="{{ field.id_for_label }}"
+                                                   placeholder="your.email@example.com"
+                                                   value="{{ field.value|default:'' }}"
+                                                   {% if field.field.required %}required{% endif %}>
+                                        {% else %}
+                                            <input type="text" 
+                                                   class="form-control {% if field.errors %}is-invalid{% endif %}" 
+                                                   name="{{ field.name }}" 
+                                                   id="{{ field.id_for_label }}"
+                                                   placeholder="{% if field.name == 'username' %}Choose a unique username{% elif field.name == 'first_name' %}Your first name{% elif field.name == 'last_name' %}Your last name{% else %}{{ field.label }}{% endif %}"
+                                                   value="{{ field.value|default:'' }}"
+                                                   {% if field.field.required %}required{% endif %}>
+                                        {% endif %}
+                                        
+                                        {% if field.help_text %}
+                                            <small class="form-text text-muted">
+                                                <i class="fas fa-lightbulb mr-1"></i>{{ field.help_text }}
+                                            </small>
+                                        {% endif %}
+                                        
+                                        {% if field.errors %}
+                                            <div class="invalid-feedback">
+                                                {% for error in field.errors %}
+                                                    <i class="fas fa-exclamation-circle mr-1"></i>{{ error }}
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            
+                            <input type="hidden" name="disclaimer_agreed" id="disclaimer_agreed" value="false">
+                            
+                            <!-- Submit Button -->
+                            <button type="submit" id="submit_button" class="btn btn-primary btn-lg btn-block mt-4">
+                                <i class="fas fa-user-plus mr-2"></i>
+                                Create My Account
+                            </button>
+                        </form>
+
+                        <!-- Footer Links -->
+                        <div class="text-center mt-4 pt-4 border-top">
+                            <p class="text-muted mb-2">Already have an account?</p>
+                            <a href="{% url 'login' %}" class="btn btn-outline btn-lg">
+                                <i class="fas fa-sign-in-alt mr-2"></i>
+                                Sign In Instead
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        {% endfor %}
-        <input type="hidden" name="disclaimer_agreed" id="disclaimer_agreed" value="false">
-        <button type="submit" id="submit_button">Sign Up</button>
-    </form>
-</div>
+    </div>
+</section>
+
+<style>
+/* Sign Up Page Specific Styles */
+.signup-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.signup-form-hidden {
+    display: none;
+}
+
+.disclaimer-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+    padding-top: 80px; /* Just add top padding for navbar */
+}
+
+.modal-content-custom {
+    background: var(--white);
+    border-radius: 20px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-xl);
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal-header-custom {
+    padding: 2rem 2rem 1rem;
+    border-bottom: 1px solid var(--gray-light);
+}
+
+.modal-header-custom h3 {
+    color: var(--primary-color);
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.modal-body-custom {
+    padding: 1.5rem 2rem;
+}
+
+.modal-footer-custom {
+    padding: 1rem 2rem 2rem;
+    text-align: center;
+}
+
+.password-field-wrapper {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--gray-medium);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: var(--transition-fast);
+}
+
+.password-toggle:hover {
+    color: var(--primary-color);
+    background: var(--gray-light);
+}
+
+.form-label {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-bottom: 0.5rem;
+}
+
+.form-label i {
+    color: var(--primary-color);
+}
+
+.form-text {
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+.invalid-feedback {
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    color: var(--danger-color);
+}
+
+/* Messages Container Styling */
+.messages-container {
+    margin-bottom: 1.5rem;
+    z-index: 10;
+    position: relative;
+}
+
+.message-alert {
+    border: none;
+    border-left: 4px solid;
+    border-radius: 8px;
+    font-weight: 500;
+    box-shadow: var(--shadow-md);
+    animation: slideInDown 0.5s ease;
+}
+
+.alert-error {
+    background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+    color: #b91c1c;
+    border-left-color: #dc2626;
+}
+
+.alert-success {
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+    color: #166534;
+    border-left-color: #16a34a;
+}
+
+.alert-info {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    color: #0c4a6e;
+    border-left-color: #0284c7;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Dark Mode Support */
+[data-theme="dark"] .modal-content-custom {
+    background: var(--white);
+}
+
+[data-theme="dark"] .modal-header-custom {
+    border-bottom-color: var(--gray-light);
+}
+
+[data-theme="dark"] .password-toggle:hover {
+    background: var(--gray-light);
+}
+
+[data-theme="dark"] .alert-error {
+    background: linear-gradient(135deg, #3f1518 0%, #571e22 100%);
+    color: #f87171;
+    border-left-color: #ef4444;
+}
+
+[data-theme="dark"] .alert-success {
+    background: linear-gradient(135deg, #1e3a32 0%, #2d5748 100%);
+    color: #4ade80;
+    border-left-color: #22c55e;
+}
+
+[data-theme="dark"] .alert-info {
+    background: linear-gradient(135deg, #1e3548 0%, #2d5062 100%);
+    color: #60a5fa;
+    border-left-color: #3b82f6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .disclaimer-modal {
+        padding-top: 60px; /* Less top padding on mobile */
+    }
+    
+    .modal-content-custom {
+        width: 95%;
+        max-height: 80vh; /* Increased for mobile to show button */
+    }
+    
+    .modal-header-custom,
+    .modal-body-custom,
+    .modal-footer-custom {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+}
+</style>
 
 <script>
+function togglePassword(fieldId) {
+    const passwordField = document.getElementById(fieldId);
+    const eyeIcon = document.getElementById('eye-icon-' + fieldId);
+    
+    if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        eyeIcon.className = 'fas fa-eye-slash';
+    } else {
+        passwordField.type = 'password';
+        eyeIcon.className = 'fas fa-eye';
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const modal = document.getElementById('disclaimer-modal');
     const agreeButton = document.getElementById('agree-button');
     const signupFormContainer = document.getElementById('signup-form-container');
     const disclaimerAgreed = document.getElementById('disclaimer_agreed');
-    const passwordFields = document.querySelectorAll('input[type="password"]');
+    const messagesContainer = document.getElementById('messages-container');
 
-    // Show modal on page load
-    modal.style.display = 'block';
+    // Check if user has already agreed to disclaimer
+    const hasAgreed = localStorage.getItem('disclaimer_agreed') === 'true';
+    
+    if (hasAgreed) {
+        // Skip modal if already agreed
+        modal.style.display = 'none';
+        signupFormContainer.classList.remove('signup-form-hidden');
+        disclaimerAgreed.value = 'true';
+        
+        // Show messages immediately with scroll
+        if (messagesContainer) {
+            messagesContainer.style.display = 'block';
+            
+            // Scroll to messages after page loads
+            setTimeout(() => {
+                messagesContainer.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }, 500);
+        }
+    } else {
+        // Show modal on page load
+        modal.style.display = 'flex';
+    }
 
     agreeButton.addEventListener('click', function() {
         modal.style.display = 'none';
-        signupFormContainer.style.display = 'block';
+        signupFormContainer.classList.remove('signup-form-hidden');
         disclaimerAgreed.value = 'true';
+        
+        // Remember that user has agreed
+        localStorage.setItem('disclaimer_agreed', 'true');
+        
+        // Show messages after modal is dismissed with animation
+        if (messagesContainer) {
+            messagesContainer.style.display = 'block';
+            
+            // Scroll to messages with a slight delay
+            setTimeout(() => {
+                messagesContainer.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }, 300);
+        }
+        
+        // Initialize AOS after form is shown
+        AOS.refresh();
     });
 
-    passwordFields.forEach(function(field) {
-        const toggleButton = document.createElement('button');
-        toggleButton.type = 'button';
-        toggleButton.textContent = 'Show';
-        toggleButton.style.marginLeft = '10px';
-        
-        field.parentNode.appendChild(toggleButton);
-        
-        toggleButton.addEventListener('click', function() {
-            if (field.type === 'password') {
-                field.type = 'text';
-                this.textContent = 'Hide';
-            } else {
-                field.type = 'password';
-                this.textContent = 'Show';
-            }
-        });
+    // Initialize AOS
+    AOS.init({
+        duration: 800,
+        once: true
     });
 });
 </script>

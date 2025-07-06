@@ -1,48 +1,173 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>{{ post.title }}</h1>
-  <p>{{ post.content }}</p>
-  <p>Author: {{ post.author.username or post.author_name }}</p>
-  <p>Created at: {{ post.created_at }}</p>
-  <p>View Count: {{ post.view_count }}</p>
-  <button id="shareButton" data-post-id="{{ post.id }}">Share</button>
-
-  <h2>Comments</h2>
-  {% for comment in comments %}
-    <div>
-      <p>{{ comment.content }}</p>
-      <p>By: {{ comment.author.username or comment.author_name }}</p>
-      <p>Created at: {{ comment.created_at }}</p>
-      <p>View Count: {{ post.view_count }}</p>
-    </div>
-    <div class="share-buttons">
-        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank">Share on Facebook</a>
-        <a href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri }}&text={{ post.title }}" target="_blank">Share on Twitter</a>
-        <!-- Add more sharing buttons or links as needed -->
+<div class="container mt-4">
+  <!-- Post Header -->
+  <div class="card">
+    {% if post.image %}
+      <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+    {% endif %}
+    
+    <div class="card-body">
+      <!-- Post Type Badge -->
+      {% if post.post_type == 'donation' %}
+        <span class="badge badge-danger mb-3">🩺 Donation Request</span>
+      {% else %}
+        <span class="badge badge-primary mb-3">📝 Regular Post</span>
+      {% endif %}
+      
+      <h1 class="card-title">{{ post.title }}</h1>
+      <p class="card-text">{{ post.content }}</p>
+      
+      <!-- Donation Details -->
+      {% if post.post_type == 'donation' %}
+        {% if post.donation_details %}
+          <div class="alert alert-info">
+            <h5>💰 Donation Information</h5>
+            <p><strong>Estimated Cost:</strong> ${{ post.donation_details.estimated_cost }}</p>
+            <p><strong>Prosthetic Type:</strong> {{ post.donation_details.prosthetic_type }}</p>
+            <p><strong>Measurements:</strong> {{ post.donation_details.measurements }}</p>
+          </div>
+        {% else %}
+          <div class="alert alert-warning">
+            <h5>🩺 Prosthetic Donation Request</h5>
+            <p>This is a request for prosthetic assistance. Your donation will help provide medical support.</p>
+          </div>
+        {% endif %}
+        
+        <!-- Donation Goal Progress -->
+        {% if post.donation_goal %}
+          <div class="mb-4">
+            <h5>📊 Funding Progress</h5>
+            <div class="d-flex justify-content-between mb-2">
+              <span>${{ post.donation_goal.current_amount }}</span>
+              <span>${{ post.donation_goal.goal_amount }}</span>
+            </div>
+            <div class="progress mb-2" style="height: 25px;">
+              <div class="progress-bar bg-success" role="progressbar" 
+                   style="width: {{ post.donation_goal.progress_percentage }}%"
+                   aria-valuenow="{{ post.donation_goal.progress_percentage }}" 
+                   aria-valuemin="0" aria-valuemax="100">
+                {{ post.donation_goal.progress_percentage|floatformat:1 }}%
+              </div>
+            </div>
+            <small class="text-muted">
+              ${{ post.donation_goal.remaining_amount }} remaining to reach goal
+            </small>
+          </div>
+        {% endif %}
+          
+        <!-- Donation Button - Always show for donation posts -->
+        <div class="mb-4">
+          <a href="{% url 'donate_to_post' post.id %}" class="btn btn-success btn-lg">
+            💝 Donate Now
+          </a>
+          <small class="text-muted d-block mt-2">
+            Help provide prosthetic assistance for this request
+          </small>
+        </div>
+      {% endif %}
+      
+      <!-- Author and Post Info -->
+      <div class="card-footer bg-light">
+        <div class="row">
+          <div class="col">
+            <small class="text-muted">
+              Posted by 
+              {% if post.author %}
+                <a href="{% url 'user_profile' post.author.username %}">{{ post.author.username }}</a>
+              {% else %}
+                {{ post.author_name }}
+              {% endif %}
+              on {{ post.created_at|date:"F j, Y, g:i A" }}
+            </small>
+          </div>
+          <div class="col text-right">
+            <small class="text-muted">
+              👁️ {{ post.view_count }} views | 📤 {{ post.share_count }} shares
+            </small>
+          </div>
+        </div>
+        
+        <div class="mt-2">
+          <button class="btn btn-outline-secondary btn-sm shareButton" data-post-id="{{ post.id }}">
+            Share This Post
+          </button>
+        </div>
       </div>
-  {% empty %}
-    <p>No comments yet.</p>
-  {% endfor %}
+    </div>
+  </div>
 
-  <h3>Add a Comment</h3>
-  <form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit</button>
-  </form>
+  <!-- Comments Section -->
+  <div class="card mt-4">
+    <div class="card-header">
+      <h3>💬 Comments</h3>
+    </div>
+    <div class="card-body">
+      {% for comment in comments %}
+        <div class="border-bottom mb-3 pb-3">
+          <p>{{ comment.content }}</p>
+          <small class="text-muted">
+            By: 
+            {% if comment.author %}
+              {{ comment.author.username }}
+            {% else %}
+              {{ comment.author_name }}
+            {% endif %}
+            on {{ comment.created_at|date:"F j, Y, g:i A" }}
+          </small>
+        </div>
+      {% empty %}
+        <p class="text-muted">No comments yet. Be the first to comment!</p>
+      {% endfor %}
+    </div>
+  </div>
 
-  <script>
-    document.getElementById('shareButton').addEventListener('click', function() {
-        const postId = this.getAttribute('data-post-id');
-        fetch(`/posts/${postId}/share/`, {method: 'POST', headers: {'X-CSRFToken': '{{ csrf_token }}'}})
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    this.textContent = `Shared (${data.share_count})`;
-                    this.disabled = true;
-                }
-            });
+  <!-- Add Comment Form -->
+  <div class="card mt-4">
+    <div class="card-header">
+      <h4>Add a Comment</h4>
+    </div>
+    <div class="card-body">
+      <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Submit Comment</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.shareButton').forEach(function(button) {
+    button.addEventListener('click', function() {
+      const postId = this.getAttribute('data-post-id');
+      
+      fetch(`/posts/${postId}/share/`, {
+        method: 'POST', 
+        headers: {
+          'X-CSRFToken': '{{ csrf_token }}',
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          this.textContent = `Shared (${data.share_count})`;
+          this.disabled = true;
+          this.classList.add('btn-success');
+          this.classList.remove('btn-outline-secondary');
+        } else {
+          alert('Error sharing post');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Error sharing post');
+      });
     });
-    </script>
+  });
+});
+</script>
 {% endblock %}
