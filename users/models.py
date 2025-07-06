@@ -24,6 +24,23 @@ class MemberApplication(models.Model):
     def __str__(self):
         return f"Application for {self.user.username}"
 
+class MemberVerificationImage(models.Model):
+    """Multiple verification images for member applications"""
+    application = models.ForeignKey(MemberApplication, on_delete=models.CASCADE, related_name='verification_images')
+    image = models.ImageField(upload_to='memberproof/')
+    image_type = models.CharField(max_length=100, choices=[
+        ('government_id', 'Government ID'),
+        ('medical_document', 'Medical Document'),
+        ('prosthetic_proof', 'Prosthetic Need Proof'),
+        ('guardian_id', 'Guardian ID (for minors)'),
+        ('other', 'Other Documentation')
+    ], default='government_id')
+    description = models.CharField(max_length=200, blank=True, help_text="Brief description of this document")
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.get_image_type_display()} for {self.application.user.username}"
+
 class MemberProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     photo = models.ImageField(upload_to='profile_photos',  default='default.jpg')

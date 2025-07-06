@@ -1192,3 +1192,238 @@ section.bg-light {
 [data-theme="dark"] .social-links a:hover {
     color: var(--accent-color);
 }
+
+/* RTL (Right-to-Left) Language Support */
+html[dir="rtl"] {
+    direction: rtl;
+    text-align: right;
+}
+
+html[dir="rtl"] body {
+    font-family: 'Amiri', 'Arial', sans-serif; /* Better Arabic font support */
+}
+
+/* RTL Navigation */
+html[dir="rtl"] .navbar-nav {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .navbar-nav .nav-link {
+    margin: 0 0.25rem 0 0;
+}
+
+html[dir="rtl"] .navbar-brand::before {
+    margin-left: 0.5rem;
+    margin-right: 0;
+}
+
+/* RTL Cards and Content */
+html[dir="rtl"] .card-body {
+    text-align: right;
+}
+
+html[dir="rtl"] .form-label {
+    text-align: right;
+    justify-content: flex-end;
+}
+
+html[dir="rtl"] .form-label i {
+    margin-left: 0.5rem;
+    margin-right: 0;
+}
+
+/* RTL Footer */
+html[dir="rtl"] .footer-links a:hover {
+    transform: translateX(-5px);
+}
+
+html[dir="rtl"] .social-links {
+    direction: ltr; /* Keep social icons LTR */
+}
+
+/* RTL Progress bars */
+html[dir="rtl"] .progress-bar::after {
+    right: auto;
+    left: -20px;
+}
+
+/* RTL Buttons and forms */
+html[dir="rtl"] .btn {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .btn i {
+    margin-left: 0.5rem;
+    margin-right: 0;
+}
+
+/* RTL Modal positioning */
+html[dir="rtl"] .modal-header-custom h3 {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .close-modal {
+    right: auto;
+    left: 1.5rem;
+}
+
+/* RTL Password toggle */
+html[dir="rtl"] .password-toggle {
+    right: auto;
+    left: 12px;
+}
+
+/* RTL Messages */
+html[dir="rtl"] .message-alert i {
+    margin-left: 0.5rem;
+    margin-right: 0;
+}
+
+/* RTL Theme toggle */
+html[dir="rtl"] .theme-toggle {
+    flex-direction: row-reverse;
+}
+
+html[dir="rtl"] .theme-toggle i {
+    margin-left: 0.5rem;
+    margin-right: 0;
+}
+
+/* RTL Language dropdown */
+html[dir="rtl"] .dropdown-menu {
+    right: 0;
+    left: auto;
+}
+
+/* RTL Dark mode support */
+[data-theme="dark"] html[dir="rtl"] .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='m26 7h-22M26 15h-22M26 23h-22'/%3e%3c/svg%3e");
+}
+
+/* RTL Typography improvements */
+html[dir="rtl"] h1, html[dir="rtl"] h2, html[dir="rtl"] h3, 
+html[dir="rtl"] h4, html[dir="rtl"] h5, html[dir="rtl"] h6 {
+    text-align: right;
+}
+
+html[dir="rtl"] p, html[dir="rtl"] .card-text {
+    text-align: right;
+    line-height: 1.8; /* Better for Arabic text */
+}
+
+/* RTL Responsive adjustments */
+@media (max-width: 768px) {
+    html[dir="rtl"] .navbar-brand {
+        margin-right: 0;
+        margin-left: auto;
+    }
+    
+    html[dir="rtl"] .navbar-toggler {
+        margin-left: 0;
+        margin-right: auto;
+    }
+}
+
+/* Language Switcher Styles */
+.language-flag {
+    margin-right: 0.5rem;
+    font-size: 1.2em;
+}
+
+html[dir="rtl"] .language-flag {
+    margin-right: 0;
+    margin-left: 0.5rem;
+}
+
+/* Fix dropdown visibility and positioning */
+.dropdown-menu {
+    z-index: 9999 !important;
+    min-width: 200px;
+    max-height: 400px;
+    overflow-y: auto;
+    border: none;
+    border-radius: 12px;
+    box-shadow: var(--shadow-xl);
+    padding: 0.5rem 0;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    transition: var(--transition-fast);
+    border: none;
+    background: transparent;
+    width: 100%;
+    text-align: left;
+    font-size: 0.95rem;
+    color: var(--dark-color);
+}
+
+.dropdown-item:hover {
+    background: var(--gradient-primary);
+    color: white;
+    text-decoration: none;
+}
+
+.dropdown-item:focus {
+    background: var(--gradient-primary);
+    color: white;
+    outline: none;
+}
+
+.dropdown-item.active {
+    background: var(--primary-color);
+    color: white;
+    font-weight: 600;
+}
+
+/* Ensure dropdown button works */
+.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.2rem rgba(18, 53, 36, 0.25);
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+
+.dropdown-header {
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--gray-medium);
+    white-space: nowrap;
+    border-bottom: 1px solid var(--gray-light);
+}
+
+.dropdown-header i {
+    margin-right: 0.5rem;
+    color: var(--primary-color);
+}
+
+/* Language-specific font improvements */
+.dropdown-item[style*="Noto Sans Arabic"],
+.dropdown-item[style*="Amiri"] {
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.dropdown-item[style*="Noto Sans"] {
+    font-size: 0.9rem;
+}
+
+/* Dark mode language dropdown */
+[data-theme="dark"] .dropdown-item {
+    background: var(--white);
+    color: var(--dark-color);
+}
+
+[data-theme="dark"] .dropdown-item:hover {
+    background: var(--gradient-primary);
+    color: white;
+}
+
+[data-theme="dark"] .dropdown-item.active {
+    background: var(--accent-color);
+    color: white;
+}

@@ -60,6 +60,9 @@
                         </div>
                     </div>
                     <p><small class="text-muted">{{ total_donors }} donor{{ total_donors|pluralize }} so far</small></p>
+                    {% if goal.total_monthly_supporters > 0 %}
+                        <p><small class="text-info">📅 {{ goal.total_monthly_supporters }} monthly supporter{{ goal.total_monthly_supporters|pluralize }} contributing ${{ goal.monthly_donation_total }}/month</small></p>
+                    {% endif %}
                     <p><small class="text-success">Only ${{ goal.remaining_amount }} needed to reach goal!</small></p>
                 </div>
             </div>
@@ -71,11 +74,29 @@
                     <h5>💝 Make a Donation</h5>
                 </div>
                 <div class="card-body">
+                    <!-- Donation Type Selection -->
+                    <div class="form-group mb-4">
+                        <label class="font-weight-bold">Choose Donation Type:</label>
+                        <div class="btn-group btn-group-toggle w-100 mt-2" data-toggle="buttons">
+                            <label class="btn btn-outline-primary active" id="oneTimeLabel">
+                                <input type="radio" name="donation_type" id="oneTime" value="one_time" checked>
+                                <i class="fas fa-heart"></i> One-time
+                            </label>
+                            <label class="btn btn-outline-success" id="monthlyLabel">
+                                <input type="radio" name="donation_type" id="monthly" value="monthly">
+                                <i class="fas fa-calendar-alt"></i> Monthly
+                            </label>
+                        </div>
+                        <small class="text-muted d-block mt-1">
+                            <span id="donationType-help">Make a one-time donation to help immediately</span>
+                        </small>
+                    </div>
+                    
                     <form method="post" id="donationForm">
                         {% csrf_token %}
                         
-                        <!-- Predefined Amounts -->
-                        <div class="form-group">
+                        <!-- One-time Donation Amounts -->
+                        <div class="form-group" id="oneTimeAmounts">
                             <label>Choose Amount:</label>
                             <div class="row">
                                 <div class="col-6 mb-2">
@@ -99,10 +120,36 @@
                             </div>
                         </div>
                         
+                        <!-- Monthly Donation Amounts -->
+                        <div class="form-group" id="monthlyAmounts" style="display: none;">
+                            <label>Choose Monthly Amount:</label>
+                            <div class="row">
+                                <div class="col-6 mb-2">
+                                    <button type="button" class="btn btn-outline-success btn-block monthly-amount-btn" data-amount="5">$5/mo</button>
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <button type="button" class="btn btn-outline-success btn-block monthly-amount-btn" data-amount="10">$10/mo</button>
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <button type="button" class="btn btn-outline-success btn-block monthly-amount-btn" data-amount="25">$25/mo</button>
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <button type="button" class="btn btn-outline-success btn-block monthly-amount-btn" data-amount="50">$50/mo</button>
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <button type="button" class="btn btn-outline-success btn-block monthly-amount-btn" data-amount="100">$100/mo</button>
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <button type="button" class="btn btn-outline-success btn-block monthly-amount-btn" data-amount="250">$250/mo</button>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <!-- Custom Amount -->
                         <div class="form-group">
-                            <label for="{{ form.amount.id_for_label }}">Custom Amount ($):</label>
+                            <label for="{{ form.amount.id_for_label }}" id="customAmountLabel">Custom Amount ($):</label>
                             {{ form.amount }}
+                            <small class="text-muted" id="customAmountHelp">Minimum: $1 for one-time, $5 for monthly</small>
                         </div>
                         
                         <!-- Donor Information -->
@@ -131,11 +178,11 @@
                         </div>
                         
                         <!-- Submit Button -->
-                        <button type="submit" class="btn btn-success btn-lg btn-block">
+                        <button type="submit" class="btn btn-success btn-lg btn-block" id="submitButton">
                             💳 Proceed to Payment
                         </button>
                         
-                        <small class="text-muted d-block text-center mt-2">
+                        <small class="text-muted d-block text-center mt-2" id="paymentInfo">
                             Secure payment powered by Stripe
                         </small>
                     </form>
@@ -175,11 +222,68 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Handle predefined amount buttons
+    const oneTimeRadio = document.getElementById('oneTime');
+    const monthlyRadio = document.getElementById('monthly');
+    const oneTimeAmounts = document.getElementById('oneTimeAmounts');
+    const monthlyAmounts = document.getElementById('monthlyAmounts');
+    const submitButton = document.getElementById('submitButton');
+    const paymentInfo = document.getElementById('paymentInfo');
+    const customAmountLabel = document.getElementById('customAmountLabel');
+    const customAmountHelp = document.getElementById('customAmountHelp');
+    const donationTypeHelp = document.getElementById('donationType-help');
+    const amountInput = document.getElementById('id_amount');
+    
+    // Handle donation type toggle
+    function toggleDonationType() {
+        if (monthlyRadio.checked) {
+            oneTimeAmounts.style.display = 'none';
+            monthlyAmounts.style.display = 'block';
+            submitButton.innerHTML = '📅 Start Monthly Subscription';
+            paymentInfo.innerHTML = 'Secure recurring payments powered by Stripe';
+            customAmountLabel.innerHTML = 'Custom Monthly Amount ($):';
+            customAmountHelp.innerHTML = 'Minimum: $5 for monthly donations';
+            donationTypeHelp.innerHTML = 'Support with a recurring monthly donation';
+            amountInput.setAttribute('min', '5.00');
+            amountInput.value = '';
+            
+            // Reset amount buttons
+            resetAmountButtons();
+        } else {
+            oneTimeAmounts.style.display = 'block';
+            monthlyAmounts.style.display = 'none';
+            submitButton.innerHTML = '💳 Proceed to Payment';
+            paymentInfo.innerHTML = 'Secure payment powered by Stripe';
+            customAmountLabel.innerHTML = 'Custom Amount ($):';
+            customAmountHelp.innerHTML = 'Minimum: $1 for one-time, $5 for monthly';
+            donationTypeHelp.innerHTML = 'Make a one-time donation to help immediately';
+            amountInput.setAttribute('min', '1.00');
+            amountInput.value = '';
+            
+            // Reset amount buttons
+            resetAmountButtons();
+        }
+    }
+    
+    function resetAmountButtons() {
+        document.querySelectorAll('.amount-btn, .monthly-amount-btn').forEach(btn => {
+            btn.classList.remove('btn-primary', 'btn-success');
+            if (btn.classList.contains('amount-btn')) {
+                btn.classList.add('btn-outline-primary');
+            } else {
+                btn.classList.add('btn-outline-success');
+            }
+        });
+    }
+    
+    // Event listeners for donation type
+    oneTimeRadio.addEventListener('change', toggleDonationType);
+    monthlyRadio.addEventListener('change', toggleDonationType);
+    
+    // Handle predefined amount buttons (one-time)
     document.querySelectorAll('.amount-btn').forEach(button => {
         button.addEventListener('click', function() {
             const amount = this.getAttribute('data-amount');
-            document.getElementById('id_amount').value = amount;
+            amountInput.value = amount;
             
             // Update button styling
             document.querySelectorAll('.amount-btn').forEach(btn => {
@@ -191,13 +295,37 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Handle custom amount input
-    document.getElementById('id_amount').addEventListener('input', function() {
-        // Reset all amount buttons when custom amount is entered
-        document.querySelectorAll('.amount-btn').forEach(btn => {
-            btn.classList.remove('btn-primary');
-            btn.classList.add('btn-outline-primary');
+    // Handle predefined amount buttons (monthly)
+    document.querySelectorAll('.monthly-amount-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const amount = this.getAttribute('data-amount');
+            amountInput.value = amount;
+            
+            // Update button styling
+            document.querySelectorAll('.monthly-amount-btn').forEach(btn => {
+                btn.classList.remove('btn-success');
+                btn.classList.add('btn-outline-success');
+            });
+            this.classList.remove('btn-outline-success');
+            this.classList.add('btn-success');
         });
+    });
+    
+    // Handle custom amount input
+    amountInput.addEventListener('input', function() {
+        // Reset all amount buttons when custom amount is entered
+        resetAmountButtons();
+    });
+    
+    // Handle form submission
+    document.getElementById('donationForm').addEventListener('submit', function(e) {
+        // Add donation type to form data
+        const formData = new FormData(this);
+        if (monthlyRadio.checked) {
+            formData.append('donation_type', 'monthly');
+        } else {
+            formData.append('donation_type', 'one_time');
+        }
     });
 });
 </script>

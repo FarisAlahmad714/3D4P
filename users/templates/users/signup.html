@@ -18,6 +18,44 @@
                         <p class="text-muted">Create an account to start helping others or request assistance</p>
                     </div>
 
+                    <!-- Verification Requirements Notice -->
+                    <div class="alert alert-info mb-4" role="alert">
+                        <div class="d-flex align-items-start">
+                            <i class="fas fa-shield-alt fa-lg mt-1 mr-3 text-primary"></i>
+                            <div>
+                                <h5 class="alert-heading mb-2">
+                                    <i class="fas fa-info-circle mr-1"></i>
+                                    Important: Verification Required for Donation Requests
+                                </h5>
+                                <p class="mb-2">
+                                    <strong>To ensure the safety and legitimacy of our platform, all users who wish to receive donations must complete a rigorous verification process:</strong>
+                                </p>
+                                <ul class="mb-2 pl-3">
+                                    <li class="mb-1">
+                                        <i class="fas fa-file-medical text-success mr-2"></i>
+                                        <strong>Extensive Medical Documentation:</strong> Complete medical history and proof of prosthetic need
+                                    </li>
+                                    <li class="mb-1">
+                                        <i class="fas fa-id-card text-success mr-2"></i>
+                                        <strong>Government-Issued Identification:</strong> Valid passport or national ID card
+                                    </li>
+                                    <li class="mb-1">
+                                        <i class="fas fa-user-friends text-success mr-2"></i>
+                                        <strong>For Minors (Under 16):</strong> Parent/guardian government-issued ID and documentation
+                                    </li>
+                                    <li class="mb-1">
+                                        <i class="fas fa-user-check text-success mr-2"></i>
+                                        <strong>Manual Review:</strong> All applications are personally reviewed by our verification team
+                                    </li>
+                                </ul>
+                                <p class="mb-0">
+                                    <i class="fas fa-clock text-warning mr-2"></i>
+                                    <small><strong>Note:</strong> Only verified users can create donation requests. Registration alone does not guarantee verification approval.</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Display Messages (will be shown after modal) -->
                     <div id="messages-container" class="messages-container" style="display: none;">
                         {% if messages %}
@@ -57,7 +95,7 @@
                             
                             <div class="row">
                                 {% for field in form %}
-                                    <div class="{% if field.name == 'username' or field.name == 'email' %}col-md-6{% else %}col-12{% endif %} form-group">
+                                    <div class="{% if field.name == 'username' or field.name == 'email' %}col-md-6{% elif field.name == 'proof_image' %}col-12{% else %}col-12{% endif %} form-group">
                                         <label class="form-label" for="{{ field.id_for_label }}">
                                             {% if field.name == 'username' %}
                                                 <i class="fas fa-user mr-2"></i>
@@ -71,6 +109,10 @@
                                                 <i class="fas fa-user-tag mr-2"></i>
                                             {% elif field.name == 'last_name' %}
                                                 <i class="fas fa-user-tag mr-2"></i>
+                                            {% elif field.name == 'date_of_birth' %}
+                                                <i class="fas fa-calendar mr-2"></i>
+                                            {% elif field.name == 'verification_files' %}
+                                                <i class="fas fa-file-upload mr-2"></i>
                                             {% else %}
                                                 <i class="fas fa-info-circle mr-2"></i>
                                             {% endif %}
@@ -95,6 +137,21 @@
                                                    name="{{ field.name }}" 
                                                    id="{{ field.id_for_label }}"
                                                    placeholder="your.email@example.com"
+                                                   value="{{ field.value|default:'' }}"
+                                                   {% if field.field.required %}required{% endif %}>
+                                        {% elif field.field.widget.input_type == 'file' %}
+                                            {{ field }}
+                                            {% if field.name == 'verification_files' %}
+                                                <small class="form-text text-muted">
+                                                    <i class="fas fa-info-circle mr-1"></i>
+                                                    Select multiple files: Government ID, medical records, prescriptions, etc. (6+ recommended)
+                                                </small>
+                                            {% endif %}
+                                        {% elif field.field.widget.input_type == 'date' %}
+                                            <input type="date" 
+                                                   class="form-control {% if field.errors %}is-invalid{% endif %}" 
+                                                   name="{{ field.name }}" 
+                                                   id="{{ field.id_for_label }}"
                                                    value="{{ field.value|default:'' }}"
                                                    {% if field.field.required %}required{% endif %}>
                                         {% else %}
@@ -123,6 +180,7 @@
                                     </div>
                                 {% endfor %}
                             </div>
+                            
                             
                             <input type="hidden" name="disclaimer_agreed" id="disclaimer_agreed" value="false">
                             
@@ -254,6 +312,26 @@
 .form-text {
     font-size: 0.875rem;
     margin-top: 0.5rem;
+}
+
+.form-control-file {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 2px dashed var(--gray-medium);
+    border-radius: 8px;
+    background: var(--gray-light);
+    transition: var(--transition-fast);
+}
+
+.form-control-file:hover {
+    border-color: var(--primary-color);
+    background: var(--white);
+}
+
+.form-control-file:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(var(--primary-rgb), 0.25);
 }
 
 .invalid-feedback {

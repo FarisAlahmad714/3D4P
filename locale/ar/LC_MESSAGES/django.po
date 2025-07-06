@@ -1,0 +1,93 @@
+# Arabic translation for 3D4P
+# Copyright (C) 2025 3D4P
+# This file is distributed under the same license as the 3D4P package.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 3D4P 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-06 12:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: 3D4P Team\n"
+"Language-Team: Arabic\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+msgid "Empowering Lives Through Prosthetics"
+msgstr "تمكين الحياة من خلال الأطراف الصناعية"
+
+msgid "Join our global mission to provide prosthetic assistance to individuals who need it most. Every donation brings someone closer to regaining their independence and mobility."
+msgstr "انضم إلى مهمتنا العالمية لتقديم المساعدة في الأطراف الصناعية للأفراد الذين يحتاجونها أكثر. كل تبرع يقرب شخصاً من استعادة استقلاليته وحركته."
+
+msgid "Home"
+msgstr "الرئيسية"
+
+msgid "Browse Requests"
+msgstr "تصفح الطلبات"
+
+msgid "All Posts"
+msgstr "جميع المنشورات"
+
+msgid "Create Post"
+msgstr "إنشاء منشور"
+
+msgid "Login"
+msgstr "تسجيل الدخول"
+
+msgid "Register"
+msgstr "التسجيل"
+
+msgid "Logout"
+msgstr "تسجيل الخروج"
+
+msgid "My Profile"
+msgstr "ملفي الشخصي"
+
+msgid "Donation History"
+msgstr "تاريخ التبرعات"
+
+msgid "Admin Dashboard"
+msgstr "لوحة الإدارة"
+
+msgid "Donate Now"
+msgstr "تبرع الآن"
+
+msgid "3D4P - Prosthetics for All"
+msgstr "3D4P - الأطراف الصناعية للجميع"
+
+msgid "Connecting individuals worldwide who need prosthetic assistance with compassionate donors. Every donation brings hope, mobility, and renewed independence."
+msgstr "ربط الأفراد حول العالم الذين يحتاجون إلى مساعدة في الأطراف الصناعية مع المتبرعين الرحماء. كل تبرع يجلب الأمل والحركة والاستقلالية المتجددة."
+
+msgid "Quick Links"
+msgstr "روابط سريعة"
+
+msgid "Support"
+msgstr "الدعم"
+
+msgid "How It Works"
+msgstr "كيف يعمل"
+
+msgid "FAQ"
+msgstr "الأسئلة الشائعة"
+
+msgid "Contact Us"
+msgstr "اتصل بنا"
+
+msgid "Privacy Policy"
+msgstr "سياسة الخصوصية"
+
+msgid "Make a Difference"
+msgstr "أحدث فرقاً"
+
+msgid "Your support can transform lives. Join our mission to provide prosthetic assistance to anyone in need, anywhere in the world."
+msgstr "دعمك يمكن أن يغير الحياة. انضم إلى مهمتنا لتقديم المساعدة في الأطراف الصناعية لأي شخص محتاج، في أي مكان في العالم."
+
+msgid "Start Donating Today"
+msgstr "ابدأ التبرع اليوم"
+
+msgid "Choose Language"
+msgstr "اختر اللغة"

@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from posts.models import Post
 
 def home(request):
@@ -21,8 +22,28 @@ def faq(request):
     """View for FAQ support page"""
     faqs = [
         {
+            'question': 'What verification is required to receive donations?',
+            'answer': 'All users must complete rigorous verification including: extensive medical documentation proving prosthetic need, government-issued ID (passport or national ID), and manual review by our verification team. For users under 16, parent/guardian documentation is also required.'
+        },
+        {
+            'question': 'How long does the verification process take?',
+            'answer': 'Our verification team typically completes the review process within 24-48 hours. Complex cases may take longer. You will be notified via email once verification is complete.'
+        },
+        {
+            'question': 'What medical documentation is required?',
+            'answer': 'You must provide complete medical history, official diagnosis from certified healthcare providers, proof of prosthetic need, and any relevant medical reports or recommendations from doctors.'
+        },
+        {
+            'question': 'Can I submit a request before verification?',
+            'answer': 'Yes, you can submit your donation request, but it will not be published until verification is complete. This ensures all public requests are from verified, legitimate recipients.'
+        },
+        {
+            'question': 'What happens if my verification is rejected?',
+            'answer': 'If verification cannot be completed, we will contact you with specific reasons and guidance on how to provide additional documentation if possible.'
+        },
+        {
             'question': 'How do I request prosthetic assistance?',
-            'answer': 'Create an account, verify your identity by providing required documentation, then submit a detailed request explaining your needs and circumstances.'
+            'answer': 'Create an account, submit your donation request with all required documentation, complete the verification process, then your verified request will be published for donors to support.'
         },
         {
             'question': 'Is there a fee to use this platform?',
@@ -30,7 +51,7 @@ def faq(request):
         },
         {
             'question': 'How are requests verified?',
-            'answer': 'Our team reviews all requests and supporting documentation to ensure legitimacy. This process typically takes 24-48 hours.'
+            'answer': 'Our trained verification specialists manually review all medical documentation, government ID, and request details to ensure legitimacy and prevent fraud.'
         },
         {
             'question': 'What types of prosthetics are covered?',

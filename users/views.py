@@ -5,8 +5,8 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib import messages
-from .forms import CustomUserCreationForm
-from .models import MemberApplication
+from .forms import CustomUserCreationForm, MemberVerificationImageFormSet
+from .models import MemberApplication, MemberVerificationImage
 from .decorators import verified_member_required
 from .forms import MemberProfileForm
 from .forms import UserUpdateForm, ProfileUpdateForm
@@ -40,9 +40,20 @@ class SignUpView(CreateView):
         
         response = super().form_valid(form)
         user = form.save()
-        proof_image = self.request.FILES.get('proof_image')
-        if proof_image:
-            MemberApplication.objects.create(user=user, proof_image=proof_image)
+        
+        # Handle multiple file uploads
+        files = self.request.FILES.getlist('verification_files')
+        if files:
+            # Use first file as proof_image for MemberApplication
+            member_application = MemberApplication.objects.create(user=user, proof_image=files[0])
+            
+            # Save all files as verification images
+            for file in files:
+                MemberVerificationImage.objects.create(
+                    application=member_application,
+                    image=file
+                )
+        
         messages.success(self.request, 'Your account has been created successfully. You can now log in.')
         return response
     

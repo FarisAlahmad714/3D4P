@@ -1,0 +1,90 @@
+# French translation for 3D4P
+# Copyright (C) 2025 3D4P
+# This file is distributed under the same license as the 3D4P package.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: 3D4P 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-06 12:00+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: 3D4P Team\n"
+"Language-Team: French\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Empowering Lives Through Prosthetics"
+msgstr "Autonomiser les Vies grâce aux Prothèses"
+
+msgid "Join our global mission to provide prosthetic assistance to individuals who need it most. Every donation brings someone closer to regaining their independence and mobility."
+msgstr "Rejoignez notre mission mondiale pour fournir une assistance prothétique aux personnes qui en ont le plus besoin. Chaque don rapproche quelqu'un de retrouver son indépendance et sa mobilité."
+
+msgid "Home"
+msgstr "Accueil"
+
+msgid "Browse Requests"
+msgstr "Parcourir les Demandes"
+
+msgid "All Posts"
+msgstr "Tous les Articles"
+
+msgid "Create Post"
+msgstr "Créer un Article"
+
+msgid "Login"
+msgstr "Se Connecter"
+
+msgid "Register"
+msgstr "S'inscrire"
+
+msgid "Logout"
+msgstr "Se Déconnecter"
+
+msgid "My Profile"
+msgstr "Mon Profil"
+
+msgid "Donation History"
+msgstr "Historique des Dons"
+
+msgid "Admin Dashboard"
+msgstr "Tableau de Bord Admin"
+
+msgid "Donate Now"
+msgstr "Faire un Don Maintenant"
+
+msgid "3D4P - Prosthetics for All"
+msgstr "3D4P - Prothèses pour Tous"
+
+msgid "Connecting individuals worldwide who need prosthetic assistance with compassionate donors. Every donation brings hope, mobility, and renewed independence."
+msgstr "Connecter des individus du monde entier qui ont besoin d'assistance prothétique avec des donateurs compatissants. Chaque don apporte espoir, mobilité et indépendance renouvelée."
+
+msgid "Quick Links"
+msgstr "Liens Rapides"
+
+msgid "Support"
+msgstr "Support"
+
+msgid "How It Works"
+msgstr "Comment Ça Marche"
+
+msgid "FAQ"
+msgstr "FAQ"
+
+msgid "Contact Us"
+msgstr "Nous Contacter"
+
+msgid "Privacy Policy"
+msgstr "Politique de Confidentialité"
+
+msgid "Make a Difference"
+msgstr "Faire la Différence"
+
+msgid "Your support can transform lives. Join our mission to provide prosthetic assistance to anyone in need, anywhere in the world."
+msgstr "Votre soutien peut transformer des vies. Rejoignez notre mission pour fournir une assistance prothétique à toute personne dans le besoin, partout dans le monde."
+
+msgid "Start Donating Today"
+msgstr "Commencer à Donner Aujourd'hui"

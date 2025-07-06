@@ -111,17 +111,14 @@ else:
         }
     }
 
-# Fallback to SQLite for development if PostgreSQL not available
-if TESTING or DEBUG:
-    try:
-        import psycopg2
-    except ImportError:
-        DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.sqlite3',
-                'NAME': str(BASE_DIR / 'db.sqlite3'),
-            }
+# Use SQLite for development when DEBUG is True
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': str(BASE_DIR / 'db.sqlite3'),
         }
+    }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -144,9 +141,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'America/Los_Angeles'
-USE_TZ = True
+TIME_ZONE = 'UTC'
 USE_I18N = True
+USE_L10N = True
+USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
