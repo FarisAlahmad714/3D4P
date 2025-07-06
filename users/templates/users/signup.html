@@ -170,7 +170,7 @@
     align-items: center;
     justify-content: center;
     backdrop-filter: blur(5px);
-    padding-top: 80px; /* Just add top padding for navbar */
+    padding-top: 80px;
 }
 
 .modal-content-custom {
@@ -178,7 +178,7 @@
     border-radius: 20px;
     max-width: 600px;
     width: 90%;
-    max-height: 85vh;
+    max-height: calc(100vh - 100px);
     overflow-y: auto;
     box-shadow: var(--shadow-xl);
     animation: modalSlideIn 0.3s ease;
@@ -196,7 +196,7 @@
 }
 
 .modal-header-custom {
-    padding: 2rem 2rem 1rem;
+    padding: 0.5rem 2rem 0.25rem;
     border-bottom: 1px solid var(--gray-light);
 }
 
@@ -208,11 +208,11 @@
 }
 
 .modal-body-custom {
-    padding: 1.5rem 2rem;
+    padding: 0.25rem 2rem;
 }
 
 .modal-footer-custom {
-    padding: 1rem 2rem 2rem;
+    padding: 0.25rem 2rem 0.5rem;
     text-align: center;
 }
 
@@ -348,7 +348,7 @@
     
     .modal-content-custom {
         width: 95%;
-        max-height: 80vh; /* Increased for mobile to show button */
+        max-height: 85vh; /* Increased for mobile to show button */
     }
     
     .modal-header-custom,
