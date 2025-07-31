@@ -6,9 +6,84 @@
         <div class="col-md-8">
             <!-- Post Information -->
             <div class="card mb-4">
-                {% if post.image %}
-                    <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}" style="max-height: 300px; object-fit: cover;">
+                <!-- Image Gallery -->
+                {% if post.image or post.images.exists or post.donation_details.images.exists %}
+                <div id="postImageCarousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        {% if post.image %}
+                        <div class="carousel-item active">
+                            <img src="{{ post.image.url }}" class="d-block w-100" alt="{{ post.title }}" style="max-height: 400px; object-fit: cover;">
+                        </div>
+                        {% endif %}
+                        
+                        {% for img in post.images.all %}
+                        <div class="carousel-item {% if not post.image and forloop.first %}active{% endif %}">
+                            <img src="{{ img.image.url }}" class="d-block w-100" alt="{{ post.title }}" style="max-height: 400px; object-fit: cover;">
+                        </div>
+                        {% endfor %}
+                        
+                        {% if post.donation_details %}
+                            {% for img in post.donation_details.images.all %}
+                            <div class="carousel-item {% if not post.image and not post.images.exists and forloop.first %}active{% endif %}">
+                                <img src="{{ img.image.url }}" class="d-block w-100" alt="{{ post.title }}" style="max-height: 400px; object-fit: cover;">
+                            </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    
+                    {% if post.images.count > 0 or post.donation_details.images.count > 0 %}
+                    <a class="carousel-control-prev" href="#postImageCarousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#postImageCarousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                    
+                    <!-- Image Indicators -->
+                    <ol class="carousel-indicators">
+                        {% if post.image %}
+                        <li data-target="#postImageCarousel" data-slide-to="0" class="active"></li>
+                        {% endif %}
+                        {% for img in post.images.all %}
+                        <li data-target="#postImageCarousel" data-slide-to="{{ forloop.counter|add:post.image|yesno:'1,0' }}"></li>
+                        {% endfor %}
+                        {% if post.donation_details %}
+                            {% for img in post.donation_details.images.all %}
+                            <li data-target="#postImageCarousel" data-slide-to="{{ forloop.counter|add:post.images.count|add:post.image|yesno:'1,0' }}"></li>
+                            {% endfor %}
+                        {% endif %}
+                    </ol>
+                    {% endif %}
+                </div>
+                
+                <!-- Image Thumbnails -->
+                {% if post.images.count > 0 or post.donation_details.images.count > 0 %}
+                <div class="image-thumbnails p-3 bg-light">
+                    <div class="row">
+                        {% if post.image %}
+                        <div class="col-3 mb-2">
+                            <img src="{{ post.image.url }}" class="img-thumbnail thumbnail-img" alt="Thumbnail" data-target="#postImageCarousel" data-slide-to="0">
+                        </div>
+                        {% endif %}
+                        {% for img in post.images.all %}
+                        <div class="col-3 mb-2">
+                            <img src="{{ img.image.url }}" class="img-thumbnail thumbnail-img" alt="Thumbnail" data-target="#postImageCarousel" data-slide-to="{{ forloop.counter|add:post.image|yesno:'1,0' }}">
+                        </div>
+                        {% endfor %}
+                        {% if post.donation_details %}
+                            {% for img in post.donation_details.images.all %}
+                            <div class="col-3 mb-2">
+                                <img src="{{ img.image.url }}" class="img-thumbnail thumbnail-img" alt="Thumbnail" data-target="#postImageCarousel" data-slide-to="{{ forloop.counter|add:post.images.count|add:post.image|yesno:'1,0' }}">
+                            </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
                 {% endif %}
+                {% endif %}
+                
                 <div class="card-body">
                     <span class="badge badge-danger mb-2">🩺 Donation Request</span>
                     <h2 class="card-title">{{ post.title }}</h2>
@@ -327,6 +402,68 @@ document.addEventListener('DOMContentLoaded', function() {
             formData.append('donation_type', 'one_time');
         }
     });
+    
+    // Thumbnail click functionality
+    document.querySelectorAll('.thumbnail-img').forEach(thumbnail => {
+        thumbnail.style.cursor = 'pointer';
+        thumbnail.addEventListener('click', function() {
+            const slideIndex = this.getAttribute('data-slide-to');
+            $('#postImageCarousel').carousel(parseInt(slideIndex));
+        });
+    });
 });
 </script>
+
+<style>
+/* Image Gallery Styles */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    padding: 20px;
+}
+
+.carousel-indicators {
+    bottom: 10px;
+}
+
+.carousel-indicators li {
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid #fff;
+}
+
+.carousel-indicators .active {
+    background-color: #fff;
+}
+
+.thumbnail-img {
+    height: 80px;
+    width: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.thumbnail-img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.image-thumbnails {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+/* Dark overlay for better carousel control visibility */
+.carousel-item::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.1) 100%);
+    pointer-events: none;
+}
+</style>
 {% endblock %}

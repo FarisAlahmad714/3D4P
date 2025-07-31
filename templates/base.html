@@ -232,7 +232,7 @@
             
             // Ensure elements exist before proceeding
             if (!themeToggle || !themeIcon || !themeText) {
-                console.log('Theme toggle elements not found');
+                // Silently return if theme toggle elements don't exist
                 return;
             }
             
@@ -269,6 +269,142 @@
                 }
             }
         });
+    </script>
+    
+    <!-- Global Confirmation Modal -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmModalLabel">Confirm Action</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="confirmModalBody">
+                    Are you sure you want to proceed?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmModalAction">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Global Success/Error Notification Modal -->
+    <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header" id="notificationModalHeader">
+                    <h5 class="modal-title" id="notificationModalLabel">Notification</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="notificationModalBody">
+                    <!-- Message will be inserted here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+    /* Modal Styles */
+    #confirmModal .modal-header {
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+        color: white;
+        border-bottom: none;
+    }
+    
+    #confirmModal .modal-content {
+        border-radius: 15px;
+        border: none;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    
+    #notificationModal .modal-content {
+        border-radius: 15px;
+        border: none;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    
+    #notificationModalHeader.success {
+        background: linear-gradient(135deg, #00a896 0%, #02c39a 100%);
+        color: white;
+        border-bottom: none;
+    }
+    
+    #notificationModalHeader.error {
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+        color: white;
+        border-bottom: none;
+    }
+    
+    #notificationModalHeader.info {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        color: white;
+        border-bottom: none;
+    }
+    </style>
+    
+    <script>
+    // Global confirmation modal function
+    function showConfirmModal(message, onConfirm, options = {}) {
+        const modal = $('#confirmModal');
+        const modalBody = $('#confirmModalBody');
+        const modalTitle = $('#confirmModalLabel');
+        const confirmBtn = $('#confirmModalAction');
+        
+        modalBody.html(message);
+        modalTitle.text(options.title || 'Confirm Action');
+        confirmBtn.text(options.confirmText || 'Confirm');
+        confirmBtn.attr('class', 'btn ' + (options.confirmClass || 'btn-danger'));
+        
+        // Remove any previous click handlers
+        confirmBtn.off('click');
+        
+        // Add new click handler
+        confirmBtn.on('click', function() {
+            modal.modal('hide');
+            if (onConfirm) {
+                onConfirm();
+            }
+        });
+        
+        modal.modal('show');
+    }
+    
+    // Global notification modal function
+    function showNotification(message, type = 'info', title = null) {
+        const modal = $('#notificationModal');
+        const modalBody = $('#notificationModalBody');
+        const modalHeader = $('#notificationModalHeader');
+        const modalTitle = $('#notificationModalLabel');
+        
+        modalBody.html(message);
+        modalHeader.removeClass('success error info').addClass(type);
+        
+        if (title) {
+            modalTitle.text(title);
+        } else {
+            switch(type) {
+                case 'success':
+                    modalTitle.text('Success');
+                    break;
+                case 'error':
+                    modalTitle.text('Error');
+                    break;
+                default:
+                    modalTitle.text('Information');
+            }
+        }
+        
+        modal.modal('show');
+    }
     </script>
     
     {% block extra_js %}{% endblock %}

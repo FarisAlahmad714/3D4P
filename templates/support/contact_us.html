@@ -281,7 +281,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Validate form
         if (!formData.name || !formData.email || !formData.subject || !formData.message) {
-            alert('Please fill in all required fields.');
+            showNotification('Please fill in all required fields.', 'error');
             return;
         }
 

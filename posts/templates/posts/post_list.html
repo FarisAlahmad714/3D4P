@@ -48,6 +48,13 @@
                 {% endif %}
                 
                 <div class="card-body">
+                    {% if user.is_authenticated and post.author == user %}
+                    <div class="post-actions">
+                        <button class="btn btn-sm btn-danger delete-btn" data-post-id="{{ post.id }}" data-post-title="{{ post.title }}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    {% endif %}
                     <h5 class="card-title">
                         <a href="{% url 'post_detail' post.pk %}" class="text-decoration-none text-dark">
                             {{ post.title }}
@@ -119,6 +126,13 @@
                 {% endif %}
                 
                 <div class="card-body">
+                    {% if user.is_authenticated and post.author == user %}
+                    <div class="post-actions">
+                        <button class="btn btn-sm btn-danger delete-btn" data-post-id="{{ post.id }}" data-post-title="{{ post.title }}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    {% endif %}
                     <span class="badge badge-info mb-2">
                         <i class="fas fa-newspaper"></i> Community Post
                     </span>
@@ -275,6 +289,37 @@
     background: var(--gradient-primary);
     color: white;
 }
+
+/* Post Actions */
+.post-actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+}
+
+.delete-btn {
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.delete-btn:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.donation-card .card-body,
+.post-card .card-body {
+    position: relative;
+}
 </style>
 
 <script>
@@ -319,6 +364,28 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             bar.style.width = width;
         }, 500);
+    });
+    
+    // Delete post functionality
+    const deleteBtns = document.querySelectorAll('.delete-btn');
+    deleteBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const postId = this.getAttribute('data-post-id');
+            const postTitle = this.getAttribute('data-post-title');
+            
+            showConfirmModal(
+                `Are you sure you want to delete the post "<strong>${postTitle}</strong>"?<br><br>This action cannot be undone.`,
+                function() {
+                    window.location.href = `/posts/delete/${postId}/`;
+                },
+                {
+                    title: 'Delete Post',
+                    confirmText: 'Delete',
+                    confirmClass: 'btn-danger'
+                }
+            );
+        });
     });
 });
 </script>
