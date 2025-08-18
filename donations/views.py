@@ -259,8 +259,25 @@ def handle_successful_payment(session):
             donation.save()
             
             # Update donation goal
+            goal_reached = False
             if hasattr(donation.post, 'donation_goal'):
+                old_amount = donation.post.donation_goal.current_amount
                 donation.post.donation_goal.update_current_amount()
+                
+                # Check if goal was just reached
+                if (old_amount < donation.post.donation_goal.goal_amount and 
+                    donation.post.donation_goal.current_amount >= donation.post.donation_goal.goal_amount):
+                    goal_reached = True
+            
+            # Send email notifications
+            from utils.email_service import EmailService
+            EmailService.send_donation_confirmation_email(donation)
+            
+            if donation.post.author:
+                EmailService.send_donation_received_email(donation.post.author, donation)
+            
+            if goal_reached:
+                EmailService.send_goal_reached_email(donation.post, donation.post.donation_goal)
                 
             logger.info(f'Donation {donation_id} completed successfully')
             

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Needs Revision - {{ site_name }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #ffc107;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .warning-title {
+            color: #856404;
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+        .warning-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        .post-box {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 10px 5px;
+            font-size: 16px;
+        }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .guidelines-box {
+            background: #e8f5e8;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .footer {
+            text-align: center;
+            border-top: 1px solid #dee2e6;
+            padding-top: 20px;
+            margin-top: 30px;
+            color: #6c757d;
+            font-size: 14px;
+        }
+        .emoji {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="warning-title">⚠️ Your Request Needs Revision</h1>
+        </div>
+        
+        <div class="warning-box">
+            <h2><span class="emoji">📝</span> Hello {{ user.first_name|default:user.username }},</h2>
+            <p><strong>We've reviewed your request and need some revisions before it can be published.</strong></p>
+        </div>
+        
+        <div class="content">
+            <p>Thank you for submitting your {{ post.post_type }} request. Our review team has carefully evaluated your submission and identified some areas that need attention before we can publish it on our platform.</p>
+            
+            <div class="post-box">
+                <h3><span class="emoji">📋</span> Your Submitted Request:</h3>
+                <p><strong>Title:</strong> {{ post.title }}</p>
+                <p><strong>Type:</strong> {{ post.post_type|title }} Request</p>
+                <p><strong>Submitted:</strong> {{ post.created_at|date:"F j, Y g:i A" }}</p>
+            </div>
+            
+            {% if reason %}
+            <div class="info-box">
+                <h3><span class="emoji">🔍</span> Specific Issues to Address:</h3>
+                <p>{{ reason }}</p>
+            </div>
+            {% endif %}
+            
+            <div class="guidelines-box">
+                <h3><span class="emoji">📖</span> Content Guidelines Reminder:</h3>
+                <ul>
+                    <li><strong>Clear Medical Need:</strong> Describe your specific prosthetic requirements</li>
+                    <li><strong>Appropriate Content:</strong> Keep language professional and respectful</li>
+                    <li><strong>Accurate Information:</strong> Ensure all details are truthful and verifiable</li>
+                    <li><strong>Complete Details:</strong> Include estimated costs and medical context</li>
+                    <li><strong>Proper Documentation:</strong> Upload relevant medical files and images</li>
+                    <li><strong>Humanitarian Focus:</strong> Keep content focused on medical assistance needs</li>
+                </ul>
+            </div>
+            
+            <div class="info-box">
+                <h3><span class="emoji">✅</span> Common Approval Criteria:</h3>
+                <ul>
+                    <li>Clear, specific description of prosthetic needs</li>
+                    <li>Professional, respectful language throughout</li>
+                    <li>Realistic cost estimates with justification</li>
+                    <li>Relevant medical documentation attached</li>
+                    <li>No inappropriate or commercial content</li>
+                    <li>Compliance with platform community guidelines</li>
+                </ul>
+            </div>
+            
+            <h3><span class="emoji">🔄</span> How to Revise and Resubmit:</h3>
+            <ol>
+                <li><strong>Edit Your Request:</strong> Go to your dashboard and edit the current request</li>
+                <li><strong>Address the Issues:</strong> Make the specific changes mentioned above</li>
+                <li><strong>Review Guidelines:</strong> Ensure compliance with all platform guidelines</li>
+                <li><strong>Resubmit for Review:</strong> Save your changes for another review</li>
+                <li><strong>Quick Review:</strong> Revised requests are typically reviewed within 24 hours</li>
+            </ol>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="{{ create_post_url }}" class="button">
+                    <span class="emoji">✏️</span> Revise Request
+                </a>
+                <a href="{{ contact_url }}" class="button" style="background: #28a745;">
+                    <span class="emoji">💬</span> Contact Support
+                </a>
+            </div>
+            
+            <div class="info-box">
+                <h3><span class="emoji">🆘</span> Need Help?</h3>
+                <p>If you're unsure about any of the requirements or need assistance with your request, our support team is here to help. We want to see you succeed and get the prosthetic assistance you need.</p>
+                <ul>
+                    <li>Contact our support team for personalized guidance</li>
+                    <li>Review successful request examples for inspiration</li>
+                    <li>Ask questions about specific requirements</li>
+                    <li>Get help with medical documentation formatting</li>
+                </ul>
+            </div>
+            
+            <div style="text-align: center; background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                <h3><span class="emoji">💪</span> Don't Give Up!</h3>
+                <p>These revisions are normal and help ensure all requests meet our quality standards. Many successful requests go through this revision process. We're here to help you create a compelling request that connects with donors.</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>{{ site_name }}</strong></p>
+            <p>We're committed to helping you succeed</p>
+            <p>Questions about the revision process? Our support team is ready to assist you.</p>
+        </div>
+    </div>
+</body>
+</html>

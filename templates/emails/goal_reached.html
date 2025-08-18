@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goal Reached! - {{ site_name }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #ffd700;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .celebration-title {
+            color: #ff6b35;
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+        .celebration-box {
+            background: linear-gradient(135deg, #fff8dc 0%, #ffeaa7 100%);
+            border: 3px solid #ffd700;
+            padding: 30px;
+            margin: 20px 0;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .celebration-box::before {
+            content: '🎊';
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 30px;
+            animation: bounce 2s infinite;
+        }
+        .celebration-box::after {
+            content: '🎉';
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 30px;
+            animation: bounce 2s infinite 0.5s;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        .amount-box {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .amount {
+            font-size: 42px;
+            font-weight: bold;
+            margin: 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .progress-box {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 25px;
+            background: #e9ecef;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 10px 0;
+            position: relative;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #ffd700, #28a745);
+            width: 100%;
+            border-radius: 15px;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+        @keyframes sparkle {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            margin: 10px 5px;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+            transition: transform 0.2s ease;
+        }
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+        }
+        .success-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .stat-item {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #2196f3;
+        }
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1976d2;
+        }
+        .info-box {
+            background: #e8f5e8;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .footer {
+            text-align: center;
+            border-top: 1px solid #dee2e6;
+            padding-top: 20px;
+            margin-top: 30px;
+            color: #6c757d;
+            font-size: 14px;
+        }
+        .emoji {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="celebration-title">🎯 GOAL REACHED!</h1>
+        </div>
+        
+        <div class="celebration-box">
+            <h2 style="margin: 0; font-size: 26px;">🏆 CONGRATULATIONS {{ user.first_name|default:user.username }}! 🏆</h2>
+            <p style="font-size: 18px; margin: 15px 0;"><strong>Your donation goal has been successfully reached!</strong></p>
+        </div>
+        
+        <div class="amount-box">
+            <h3 style="margin: 0;">🎉 GOAL ACHIEVED 🎉</h3>
+            <div class="amount">${{ goal.current_amount }}</div>
+            <p style="margin: 5px 0;">of ${{ goal.goal_amount }} target</p>
+        </div>
+        
+        <div class="content">
+            <div class="progress-box">
+                <h3><span class="emoji">📊</span> Your Success Story:</h3>
+                <p><strong>Request:</strong> {{ post.title }}</p>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+                <div style="text-align: center; margin-top: 10px;">
+                    <strong style="color: #28a745; font-size: 18px;">✅ 100% FUNDED!</strong>
+                </div>
+            </div>
+            
+            <div class="success-stats">
+                <div class="stat-item">
+                    <div class="stat-number">${{ goal.current_amount }}</div>
+                    <div>Total Raised</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">{{ post.donations.count }}</div>
+                    <div>Donors</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div>Goal Reached</div>
+                </div>
+            </div>
+            
+            <div class="info-box">
+                <h3><span class="emoji">🌟</span> What This Means:</h3>
+                <ul>
+                    <li><strong>Prosthetic Assistance Secured:</strong> You now have the funding needed for your prosthetic needs</li>
+                    <li><strong>Community Support:</strong> {{ post.donations.count }} people believed in your story and contributed</li>
+                    <li><strong>Life-Changing Impact:</strong> This funding will help restore your mobility and independence</li>
+                    <li><strong>Inspiration to Others:</strong> Your success story shows what's possible on our platform</li>
+                </ul>
+            </div>
+            
+            <h3><span class="emoji">🚀</span> Next Steps:</h3>
+            <ol>
+                <li><strong>Thank Your Supporters:</strong> Consider posting an update thanking all donors</li>
+                <li><strong>Begin Your Journey:</strong> Start the process of getting your prosthetic device</li>
+                <li><strong>Share Updates:</strong> Keep supporters informed of your progress</li>
+                <li><strong>Pay It Forward:</strong> Help promote other requests when you can</li>
+                <li><strong>Celebrate!</strong> Take time to appreciate this amazing milestone</li>
+            </ol>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="{{ post_url }}" class="button">
+                    <span class="emoji">👁️</span> View Your Success Story
+                </a>
+            </div>
+            
+            <div style="background: linear-gradient(135deg, #fff4e6, #ffe0cc); border: 2px solid #ff6b35; padding: 25px; border-radius: 15px; margin: 20px 0; text-align: center;">
+                <h3 style="color: #d2691e; margin-top: 0;"><span class="emoji">💖</span> A Message from Our Team</h3>
+                <p style="color: #8b4513; font-style: italic; margin-bottom: 0;">
+                    "Seeing goals reached like yours is why we built this platform. Your courage in sharing your story, combined with the generosity of our global community, has created something beautiful. This is just the beginning of your journey toward restored mobility and independence. Congratulations on this incredible achievement!"
+                </p>
+            </div>
+            
+            <div class="info-box">
+                <h3><span class="emoji">🎁</span> Special Recognition:</h3>
+                <p>Your successful campaign will be featured as a success story to inspire others. You've become part of a community that proves what's possible when people come together for a humanitarian cause.</p>
+                <ul>
+                    <li>Featured in our success stories section</li>
+                    <li>Inspiration for future campaign creators</li>
+                    <li>Proof that our platform changes lives</li>
+                    <li>Part of our global impact statistics</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>{{ site_name }}</strong></p>
+            <p>🎉 Another life changed • Another goal reached • Another success story 🎉</p>
+            <p>Thank you for being part of our humanitarian mission!</p>
+        </div>
+    </div>
+</body>
+</html>

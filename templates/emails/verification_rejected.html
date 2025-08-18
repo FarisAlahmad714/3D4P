@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Additional Documentation Required - {{ site_name }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #ffc107;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .warning-title {
+            color: #856404;
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+        .warning-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 10px 5px;
+            font-size: 16px;
+        }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .requirements-box {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .footer {
+            text-align: center;
+            border-top: 1px solid #dee2e6;
+            padding-top: 20px;
+            margin-top: 30px;
+            color: #6c757d;
+            font-size: 14px;
+        }
+        .emoji {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="warning-title">⚠️ Additional Documentation Required</h1>
+        </div>
+        
+        <div class="warning-box">
+            <h2><span class="emoji">📋</span> Hello {{ user.first_name|default:user.username }},</h2>
+            <p><strong>We need additional documentation to complete your verification process.</strong></p>
+        </div>
+        
+        <div class="content">
+            <p>Thank you for submitting your verification application. Our team has reviewed your submission, and we need some additional information before we can approve your account.</p>
+            
+            {% if reason %}
+            <div class="info-box">
+                <h3><span class="emoji">📝</span> Specific Requirements:</h3>
+                <p>{{ reason }}</p>
+            </div>
+            {% endif %}
+            
+            <div class="requirements-box">
+                <h3><span class="emoji">📄</span> Required Documentation Checklist:</h3>
+                <ul>
+                    <li><strong>Medical Documentation:</strong>
+                        <ul>
+                            <li>Complete medical history from certified healthcare providers</li>
+                            <li>Official diagnosis and proof of prosthetic need</li>
+                            <li>Medical reports or doctor recommendations</li>
+                            <li>Recent medical assessments (within last 12 months)</li>
+                        </ul>
+                    </li>
+                    <li><strong>Government Identification:</strong>
+                        <ul>
+                            <li>Valid passport or national identification card</li>
+                            <li>Clear, readable photo of ID document</li>
+                            <li>Document must not be expired</li>
+                        </ul>
+                    </li>
+                    {% if user.age < 16 %}
+                    <li><strong>Guardian Documentation (Required for users under 16):</strong>
+                        <ul>
+                            <li>Parent/guardian identification</li>
+                            <li>Proof of guardianship or parental relationship</li>
+                            <li>Signed consent forms</li>
+                        </ul>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+            
+            <div class="info-box">
+                <h3><span class="emoji">💡</span> Tips for Successful Verification:</h3>
+                <ul>
+                    <li>Ensure all documents are clear and legible</li>
+                    <li>Documents should be in color when possible</li>
+                    <li>Medical documents must be from certified healthcare providers</li>
+                    <li>All personal information should be clearly visible</li>
+                    <li>Upload documents in PDF, JPG, or PNG format</li>
+                </ul>
+            </div>
+            
+            <h3><span class="emoji">🔄</span> How to Resubmit:</h3>
+            <ol>
+                <li>Log into your account dashboard</li>
+                <li>Go to your application status page</li>
+                <li>Upload the additional required documents</li>
+                <li>Our team will review within 24-48 hours</li>
+            </ol>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="{{ dashboard_url }}" class="button">
+                    <span class="emoji">📤</span> Upload Documents
+                </a>
+                <a href="{{ contact_url }}" class="button" style="background: #28a745;">
+                    <span class="emoji">💬</span> Contact Support
+                </a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>{{ site_name }}</strong></p>
+            <p>We're here to help you through the verification process</p>
+            <p>If you have questions about requirements, please contact our support team</p>
+        </div>
+    </div>
+</body>
+</html>

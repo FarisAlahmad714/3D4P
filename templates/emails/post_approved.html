@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Approved - {{ site_name }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #28a745;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .success-title {
+            color: #28a745;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .success-box {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border: 2px solid #28a745;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .post-box {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 10px 5px;
+            font-size: 16px;
+        }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .tips-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .footer {
+            text-align: center;
+            border-top: 1px solid #dee2e6;
+            padding-top: 20px;
+            margin-top: 30px;
+            color: #6c757d;
+            font-size: 14px;
+        }
+        .emoji {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="success-title">✅ Your Request is Now Live!</h1>
+        </div>
+        
+        <div class="success-box">
+            <h2><span class="emoji">🎉</span> Great News, {{ user.first_name|default:user.username }}!</h2>
+            <p><strong>Your {{ post.post_type }} request has been approved and is now published on our platform!</strong></p>
+        </div>
+        
+        <div class="content">
+            <p>Our review team has approved your request and it's now visible to our global community of donors and supporters.</p>
+            
+            <div class="post-box">
+                <h3><span class="emoji">📋</span> Your Published Request:</h3>
+                <p><strong>Title:</strong> {{ post.title }}</p>
+                <p><strong>Type:</strong> {{ post.post_type|title }} Request</p>
+                <p><strong>Published:</strong> {{ post.created_at|date:"F j, Y g:i A" }}</p>
+                <p><strong>Content Preview:</strong> {{ post.content|truncatewords:30 }}</p>
+            </div>
+            
+            <div class="info-box">
+                <h3><span class="emoji">🚀</span> What Happens Now:</h3>
+                <ul>
+                    <li><strong>Visible to Donors:</strong> Your request is now visible to our global community</li>
+                    <li><strong>Donation Tracking:</strong> You can monitor progress in real-time</li>
+                    <li><strong>Supporter Engagement:</strong> Donors can comment and show support</li>
+                    <li><strong>Social Sharing:</strong> Share your request on social media to reach more people</li>
+                </ul>
+            </div>
+            
+            <div class="tips-box">
+                <h3><span class="emoji">💡</span> Tips to Maximize Your Success:</h3>
+                <ul>
+                    <li><strong>Share Widely:</strong> Post on social media, forums, and with friends/family</li>
+                    <li><strong>Add Updates:</strong> Regularly update your request with progress and news</li>
+                    <li><strong>Engage with Supporters:</strong> Respond to comments and thank donors</li>
+                    <li><strong>Upload Photos:</strong> Visual content helps donors connect with your story</li>
+                    <li><strong>Be Authentic:</strong> Share your journey honestly and respectfully</li>
+                </ul>
+            </div>
+            
+            <h3><span class="emoji">📊</span> Track Your Progress:</h3>
+            <p>You can monitor your request's performance including:</p>
+            <ul>
+                <li>Total donations received</li>
+                <li>Goal progress percentage</li>
+                <li>Number of supporters</li>
+                <li>Comments and interactions</li>
+                <li>View counts and shares</li>
+            </ul>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="{{ post_url }}" class="button">
+                    <span class="emoji">👁️</span> View Your Live Request
+                </a>
+                <a href="{{ dashboard_url }}" class="button" style="background: #007bff;">
+                    <span class="emoji">📊</span> Go to Dashboard
+                </a>
+            </div>
+            
+            <div class="info-box">
+                <h3><span class="emoji">🔗</span> Share Your Request:</h3>
+                <p>Help spread the word about your prosthetic assistance request:</p>
+                <p><strong>Direct Link:</strong> {{ post_url }}</p>
+                <p>Copy this link and share it on social media, email, and messaging apps to reach more potential supporters.</p>
+            </div>
+            
+            <div style="text-align: center; background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                <h3><span class="emoji">🌟</span> You're Now Part of Our Community</h3>
+                <p>Your request joins thousands of others in our global community working together to provide prosthetic assistance. We're here to support you every step of the way toward reaching your goal.</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>{{ site_name }}</strong></p>
+            <p>Connecting hope with healing • Made with ❤️ for humanity</p>
+            <p>Need help with your request or have questions? Contact our support team anytime.</p>
+        </div>
+    </div>
+</body>
+</html>

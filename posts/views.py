@@ -25,12 +25,12 @@ def create_regular_post(request):
             post.author = request.user
             post.post_type = 'regular'
 
-            # Text moderation - temporarily disabled for humanitarian content
-            # moderation_result = perform_moderation(post.title, post.content)
-            # if moderation_result:
-            #     clear_messages(request)
-            #     messages.error(request, f"Text moderation failed: {moderation_result}")
-            #     return render(request, 'posts/create_regular_post.html', {'form': form})
+            # Text moderation
+            moderation_result = perform_moderation(post.title, post.content)
+            if moderation_result and moderation_result != "Post is clean.":
+                clear_messages(request)
+                messages.error(request, f"Content moderation failed: {moderation_result}")
+                return render(request, 'posts/create_regular_post.html', {'form': form})
 
             # Image moderation
             if 'image' in request.FILES:
@@ -54,6 +54,12 @@ def create_regular_post(request):
             
             post.is_approved = True
             post.save()
+            
+            # Send email notifications
+            from utils.email_service import EmailService
+            EmailService.send_post_approved_email(request.user, post)
+            EmailService.send_new_post_admin_notification(post)
+            
             messages.success(request, 'Your post has been created successfully.')
             return redirect('post_list')
         else:
@@ -77,16 +83,16 @@ def create_donation_request(request):
             post.post_type = 'donation'
             post.is_approved = False
 
-            # Call the moderation function once - temporarily disabled for humanitarian content
-            # moderation_result = perform_moderation(post.title, post.content)
-            # if moderation_result:
-            #     clear_messages(request)
-            #     messages.error(request, f"Moderation failed: {moderation_result}")
-            #     return render(request, 'posts/create_donation_request.html', {
-            #         'form': form,
-            #         'image_formset': image_formset,
-            #         'file_formset': file_formset
-            #     })
+            # Text moderation
+            moderation_result = perform_moderation(post.title, post.content)
+            if moderation_result and moderation_result != "Post is clean.":
+                clear_messages(request)
+                messages.error(request, f"Content moderation failed: {moderation_result}")
+                return render(request, 'posts/create_donation_request.html', {
+                    'form': form,
+                    'image_formset': image_formset,
+                    'file_formset': file_formset
+                })
             
             post.save()
             messages.success(request, 'Your donation request has been created successfully.')

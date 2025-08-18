@@ -54,6 +54,11 @@ class SignUpView(CreateView):
                     image=file
                 )
         
+        # Send welcome email
+        from utils.email_service import EmailService
+        EmailService.send_welcome_email(user)
+        EmailService.send_new_user_admin_notification(user)
+        
         messages.success(self.request, 'Your account has been created successfully. You can now log in.')
         return response
     

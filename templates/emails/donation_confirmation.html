@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donation Confirmation - {{ site_name }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #28a745;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .success-title {
+            color: #28a745;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .donation-box {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border: 2px solid #28a745;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .amount {
+            font-size: 36px;
+            font-weight: bold;
+            color: #28a745;
+            margin: 10px 0;
+        }
+        .receipt-box {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 10px 5px;
+            font-size: 16px;
+        }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .footer {
+            text-align: center;
+            border-top: 1px solid #dee2e6;
+            padding-top: 20px;
+            margin-top: 30px;
+            color: #6c757d;
+            font-size: 14px;
+        }
+        .emoji {
+            font-size: 20px;
+        }
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="success-title">💝 Thank You for Your Donation!</h1>
+        </div>
+        
+        <div class="donation-box">
+            <h2><span class="emoji">🙏</span> Dear {{ donor_name }},</h2>
+            <p><strong>Your generous donation has been successfully processed!</strong></p>
+            <div class="amount">${{ donation.amount }}</div>
+            <p>You've just made a real difference in someone's life.</p>
+        </div>
+        
+        <div class="content">
+            <div class="receipt-box">
+                <h3><span class="emoji">🧾</span> Donation Receipt</h3>
+                <div class="detail-row">
+                    <span><strong>Donation ID:</strong></span>
+                    <span>#{{ donation.id }}</span>
+                </div>
+                <div class="detail-row">
+                    <span><strong>Amount:</strong></span>
+                    <span>${{ donation.amount }}</span>
+                </div>
+                <div class="detail-row">
+                    <span><strong>Date:</strong></span>
+                    <span>{{ donation.created_at|date:"F j, Y g:i A" }}</span>
+                </div>
+                <div class="detail-row">
+                    <span><strong>Recipient:</strong></span>
+                    <span>{{ post.title }}</span>
+                </div>
+                <div class="detail-row">
+                    <span><strong>Payment Method:</strong></span>
+                    <span>Credit Card (Stripe)</span>
+                </div>
+                <div class="detail-row">
+                    <span><strong>Status:</strong></span>
+                    <span style="color: #28a745; font-weight: bold;">✅ Completed</span>
+                </div>
+            </div>
+            
+            <div class="info-box">
+                <h3><span class="emoji">🎯</span> Your Impact:</h3>
+                <p><strong>{{ post.title }}</strong></p>
+                <p>{{ post.content|truncatewords:50 }}</p>
+                {% if post.donation_goal %}
+                <p><strong>Goal Progress:</strong> ${{ post.donation_goal.current_amount }} raised of ${{ post.donation_goal.goal_amount }} goal</p>
+                {% endif %}
+            </div>
+            
+            <h3><span class="emoji">🔔</span> What Happens Next:</h3>
+            <ul>
+                <li>The recipient has been notified of your donation</li>
+                <li>Your contribution goes directly toward prosthetic costs</li>
+                <li>You'll receive updates on the progress of this request</li>
+                <li>You can track the impact of your donation anytime</li>
+            </ul>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="{{ post_url }}" class="button">
+                    <span class="emoji">👁️</span> View Request
+                </a>
+                <a href="{{ receipt_url }}" class="button" style="background: #28a745;">
+                    <span class="emoji">📄</span> Download Receipt
+                </a>
+            </div>
+            
+            <div class="info-box">
+                <h3><span class="emoji">💰</span> Tax Information:</h3>
+                <p>{{ site_name }} is a humanitarian platform. Please consult with your tax advisor regarding the deductibility of your donation based on your local tax laws.</p>
+                <p><strong>Keep this email as your donation record for tax purposes.</strong></p>
+            </div>
+            
+            <div style="text-align: center; background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                <h3><span class="emoji">❤️</span> Thank You for Being a Hero</h3>
+                <p>Your compassion and generosity help provide life-changing prosthetic assistance to those who need it most. Every donation, no matter the size, brings hope and mobility to individuals worldwide.</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>{{ site_name }}</strong></p>
+            <p>Connecting hope with healing • Made with ❤️ for humanity</p>
+            <p>Questions about your donation? Contact our support team anytime.</p>
+        </div>
+    </div>
+</body>
+</html>

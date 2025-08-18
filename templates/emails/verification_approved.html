@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verification Approved - {{ site_name }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #28a745;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .success-title {
+            color: #28a745;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .success-box {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border: 2px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 10px 5px;
+            font-size: 16px;
+        }
+        .info-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .footer {
+            text-align: center;
+            border-top: 1px solid #dee2e6;
+            padding-top: 20px;
+            margin-top: 30px;
+            color: #6c757d;
+            font-size: 14px;
+        }
+        .emoji {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="success-title">✅ Verification Approved!</h1>
+        </div>
+        
+        <div class="success-box">
+            <h2><span class="emoji">🎉</span> Congratulations, {{ user.first_name|default:user.username }}!</h2>
+            <p><strong>Your account has been successfully verified and you can now create donation requests.</strong></p>
+        </div>
+        
+        <div class="content">
+            <p>Our verification team has completed the review of your documentation and we're pleased to inform you that your account is now fully verified.</p>
+            
+            <div class="info-box">
+                <h3><span class="emoji">🚀</span> What You Can Do Now:</h3>
+                <ul>
+                    <li><strong>Create Donation Requests:</strong> Submit detailed requests for prosthetic assistance</li>
+                    <li><strong>Upload Medical Files:</strong> Share medical documentation, reports, and images</li>
+                    <li><strong>Track Progress:</strong> Monitor donations and goal progress in real-time</li>
+                    <li><strong>Connect with Donors:</strong> Engage with supporters through comments and updates</li>
+                </ul>
+            </div>
+            
+            <h3><span class="emoji">📝</span> Creating Your First Request:</h3>
+            <ol>
+                <li>Go to your dashboard and click "Create Request"</li>
+                <li>Choose between "Donation Request" for prosthetic assistance</li>
+                <li>Fill in detailed information about your needs</li>
+                <li>Upload relevant medical files and images</li>
+                <li>Set a funding goal for your prosthetic needs</li>
+                <li>Submit for final review and publication</li>
+            </ol>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="{{ dashboard_url }}" class="button">
+                    <span class="emoji">🏠</span> Go to Dashboard
+                </a>
+            </div>
+            
+            <div class="info-box">
+                <h3><span class="emoji">💡</span> Tips for Successful Requests:</h3>
+                <ul>
+                    <li>Be specific about your prosthetic needs and costs</li>
+                    <li>Include clear, professional medical documentation</li>
+                    <li>Share your story authentically and respectfully</li>
+                    <li>Upload photos that help donors understand your situation</li>
+                    <li>Set realistic funding goals based on actual prosthetic costs</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>{{ site_name }}</strong></p>
+            <p>Connecting hope with healing • Made with ❤️ for humanity</p>
+            <p>If you need any assistance creating your request, please contact our support team.</p>
+        </div>
+    </div>
+</body>
+</html>

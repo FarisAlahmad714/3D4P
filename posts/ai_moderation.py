@@ -32,17 +32,34 @@ def check_for_donation_request(content):
 def keyword_check(content):
     keywords = ['donate', 'donation', 'financial assistance', 'money needed', 'fund me', 'need funds']
     content_lower = content.lower()
-    return any(keyword in content_lower for keyword in keywords)   
+    return any(keyword in content_lower for keyword in keywords)
+
+def basic_profanity_check(content):
+    """Basic profanity filter as backup to AI moderation"""
+    profane_words = ['fuck', 'shit', 'damn', 'bitch', 'ass', 'hell', 'crap']
+    content_lower = content.lower()
+    
+    # Count profane words
+    profane_count = sum(content_lower.count(word) for word in profane_words)
+    
+    # If more than 2 profane words, flag it
+    if profane_count > 2:
+        return f"Content contains excessive profanity ({profane_count} instances)"
+    
+    return None   
 
 
 def perform_moderation(title, content):
     moderation_prompt = f"""
     You are moderating content for a MEDICAL PROSTHETIC DONATION PLATFORM that helps injured people get prosthetic limbs.
 
-    ONLY flag content that contains:
+    FLAG content that contains:
+    - Profanity, vulgar language, or excessive swearing
     - Explicit sexual content
+    - Hate speech or discriminatory language
     - Personal private information (addresses, phone numbers)
     - Clear spam or commercial advertising
+    - Content that is clearly inappropriate for a medical/humanitarian platform
 
     DO NOT flag content that mentions:
     - Any military, army, or conflict (this is a medical platform for war injuries)
@@ -52,7 +69,8 @@ def perform_moderation(title, content):
 
     This platform specifically helps people injured in conflicts get prosthetic limbs. Political references are part of explaining medical needs.
 
-    If the content is requesting prosthetic help or describing medical needs, respond ONLY with: "Post is clean."
+    If the content is appropriate and clean, respond ONLY with: "Post is clean."
+    If content contains inappropriate language or violations, explain what was found.
 
     Title: {title}
     Content: {content}
@@ -78,6 +96,11 @@ def perform_moderation(title, content):
     Content: {content}
     
     Respond with only 'Yes' or 'No'."""
+
+    # Basic profanity check first (faster)
+    profanity_result = basic_profanity_check(title + " " + content)
+    if profanity_result:
+        return profanity_result
 
     try:
         moderation_response = client.chat.completions.create(

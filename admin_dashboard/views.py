@@ -7,6 +7,8 @@ from django.http import JsonResponse
 from django.utils import timezone
 from datetime import datetime, timedelta
 from django.core.paginator import Paginator
+from django.views.decorators.csrf import ensure_csrf_cookie
+import json
 
 from posts.models import Post, DonationRequest
 from users.models import CustomUser, MemberApplication, MemberProfile
@@ -131,10 +133,46 @@ def approve_post(request, post_id):
 @user_passes_test(is_admin)
 def reject_post(request, post_id):
     post = get_object_or_404(Post, id=post_id)
-    post.is_approved = False
-    post.save()
-    messages.warning(request, f'Post "{post.title}" has been rejected.')
+    post_title = post.title
+    post.delete()
+    messages.warning(request, f'Post "{post_title}" has been deleted.')
     return redirect('admin_posts')
+
+@user_passes_test(is_admin)
+@ensure_csrf_cookie
+def bulk_action_posts(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            action = data.get('action')
+            post_ids = data.get('post_ids', [])
+            
+            if not post_ids:
+                return JsonResponse({'success': False, 'message': 'No posts selected'})
+            
+            # Convert string IDs to integers
+            post_ids = [int(pid) for pid in post_ids]
+            
+            if action == 'approve':
+                posts = Post.objects.filter(id__in=post_ids)
+                count = posts.update(is_approved=True)
+                messages.success(request, f'{count} posts have been approved.')
+                return JsonResponse({'success': True, 'message': f'{count} posts approved'})
+                
+            elif action == 'reject':
+                posts = Post.objects.filter(id__in=post_ids)
+                count = posts.count()
+                posts.delete()
+                messages.warning(request, f'{count} posts have been deleted.')
+                return JsonResponse({'success': True, 'message': f'{count} posts deleted'})
+                
+            else:
+                return JsonResponse({'success': False, 'message': 'Invalid action'})
+                
+        except Exception as e:
+            return JsonResponse({'success': False, 'message': str(e)})
+    
+    return JsonResponse({'success': False, 'message': 'Method not allowed'})
 
 @user_passes_test(is_admin)
 def admin_users(request):

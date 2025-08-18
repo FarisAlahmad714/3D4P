@@ -1,14 +1,35 @@
 {% extends 'admin_dashboard/base.html' %}
+{% load static %}
 
 {% block title %}Posts Management - 3D4P Admin{% endblock %}
 
 {% block content %}
+{% csrf_token %}
 <div class="container-fluid">
     <!-- Page Header -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
             <h1 class="h3 mb-0">Posts & Requests Management</h1>
             <p class="text-muted">Review and manage community posts and donation requests</p>
+        </div>
+    </div>
+
+    <!-- Bulk Actions Bar -->
+    <div class="alert alert-info mb-3" id="bulkActionsBar" style="display: none; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; color: white;">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <strong><span id="selectedCount">0</span> posts selected</strong>
+                <button class="btn btn-sm btn-light ms-2" onclick="selectAll()" style="margin-left: 10px;">Select All</button>
+                <button class="btn btn-sm btn-light ms-1" onclick="deselectAll()" style="margin-left: 5px;">Deselect All</button>
+            </div>
+            <div>
+                <button class="btn btn-success" onclick="bulkApprove()" style="margin-right: 10px;">
+                    <i class="fas fa-check"></i> Approve Selected
+                </button>
+                <button class="btn btn-danger" onclick="bulkReject()">
+                    <i class="fas fa-times"></i> Reject Selected
+                </button>
+            </div>
         </div>
     </div>
 
@@ -49,17 +70,20 @@
     <div class="row">
         {% for post in page_obj %}
         <div class="col-xl-4 col-lg-6 mb-4">
-            <div class="admin-card h-100">
+            <div class="admin-card h-100 post-card" data-post-id="{{ post.id }}">
                 <div class="admin-card-header d-flex justify-content-between align-items-center">
-                    {% if post.post_type == 'donation' %}
-                    <span class="badge badge-danger">
-                        <i class="fas fa-hand-holding-medical"></i> Donation Request
-                    </span>
-                    {% else %}
-                    <span class="badge badge-primary">
-                        <i class="fas fa-newspaper"></i> Community Post
-                    </span>
-                    {% endif %}
+                    <div class="d-flex align-items-center">
+                        <input type="checkbox" class="post-checkbox mr-2" data-post-id="{{ post.id }}" onclick="updateSelection()">
+                        {% if post.post_type == 'donation' %}
+                        <span class="badge badge-danger">
+                            <i class="fas fa-hand-holding-medical"></i> Donation Request
+                        </span>
+                        {% else %}
+                        <span class="badge badge-primary">
+                            <i class="fas fa-newspaper"></i> Community Post
+                        </span>
+                        {% endif %}
+                    </div>
                     
                     {% if not post.is_approved %}
                     <span class="badge badge-warning">Pending</span>
@@ -122,8 +146,11 @@
                         <a href="{% url 'approve_post' post.id %}" class="action-btn action-btn-approve flex-fill text-center">
                             <i class="fas fa-check"></i> Approve
                         </a>
+                        <a href="#" class="action-btn action-btn-reject flex-fill text-center" onclick="confirmReject(event, '{% url 'reject_post' post.id %}', '{{ post.title|escapejs }}');">
+                            <i class="fas fa-times"></i> Reject
+                        </a>
                         {% else %}
-                        <a href="{% url 'reject_post' post.id %}" class="action-btn action-btn-reject flex-fill text-center">
+                        <a href="#" class="action-btn action-btn-reject flex-fill text-center" onclick="confirmReject(event, '{% url 'reject_post' post.id %}', '{{ post.title|escapejs }}');">
                             <i class="fas fa-times"></i> Reject
                         </a>
                         {% endif %}
@@ -176,14 +203,99 @@
     {% endif %}
 </div>
 
+<!-- Custom Confirmation Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%); color: white;">
+                <h5 class="modal-title" id="confirmModalLabel">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>Confirm Action
+                </h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="confirmModalBody">
+                <!-- Message will be inserted here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="confirmModalCancel">Cancel</button>
+                <button type="button" class="btn btn-danger" id="confirmModalConfirm">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Custom Notification Modal -->
+<div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" id="notificationModalHeader">
+                <h5 class="modal-title" id="notificationModalLabel">Notification</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="notificationModalBody">
+                <!-- Message will be inserted here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <style>
 .gap-2 {
-    gap: 0.5rem;
+    gap: 0.5rem !important;
+    display: flex !important;
 }
 
 .action-btn {
     text-align: center;
     font-size: 0.8rem;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    display: inline-block;
+    position: relative;
+    z-index: 10;
+    pointer-events: auto;
+}
+
+.action-btn-view {
+    background: #17a2b8;
+    color: white;
+}
+
+.action-btn-view:hover {
+    background: #138496;
+    color: white;
+    text-decoration: none;
+}
+
+.action-btn-approve {
+    background: #28a745;
+    color: white;
+}
+
+.action-btn-approve:hover {
+    background: #218838;
+    color: white;
+    text-decoration: none;
+}
+
+.action-btn-reject {
+    background: #dc3545;
+    color: white;
+}
+
+.action-btn-reject:hover {
+    background: #c82333;
+    color: white;
+    text-decoration: none;
 }
 
 .progress {
@@ -193,5 +305,279 @@
 .admin-card img {
     border-radius: 8px;
 }
+
+.post-checkbox {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.post-card.selected {
+    border: 2px solid #007bff;
+    box-shadow: 0 0 10px rgba(0,123,255,0.2);
+}
+
+/* Modal Styles */
+#notificationModalHeader.success {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%) !important;
+    color: white;
+}
+
+#notificationModalHeader.error {
+    background: linear-gradient(135deg, #dc3545 0%, #e74c3c 100%) !important;
+    color: white;
+}
+
+#notificationModalHeader.info {
+    background: linear-gradient(135deg, #17a2b8 0%, #3498db 100%) !important;
+    color: white;
+}
 </style>
+
+<script>
+// Run when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Bulk actions script loaded');
+});
+
+// Show notification modal function
+function showNotification(message, type = 'info') {
+    const modal = $('#notificationModal');
+    const header = $('#notificationModalHeader');
+    const body = $('#notificationModalBody');
+    const title = $('#notificationModalLabel');
+    
+    // Remove previous classes
+    header.removeClass('success error info');
+    
+    // Add new class and set content
+    header.addClass(type);
+    body.html(message);
+    
+    // Set title based on type
+    if (type === 'success') {
+        title.html('<i class="fas fa-check-circle mr-2"></i>Success');
+    } else if (type === 'error') {
+        title.html('<i class="fas fa-exclamation-circle mr-2"></i>Error');
+    } else {
+        title.html('<i class="fas fa-info-circle mr-2"></i>Information');
+    }
+    
+    modal.modal('show');
+}
+
+function getCSRFToken() {
+    const token = document.querySelector('[name=csrfmiddlewaretoken]');
+    return token ? token.value : '';
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+function updateSelection() {
+    console.log('updateSelection called');
+    const checkboxes = document.querySelectorAll('.post-checkbox:checked');
+    const count = checkboxes.length;
+    console.log('Selected count:', count);
+    
+    const countElement = document.getElementById('selectedCount');
+    const bulkBar = document.getElementById('bulkActionsBar');
+    
+    if (countElement) {
+        countElement.textContent = count;
+    }
+    
+    if (bulkBar) {
+        if (count > 0) {
+            bulkBar.style.display = 'block';
+            console.log('Showing bulk actions bar');
+        } else {
+            bulkBar.style.display = 'none';
+            console.log('Hiding bulk actions bar');
+        }
+    } else {
+        console.error('Bulk actions bar not found!');
+    }
+    
+    // Update card highlighting
+    document.querySelectorAll('.post-card').forEach(card => {
+        const checkbox = card.querySelector('.post-checkbox');
+        if (checkbox && checkbox.checked) {
+            card.classList.add('selected');
+        } else {
+            card.classList.remove('selected');
+        }
+    });
+}
+
+function selectAll() {
+    document.querySelectorAll('.post-checkbox').forEach(checkbox => {
+        checkbox.checked = true;
+    });
+    updateSelection();
+}
+
+function deselectAll() {
+    document.querySelectorAll('.post-checkbox').forEach(checkbox => {
+        checkbox.checked = false;
+    });
+    updateSelection();
+}
+
+function getSelectedPostIds() {
+    const ids = [];
+    document.querySelectorAll('.post-checkbox:checked').forEach(checkbox => {
+        ids.push(checkbox.dataset.postId);
+    });
+    return ids;
+}
+
+function confirmReject(event, url, title) {
+    event.preventDefault();
+    const message = `Are you sure you want to reject "${title}"? This will permanently delete this post.`;
+    
+    // Use the parent window's modal functions from base.html
+    if (typeof parent.showConfirmModal === 'function') {
+        parent.showConfirmModal(message, function() {
+            window.location.href = url;
+        });
+    } else if (typeof showConfirmModal === 'function') {
+        showConfirmModal(message, function() {
+            window.location.href = url;
+        });
+    } else {
+        // Fallback: create our own modal or use the global modal
+        const modal = document.getElementById('confirmModal');
+        if (modal) {
+            const body = document.getElementById('confirmModalBody');
+            body.innerHTML = message;
+            
+            // Use jQuery if available
+            if (typeof $ !== 'undefined') {
+                $('#confirmModal').modal('show');
+                
+                // Handle confirm button
+                $('#confirmModalConfirm').off('click').on('click', function() {
+                    $('#confirmModal').modal('hide');
+                    window.location.href = url;
+                });
+            }
+        } else {
+            // Final fallback - should not reach here with modals available
+            console.warn('Modal not available, using confirm');
+            if (confirm(message)) {
+                window.location.href = url;
+            }
+        }
+    }
+}
+
+function bulkApprove() {
+    const ids = getSelectedPostIds();
+    if (ids.length === 0) return;
+    
+    const message = `Are you sure you want to approve ${ids.length} posts?`;
+    
+    // Use jQuery modal directly
+    if (typeof $ !== 'undefined' && document.getElementById('confirmModal')) {
+        const modal = $('#confirmModal');
+        const body = $('#confirmModalBody');
+        
+        body.html(message);
+        modal.modal('show');
+        
+        $('#confirmModalConfirm').off('click').on('click', function() {
+            modal.modal('hide');
+            processBulkAction('approve', ids);
+        });
+    } else {
+        // Final fallback - should not reach here with modals available
+        console.warn('Modal not available, using confirm');
+        if (confirm(message)) {
+            processBulkAction('approve', ids);
+        }
+    }
+}
+
+function bulkReject() {
+    const ids = getSelectedPostIds();
+    if (ids.length === 0) return;
+    
+    const message = `Are you sure you want to reject ${ids.length} posts? This will permanently delete them.`;
+    
+    // Use jQuery modal directly
+    if (typeof $ !== 'undefined' && document.getElementById('confirmModal')) {
+        const modal = $('#confirmModal');
+        const body = $('#confirmModalBody');
+        
+        body.html(message);
+        modal.modal('show');
+        
+        $('#confirmModalConfirm').off('click').on('click', function() {
+            modal.modal('hide');
+            processBulkAction('reject', ids);
+        });
+    } else {
+        // Final fallback - should not reach here with modals available
+        console.warn('Modal not available, using confirm');
+        if (confirm(message)) {
+            processBulkAction('reject', ids);
+        }
+    }
+}
+
+function processBulkAction(action, postIds) {
+    const csrftoken = getCSRFToken();
+    console.log('CSRF Token:', csrftoken);
+    
+    fetch(`/dashboard/posts/bulk-action/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken
+        },
+        body: JSON.stringify({
+            action: action,
+            post_ids: postIds
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            if (window.showNotification) {
+                showNotification(data.message, 'success');
+                setTimeout(() => location.reload(), 1500);
+            } else {
+                location.reload();
+            }
+        } else {
+            if (window.showNotification) {
+                showNotification('Error: ' + data.message, 'error');
+            } else {
+                showNotification('Error: ' + data.message, 'error');
+            }
+        }
+    })
+    .catch(error => {
+        if (window.showNotification) {
+            showNotification('Error processing bulk action', 'error');
+        } else {
+            showNotification('Error processing bulk action', 'error');
+        }
+        console.error('Error:', error);
+    });
+}
+</script>
 {% endblock %}

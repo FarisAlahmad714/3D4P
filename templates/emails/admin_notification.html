@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Notification - {{ site_name }}</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 3px solid {% if urgent %}#dc3545{% else %}#007bff{% endif %};
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .notification-title {
+            color: {% if urgent %}#dc3545{% else %}#007bff{% endif %};
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+        .notification-box {
+            background: {% if urgent %}#f8d7da{% else %}#e3f2fd{% endif %};
+            border: 2px solid {% if urgent %}#dc3545{% else %}#007bff{% endif %};
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        .urgent-indicator {
+            background: #dc3545;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            display: inline-block;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: {% if urgent %}#dc3545{% else %}#007bff{% endif %};
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            margin: 10px 5px;
+            font-size: 16px;
+        }
+        .info-box {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .footer {
+            text-align: center;
+            border-top: 1px solid #dee2e6;
+            padding-top: 20px;
+            margin-top: 30px;
+            color: #6c757d;
+            font-size: 14px;
+        }
+        .emoji {
+            font-size: 20px;
+        }
+        .timestamp {
+            color: #6c757d;
+            font-size: 14px;
+            text-align: right;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            {% if urgent %}
+            <div class="urgent-indicator">
+                🚨 URGENT NOTIFICATION
+            </div>
+            {% endif %}
+            <h1 class="notification-title">
+                {% if urgent %}🚨{% else %}📢{% endif %} {{ subject }}
+            </h1>
+        </div>
+        
+        <div class="notification-box">
+            <h2><span class="emoji">👋</span> Admin Team,</h2>
+            <p><strong>You have a new notification from the {{ site_name }} platform.</strong></p>
+        </div>
+        
+        <div class="content">
+            <div class="info-box">
+                <h3><span class="emoji">📝</span> Notification Details:</h3>
+                <div style="white-space: pre-line;">{{ message }}</div>
+            </div>
+            
+            {% if urgent %}
+            <div style="background: #f8d7da; border: 2px solid #dc3545; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                <h3 style="color: #721c24; margin-top: 0;"><span class="emoji">⚡</span> Immediate Action Required</h3>
+                <p style="color: #721c24; margin-bottom: 0;">This is an urgent notification that may require immediate attention. Please review and take appropriate action as soon as possible.</p>
+            </div>
+            {% endif %}
+            
+            <h3><span class="emoji">🔧</span> Quick Actions:</h3>
+            <ul>
+                <li>Review pending user applications and posts</li>
+                <li>Check system logs for any issues</li>
+                <li>Monitor platform performance and security</li>
+                <li>Respond to user support requests</li>
+                <li>Update platform content and settings as needed</li>
+            </ul>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <a href="{{ admin_url }}" class="button">
+                    <span class="emoji">🏠</span> Go to Admin Dashboard
+                </a>
+            </div>
+            
+            <div class="info-box">
+                <h3><span class="emoji">📊</span> Platform Status Summary:</h3>
+                <ul>
+                    <li><strong>Active Users:</strong> Check current user registrations</li>
+                    <li><strong>Pending Verifications:</strong> Review user verification applications</li>
+                    <li><strong>Post Approvals:</strong> Review submitted posts awaiting approval</li>
+                    <li><strong>Recent Donations:</strong> Monitor donation activity and trends</li>
+                    <li><strong>System Health:</strong> Check for any technical issues</li>
+                </ul>
+            </div>
+            
+            {% if not urgent %}
+            <div style="background: #d1ecf1; border-left: 4px solid #17a2b8; padding: 15px; margin: 20px 0; border-radius: 5px;">
+                <h3 style="color: #0c5460; margin-top: 0;"><span class="emoji">💡</span> Admin Tips:</h3>
+                <ul style="color: #0c5460;">
+                    <li>Regularly review and approve legitimate requests</li>
+                    <li>Monitor content moderation effectiveness</li>
+                    <li>Keep track of successful donation campaigns</li>
+                    <li>Maintain communication with active users</li>
+                    <li>Update platform documentation as needed</li>
+                </ul>
+            </div>
+            {% endif %}
+            
+            <div class="timestamp">
+                <span class="emoji">🕐</span> Notification sent: {{ "now"|date:"F j, Y g:i A" }}
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>{{ site_name }} - Admin Panel</strong></p>
+            <p>Automated notification system • Platform management alerts</p>
+            <p>This email was sent to all administrators. Configure notification preferences in admin settings.</p>
+        </div>
+    </div>
+</body>
+</html>

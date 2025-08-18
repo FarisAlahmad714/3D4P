@@ -83,6 +83,7 @@ body {
     background-color: var(--light-color);
     line-height: 1.6;
     overflow-x: hidden;
+    padding-top: 100px; /* Account for fixed navbar height */
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -370,12 +371,30 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-outline {
-    background: transparent;
+    background: rgba(255, 255, 255, 0.9);
     border: 2px solid var(--primary-color);
     color: var(--primary-color);
+    box-shadow: 0 4px 12px rgba(18, 53, 36, 0.2);
+    font-weight: 600;
 }
 
 .btn-outline:hover {
+    background: var(--gradient-primary);
+    color: white;
+    border-color: transparent;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(18, 53, 36, 0.3);
+}
+
+/* Dark mode outline button */
+[data-theme="dark"] .btn-outline {
+    background: rgba(26, 29, 35, 0.9);
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+    box-shadow: 0 4px 12px rgba(74, 153, 103, 0.2);
+}
+
+[data-theme="dark"] .btn-outline:hover {
     background: var(--gradient-primary);
     color: white;
     border-color: transparent;
@@ -1426,4 +1445,19 @@ html[dir="rtl"] .language-flag {
 [data-theme="dark"] .dropdown-item.active {
     background: var(--accent-color);
     color: white;
+}
+/* Security Section Titles */
+.security-title, .security-main-title {
+    color: var(--dark-color);
+    transition: color 0.3s ease;
+    font-weight: 600;
+}
+
+[data-theme='dark'] .security-title {
+    color: var(--accent-color) !important;  /* Uses navbar green #4a9967 in dark mode */
+    font-weight: 600;
+}
+
+[data-theme='dark'] .security-main-title {
+    color: var(--accent-color) !important;  /* Uses navbar green #4a9967 in dark mode */
 }
