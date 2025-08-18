@@ -105,7 +105,7 @@ EMAIL_HOST_USER=your_email@example.com
 EMAIL_HOST_PASSWORD=your_app_password
 
 # API Keys
-OPENAI_API_KEY=sk-your-openai-key
+OPENAI_API_KEY=your-openai-api-key-here
 
 # Stripe
 STRIPE_PUBLIC_KEY=pk_live_your_key
