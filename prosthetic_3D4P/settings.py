@@ -23,13 +23,14 @@ TESTING = 'test' in sys.argv
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = config('SECRET_KEY', default='django-insecure-temp-key-for-deployment-change-in-production')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 # Parse allowed hosts from environment variable
-ALLOWED_HOSTS = [host.strip() for host in config('ALLOWED_HOSTS', default='localhost,127.0.0.1').split(',')]
+ALLOWED_HOSTS_STR = config('ALLOWED_HOSTS', default='localhost,127.0.0.1,*.railway.app')
+ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS_STR.split(',') if host.strip()]
 
 # Application definition
 INSTALLED_APPS = [
@@ -95,11 +96,23 @@ WSGI_APPLICATION = 'prosthetic_3D4P.wsgi.application'
 
 # Database Configuration
 # Use PostgreSQL in production, SQLite for development/testing
-if config('DATABASE_URL', default=None):
+DATABASE_URL = config('DATABASE_URL', default=None)
+
+if DATABASE_URL:
+    # Railway or other platform with DATABASE_URL
     DATABASES = {
-        'default': dj_database_url.parse(config('DATABASE_URL'))
+        'default': dj_database_url.parse(DATABASE_URL)
+    }
+elif DEBUG:
+    # Development - use SQLite
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': str(BASE_DIR / 'db.sqlite3'),
+        }
     }
 else:
+    # Production without DATABASE_URL - use PostgreSQL with individual vars
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -108,15 +121,6 @@ else:
             'PASSWORD': config('DB_PASSWORD', default=''),
             'HOST': config('DB_HOST', default='localhost'),
             'PORT': config('DB_PORT', default='5432'),
-        }
-    }
-
-# Use SQLite for development when DEBUG is True
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': str(BASE_DIR / 'db.sqlite3'),
         }
     }
 
@@ -196,7 +200,7 @@ csrf_origins = config('CSRF_TRUSTED_ORIGINS', default='https://localhost:8000,ht
 CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in csrf_origins.split(',')]
 
 # API Keys
-OPENAI_API_KEY = config('OPENAI_API_KEY')
+OPENAI_API_KEY = config('OPENAI_API_KEY', default='')
 
 # Stripe Configuration
 STRIPE_PUBLIC_KEY = config('STRIPE_PUBLIC_KEY', default='')
