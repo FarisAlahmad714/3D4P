@@ -34,6 +34,12 @@ if settings.DEBUG:
         path('__debug__/', include(debug_toolbar.urls)),
     ]
 
-# Serve media files in both development and production
 # Always serve media files - WhiteNoise doesn't handle media, only static files
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# This should work in both development and production
+from django.views.static import serve
+from django.urls import re_path
+
+# Add media serving URL pattern
+urlpatterns += [
+    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+]
