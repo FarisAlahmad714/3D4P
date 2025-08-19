@@ -1,0 +1,10 @@
+[build]
+builder = "nixpacks"
+
+[deploy]
+startCommand = "ls -la /app/ && mkdir -p /app/media && chmod 755 /app/media && python manage.py migrate && python manage.py createsuperuser --noinput || true && python manage.py collectstatic --noinput && gunicorn prosthetic_3D4P.wsgi:application --bind 0.0.0.0:$PORT"
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
+
+[mounts]
+"/app/media" = "media-volume"

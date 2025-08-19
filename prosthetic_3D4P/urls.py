@@ -32,4 +32,12 @@ if settings.DEBUG:
     urlpatterns += [
         path('__debug__/', include(debug_toolbar.urls)),
     ]
+
+# Serve media files in both development and production
+# In production, consider using a CDN or object storage for better performance
+# Always serve media files - WhiteNoise doesn't handle media, only static files
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+else:
+    # Force serving media files in production for Railway
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

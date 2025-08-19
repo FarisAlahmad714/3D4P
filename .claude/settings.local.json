@@ -4,7 +4,10 @@
       "Bash(find:*)",
       "Bash(mkdir:*)",
       "Bash(grep:*)",
-      "Bash(python manage.py:*)"
+      "Bash(python manage.py:*)",
+      "WebFetch(domain:docs.railway.app)",
+      "WebFetch(domain:docs.railway.com)",
+      "Bash(git add:*)"
     ],
     "deny": []
   }

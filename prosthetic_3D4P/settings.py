@@ -157,7 +157,17 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Media files
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# Use absolute path for Railway volume mount
+if config('RAILWAY_ENVIRONMENT', default=None):
+    MEDIA_ROOT = '/app/media'
+    # Debug: Print media root path in Railway
+    print(f"RAILWAY MEDIA_ROOT: {MEDIA_ROOT}")
+    if os.path.exists(MEDIA_ROOT):
+        print(f"Media directory exists, contents: {os.listdir(MEDIA_ROOT)}")
+    else:
+        print("Media directory does not exist!")
+else:
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
