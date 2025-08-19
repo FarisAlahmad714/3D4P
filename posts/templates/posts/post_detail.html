@@ -4,8 +4,73 @@
 <div class="container mt-4">
   <!-- Post Header -->
   <div class="card">
-    {% if post.image %}
-      <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+    {% if post.image or post.donation_details.images.exists %}
+      <!-- Image Carousel for donation requests with multiple images -->
+      {% if post.post_type == 'donation' and post.donation_details.images.exists %}
+        <div id="postImageCarousel" class="carousel slide" data-ride="carousel">
+          <div class="carousel-inner">
+            {% if post.image %}
+            <div class="carousel-item active">
+              <img src="{{ post.image.url }}" class="d-block w-100" alt="{{ post.title }}" style="max-height: 400px; object-fit: cover;">
+            </div>
+            {% endif %}
+            
+            {% for img in post.donation_details.images.all %}
+            <div class="carousel-item {% if not post.image and forloop.first %}active{% endif %}">
+              <img src="{{ img.image.url }}" class="d-block w-100" alt="{{ post.title }}" style="max-height: 400px; object-fit: cover;">
+            </div>
+            {% endfor %}
+          </div>
+          
+          <!-- Show controls only if there are multiple images -->
+          {% if post.donation_details.images.count > 0 and post.image or post.donation_details.images.count > 1 %}
+          <a class="carousel-control-prev" href="#postImageCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#postImageCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+          
+          <!-- Image Indicators -->
+          <ol class="carousel-indicators">
+            {% if post.image %}
+            <li data-target="#postImageCarousel" data-slide-to="0" class="active"></li>
+            {% endif %}
+            {% for img in post.donation_details.images.all %}
+            <li data-target="#postImageCarousel" data-slide-to="{{ forloop.counter|add:post.image|yesno:'1,0' }}"></li>
+            {% endfor %}
+          </ol>
+          {% endif %}
+        </div>
+        
+        <!-- Thumbnail Gallery -->
+        {% if post.donation_details.images.count > 0 or post.image %}
+        <div class="image-gallery mt-3 px-3 pb-3">
+          <h6><i class="fas fa-images"></i> All Images ({{ post.donation_details.images.count|add:post.image|yesno:"1,0"|add:1 }})</h6>
+          <div class="row">
+            {% if post.image %}
+            <div class="col-md-3 col-sm-4 col-6 mb-3">
+              <img src="{{ post.image.url }}" class="img-thumbnail gallery-thumb" alt="{{ post.title }}" 
+                   data-target="#postImageCarousel" data-slide-to="0" style="cursor: pointer; height: 120px; object-fit: cover; width: 100%;">
+            </div>
+            {% endif %}
+            
+            {% for img in post.donation_details.images.all %}
+            <div class="col-md-3 col-sm-4 col-6 mb-3">
+              <img src="{{ img.image.url }}" class="img-thumbnail gallery-thumb" alt="{{ post.title }}" 
+                   data-target="#postImageCarousel" data-slide-to="{{ forloop.counter|add:post.image|yesno:'1,0' }}" 
+                   style="cursor: pointer; height: 120px; object-fit: cover; width: 100%;">
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+      {% else %}
+        <!-- Single image for regular posts -->
+        <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+      {% endif %}
     {% endif %}
     
     <div class="card-body">

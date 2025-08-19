@@ -125,12 +125,82 @@
                 {% if post.post_type == 'donation' %}
                 <!-- Donation Request Card -->
                 <div class="donation-card-mini">
-                    {% if post.image %}
+                    {% if post.image or post.donation_details.images.exists %}
                     <div class="card-img-wrapper">
-                        <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+                        <!-- Image Carousel for multiple images -->
+                        <div id="carousel-{{ post.pk }}" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner">
+                                {% if post.image %}
+                                <div class="carousel-item active">
+                                    <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+                                </div>
+                                {% endif %}
+                                
+                                {% if post.donation_details %}
+                                    {% for img in post.donation_details.images.all %}
+                                    <div class="carousel-item {% if not post.image and forloop.first %}active{% endif %}">
+                                        <img src="{{ img.image.url }}" class="card-img-top" alt="{{ post.title }}">
+                                    </div>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            
+                            <!-- Show controls only if there are multiple images -->
+                            {% if post.donation_details.images.count > 0 and post.image or post.donation_details.images.count > 1 %}
+                            <a class="carousel-control-prev" href="#carousel-{{ post.pk }}" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            </a>
+                            <a class="carousel-control-next" href="#carousel-{{ post.pk }}" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            </a>
+                            
+                            <!-- Image indicators -->
+                            <ol class="carousel-indicators">
+                                {% if post.image %}
+                                <li data-target="#carousel-{{ post.pk }}" data-slide-to="0" class="active"></li>
+                                {% endif %}
+                                {% if post.donation_details %}
+                                    {% for img in post.donation_details.images.all %}
+                                    <li data-target="#carousel-{{ post.pk }}" data-slide-to="{{ forloop.counter|add:post.image|yesno:'1,0' }}"></li>
+                                    {% endfor %}
+                                {% endif %}
+                            </ol>
+                            {% endif %}
+                        </div>
+                        
                         <div class="urgency-badge-mini">
                             🩺 Request
                         </div>
+                        
+                        <!-- Image count badge -->
+                        {% if post.donation_details.images.count > 0 %}
+                        <div class="image-count-badge">
+                            <i class="fas fa-images"></i> {{ post.donation_details.images.count|add:post.image|yesno:"1,0"|add:1 }}
+                        </div>
+                        {% endif %}
+                        
+                        <!-- Thumbnail gallery below carousel -->
+                        {% if post.donation_details.images.count > 0 or post.image %}
+                        <div class="thumbnail-gallery mt-2 px-2">
+                          <div class="row g-1">
+                            {% if post.image %}
+                            <div class="col-4">
+                              <img src="{{ post.image.url }}" class="img-thumbnail gallery-thumb-mini" alt="{{ post.title }}" 
+                                   data-target="#carousel-{{ post.pk }}" data-slide-to="0" 
+                                   style="cursor: pointer; height: 40px; object-fit: cover; width: 100%;">
+                            </div>
+                            {% endif %}
+                            
+                            {% for img in post.donation_details.images.all %}
+                            <div class="col-4">
+                              <img src="{{ img.image.url }}" class="img-thumbnail gallery-thumb-mini" alt="{{ post.title }}" 
+                                   data-target="#carousel-{{ post.pk }}" data-slide-to="{{ forloop.counter|add:post.image|yesno:'1,0' }}" 
+                                   style="cursor: pointer; height: 40px; object-fit: cover; width: 100%;">
+                            </div>
+                            {% endfor %}
+                          </div>
+                        </div>
+                        {% endif %}
                     </div>
                     {% else %}
                     <div class="card-img-wrapper gradient-bg">
@@ -536,6 +606,58 @@
     border-radius: 15px;
     font-size: 0.75rem;
     font-weight: 600;
+    z-index: 2;
+}
+
+.image-count-badge {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    z-index: 2;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 15%;
+    opacity: 0.7;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    opacity: 1;
+}
+
+.carousel-indicators {
+    bottom: 0.25rem;
+}
+
+.carousel-indicators li {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin: 0 2px;
+}
+
+.thumbnail-gallery {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+}
+
+.gallery-thumb-mini {
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+}
+
+.gallery-thumb-mini:hover {
+    border-color: var(--primary-color);
+    transform: scale(1.05);
 }
 
 .post-type-badge {

@@ -95,6 +95,23 @@ def create_donation_request(request):
                 })
             
             post.save()
+            
+            # Create the DonationRequest object
+            donation_request = DonationRequest.objects.create(
+                post=post,
+                estimated_cost=form.cleaned_data['estimated_cost'],
+                prosthetic_type=form.cleaned_data['prosthetic_type'],
+                measurements=form.cleaned_data['measurements']
+            )
+            
+            # Save additional images
+            image_formset.instance = donation_request
+            image_formset.save()
+            
+            # Save additional files  
+            file_formset.instance = donation_request
+            file_formset.save()
+            
             messages.success(request, 'Your donation request has been created successfully.')
             return redirect('post_list')
         else:
