@@ -2,7 +2,7 @@
 builder = "nixpacks"
 
 [deploy]
-startCommand = "ls -la /app/ && mkdir -p /app/media && chmod 755 /app/media && python manage.py migrate && python manage.py createsuperuser --noinput || true && python manage.py collectstatic --noinput && gunicorn prosthetic_3D4P.wsgi:application --bind 0.0.0.0:$PORT"
+startCommand = "ls -la /app/ && mkdir -p /app/media && chmod 777 /app/media && ls -la /app/media && python manage.py migrate && python manage.py createsuperuser --noinput || true && python manage.py collectstatic --noinput && echo 'MEDIA_ROOT check:' && python -c 'import os; from django.conf import settings; os.environ.setdefault(\"DJANGO_SETTINGS_MODULE\", \"prosthetic_3D4P.settings\"); import django; django.setup(); print(f\"MEDIA_ROOT: {settings.MEDIA_ROOT}\"); print(f\"Exists: {os.path.exists(settings.MEDIA_ROOT)}\")' && gunicorn prosthetic_3D4P.wsgi:application --bind 0.0.0.0:$PORT"
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 10
 

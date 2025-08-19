@@ -19,6 +19,7 @@ urlpatterns = [
     path('campaigns/', include('campaigns.urls')),
     path('donations/', include('donations.urls')),
     path('verification/', include('verification.urls')),
+    path('debug-media/', views.debug_media, name='debug_media'),
     
     # Support pages
     path('support/how-it-works/', views.how_it_works, name='how_it_works'),

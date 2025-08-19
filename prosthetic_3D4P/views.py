@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
+from django.conf import settings
 from posts.models import Post
+import os
 
 def home(request):
     recent_posts = Post.objects.filter(is_approved=True).order_by('-created_at')[:5]
@@ -87,3 +89,46 @@ def contact_us(request):
 def privacy_policy(request):
     """View for Privacy Policy support page"""
     return render(request, 'support/privacy_policy.html')
+
+
+def debug_media(request):
+    """Debug view to check media configuration"""
+    debug_info = []
+    
+    debug_info.append(f"MEDIA_ROOT: {settings.MEDIA_ROOT}")
+    debug_info.append(f"MEDIA_URL: {settings.MEDIA_URL}")
+    debug_info.append(f"MEDIA_ROOT exists: {os.path.exists(settings.MEDIA_ROOT)}")
+    
+    if os.path.exists(settings.MEDIA_ROOT):
+        try:
+            contents = os.listdir(settings.MEDIA_ROOT)
+            debug_info.append(f"MEDIA_ROOT contents: {contents}")
+            
+            post_images_path = os.path.join(settings.MEDIA_ROOT, 'post_images')
+            if os.path.exists(post_images_path):
+                post_images = os.listdir(post_images_path)
+                debug_info.append(f"post_images contents: {post_images}")
+                
+                # Check specific file from error
+                test_file = os.path.join(post_images_path, 'photo_2025-07-30_17-46-47_GtUDQfh.jpg')
+                debug_info.append(f"Test file exists: {os.path.exists(test_file)}")
+                if os.path.exists(test_file):
+                    stat = os.stat(test_file)
+                    debug_info.append(f"Test file size: {stat.st_size} bytes")
+                    debug_info.append(f"Test file permissions: {oct(stat.st_mode)}")
+            else:
+                debug_info.append("post_images directory does not exist")
+        except Exception as e:
+            debug_info.append(f"Error listing directory: {e}")
+    
+    # Test write permissions
+    try:
+        test_file = os.path.join(settings.MEDIA_ROOT, 'test_write.txt')
+        with open(test_file, 'w') as f:
+            f.write('test')
+        os.remove(test_file)
+        debug_info.append("Write permissions: OK")
+    except Exception as e:
+        debug_info.append(f"Write permissions: FAILED - {e}")
+    
+    return HttpResponse('<br>'.join(debug_info))
