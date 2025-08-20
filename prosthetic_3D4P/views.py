@@ -132,3 +132,8 @@ def debug_media(request):
         debug_info.append(f"Write permissions: FAILED - {e}")
     
     return HttpResponse('<br>'.join(debug_info))
+
+
+def firebase_test(request):
+    """View for Firebase integration test page"""
+    return render(request, 'firebase_test.html')

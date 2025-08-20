@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Firebase Test - 3D4P{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Firebase Integration Test</h3>
+                </div>
+                <div class="card-body">
+                    <h5>Firebase Status</h5>
+                    <div id="firebase-status" class="alert alert-info">
+                        Checking Firebase connection...
+                    </div>
+                    
+                    <h5 class="mt-4">Test Analytics Events</h5>
+                    <div class="btn-group-vertical w-100">
+                        <button class="btn btn-primary mb-2" onclick="testPageView()">
+                            Test Page View Event
+                        </button>
+                        <button class="btn btn-success mb-2" onclick="testButtonClick()">
+                            Test Button Click Event
+                        </button>
+                        <button class="btn btn-warning mb-2" onclick="testDonation()">
+                            Test Donation Event
+                        </button>
+                        <button class="btn btn-info mb-2" onclick="testCustomEvent()">
+                            Test Custom Event
+                        </button>
+                    </div>
+                    
+                    <h5 class="mt-4">Event Log</h5>
+                    <div id="event-log" class="border rounded p-3" style="height: 200px; overflow-y: auto; background: #f8f9fa;">
+                        <small class="text-muted">Events will appear here...</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Check Firebase status
+    setTimeout(() => {
+        const statusDiv = document.getElementById('firebase-status');
+        if (window.firebaseService && window.firebaseService.app) {
+            statusDiv.className = 'alert alert-success';
+            statusDiv.innerHTML = '✅ Firebase is connected and initialized!';
+            logEvent('Firebase initialized successfully');
+        } else {
+            statusDiv.className = 'alert alert-danger';
+            statusDiv.innerHTML = '❌ Firebase is not initialized. Check console for errors.';
+        }
+    }, 2000);
+    
+    function logEvent(message) {
+        const logDiv = document.getElementById('event-log');
+        const timestamp = new Date().toLocaleTimeString();
+        const entry = document.createElement('div');
+        entry.innerHTML = `<small><strong>[${timestamp}]</strong> ${message}</small>`;
+        logDiv.appendChild(entry);
+        logDiv.scrollTop = logDiv.scrollHeight;
+    }
+    
+    function testPageView() {
+        if (window.firebaseService) {
+            window.firebaseService.trackPageView('Firebase Test Page');
+            logEvent('📊 Page view event sent to Firebase Analytics');
+        } else {
+            logEvent('❌ Firebase service not available');
+        }
+    }
+    
+    function testButtonClick() {
+        if (window.firebaseService) {
+            window.firebaseService.trackButtonClick('test_button', 'testing');
+            logEvent('🖱️ Button click event sent to Firebase Analytics');
+        } else {
+            logEvent('❌ Firebase service not available');
+        }
+    }
+    
+    function testDonation() {
+        if (window.firebaseService) {
+            window.firebaseService.trackDonation(100, 'one-time', 'test-123');
+            logEvent('💝 Donation event sent to Firebase Analytics (Amount: $100)');
+        } else {
+            logEvent('❌ Firebase service not available');
+        }
+    }
+    
+    function testCustomEvent() {
+        if (window.firebaseService) {
+            window.firebaseService.logEvent('test_custom_event', {
+                category: 'testing',
+                label: 'firebase_integration',
+                value: 42
+            });
+            logEvent('🎯 Custom event sent to Firebase Analytics');
+        } else {
+            logEvent('❌ Firebase service not available');
+        }
+    }
+</script>
+{% endblock %}

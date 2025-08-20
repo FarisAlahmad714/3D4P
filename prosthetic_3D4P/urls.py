@@ -26,6 +26,9 @@ urlpatterns = [
     path('support/faq/', views.faq, name='faq'),
     path('support/contact/', views.contact_us, name='contact_us'),
     path('support/privacy-policy/', views.privacy_policy, name='privacy_policy'),
+    
+    # Firebase test page (remove in production)
+    path('firebase-test/', views.firebase_test, name='firebase_test'),
 ]
 
 if settings.DEBUG:
